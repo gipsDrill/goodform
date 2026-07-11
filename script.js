@@ -3,7 +3,6 @@ const nav = document.querySelector('.main-nav');
 
 if (menuButton && nav) {
   const menuLabel = menuButton.querySelector('.sr-only');
-
   const closeMenu = () => {
     menuButton.setAttribute('aria-expanded', 'false');
     nav.classList.remove('is-open');
@@ -18,7 +17,6 @@ if (menuButton && nav) {
   });
 
   nav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
-
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
       closeMenu();
@@ -49,24 +47,19 @@ const benefitStrip = document.querySelector('.brand-strip');
 const benefitTrack = document.querySelector('.strip-track');
 let stripAnimation;
 let stripResizeTimer;
-let stripOriginalMarkup = benefitTrack ? benefitTrack.innerHTML : '';
+const stripOriginalMarkup = benefitTrack ? benefitTrack.innerHTML : '';
 
 function buildBenefitStrip() {
   if (!benefitStrip || !benefitTrack) return;
-
   if (stripAnimation) stripAnimation.cancel();
   benefitTrack.innerHTML = stripOriginalMarkup;
 
-  // Keep the line wider than every screen so the movement is always visible.
   while (benefitTrack.scrollWidth < benefitStrip.clientWidth + 1100) {
     benefitTrack.insertAdjacentHTML('beforeend', '<b aria-hidden="true">●</b>' + stripOriginalMarkup);
   }
 
   const travel = Math.max(260, benefitTrack.scrollWidth - benefitStrip.clientWidth);
-  // A deliberately calm pace: the line travels to one edge, reverses,
-  // then repeats without jumping back to the start.
   const duration = Math.max(52000, Math.min(85000, travel * 32));
-
   stripAnimation = benefitTrack.animate(
     [
       { transform: 'translate3d(0, 0, 0)' },
@@ -87,3 +80,46 @@ window.addEventListener('resize', () => {
   clearTimeout(stripResizeTimer);
   stripResizeTimer = setTimeout(buildBenefitStrip, 180);
 }, { passive: true });
+
+const form = document.querySelector('.contact-form');
+if (form) {
+  const button = form.querySelector('button[type="submit"]');
+  const note = form.querySelector('.form-note');
+  const success = form.querySelector('.form-success');
+  const defaultButton = button ? button.innerHTML : '';
+
+  form.addEventListener('submit', async (event) => {
+    if (!window.fetch) return;
+    event.preventDefault();
+
+    if (button) {
+      button.disabled = true;
+      button.innerHTML = 'Sending…';
+    }
+    if (note) note.textContent = 'Sending your enquiry…';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      });
+
+      if (!response.ok) throw new Error('Form submission failed');
+      form.reset();
+      form.classList.add('is-sent');
+      if (success) success.hidden = false;
+      if (note) note.hidden = true;
+      if (button) button.hidden = true;
+    } catch (error) {
+      if (note) {
+        note.hidden = false;
+        note.textContent = 'Sorry, the message could not be sent. Please email contact@goodform.org.uk.';
+      }
+      if (button) {
+        button.disabled = false;
+        button.innerHTML = defaultButton;
+      }
+    }
+  });
+}

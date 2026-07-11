@@ -1,28 +1,24 @@
-OPENHOUSE WEB STUDIO — PROJECT NOTES
+GOODFORM WEB STUDIO — READY-TO-PUBLISH PROJECT
 
-Main file: index.html
-Styles: styles.css
-Interactions: script.js
-Images: assets/
+Live domain: https://goodform.org.uk/
+Contact email: contact@goodform.org.uk
+Form service: Formspree
 
-Before publishing:
-1. Replace Goodform, the sample domain and sample email with the final brand details.
-2. Connect the contact form to Formspree, Netlify Forms, a server endpoint or another email service.
-3. Update canonical, Open Graph, sitemap.xml and robots.txt with the real domain.
-4. Review Privacy Policy and Terms for the final business and service process.
-5. Add analytics/cookie consent only if you decide to use tracking.
-6. Check all prices and package limits before launch.
+UPLOAD TO GITHUB
+1. Open the gipsDrill/goodform repository.
+2. Upload the contents of this folder to the repository root, replacing the existing files.
+3. Keep the CNAME file in the root. It contains goodform.org.uk.
+4. Commit the changes and wait for GitHub Pages to rebuild.
+5. Test the contact form after publication.
 
-PHOTO SOURCES — PEXELS
-- Florist: Andrea Piacquadio / Pexels, photo ID 3766221
-- Cafe owners: RDNE Stock project / Pexels, photo ID 10375893
-- Colourful retail space: Sarah O'Shea / Pexels, photo ID 31858687
+INCLUDED
+- Correct canonical, Open Graph and structured-data URLs
+- Updated contact email
+- Live Formspree contact form with an inline success message
+- Finished Privacy Policy and Terms pages
+- Correct robots.txt and sitemap.xml
+- Neutral example graphics without invented reviews or performance claims
+- Responsive layout and accessibility features
 
-The photos are stored locally in WebP format for performance.
-
-
-GOODFORM V4 UPDATES
-- Slower back-and-forth benefits ticker.
-- Redesigned benefit illustrations focused on web content, trust and enquiries.
-- £399 package now includes a simple starter logo when needed.
-- Fixed duplicate process step.
+NOTE
+The Privacy Policy and Terms are practical starter documents, not a substitute for advice from a UK solicitor or data-protection professional where your circumstances require it.
