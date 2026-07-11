@@ -22,3 +22,9 @@ INCLUDED
 
 NOTE
 The Privacy Policy and Terms are practical starter documents, not a substitute for advice from a UK solicitor or data-protection professional where your circumstances require it.
+
+
+NEW PAGES
+- starter-package.html: full £399 package details
+- how-it-works.html: expanded three-step process
+- Homepage includes two understated external example links.
