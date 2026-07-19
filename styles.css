@@ -62,6 +62,7 @@ button { color: inherit; }
 .hero h1 { margin: 0; max-width: 720px; font-size: clamp(3.3rem, 6.7vw, 6.75rem); line-height: .91; letter-spacing: -.072em; font-weight: 900; }
 .hero h1 em { color: var(--coral); font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter-spacing: -.055em; }
 .hero-lead { max-width: 600px; margin: 30px 0 0; font-size: clamp(1.05rem, 1.4vw, 1.25rem); color: rgba(19,21,38,.74); }
+.hero-location { max-width: 720px; margin: 16px 0 0; padding-left: 15px; border-left: 3px solid var(--coral); font-size: clamp(.92rem, 1.15vw, 1.02rem); font-weight: 700; line-height: 1.55; color: rgba(19,21,38,.82); }
 .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; margin-top: 34px; }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 14px; min-height: 54px; padding: 0 22px; border: 0; border-radius: 999px; font-weight: 900; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; }
 .button:hover { transform: translateY(-3px); }
@@ -214,6 +215,7 @@ details p { margin: -6px 0 24px; color: rgba(19,21,38,.7); max-width: 720px; }
 
 .site-footer { max-width: 1500px; margin: 0 auto; padding: 54px 24px; display: grid; grid-template-columns: 1.3fr .55fr .55fr; gap: 50px; border-top: 1px solid var(--line); }
 .footer-brand p { max-width: 430px; color: rgba(19,21,38,.62); }
+.footer-brand .footer-area { margin-top: 8px; font-size: .88rem; line-height: 1.55; color: rgba(19,21,38,.72); }
 .footer-links { display: flex; flex-direction: column; gap: 9px; font-size: .9rem; }
 .brand-footer { margin-bottom: 10px; }
 
