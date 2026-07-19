@@ -1624,3 +1624,38 @@ details p { margin: -6px 0 24px; color: rgba(19,21,38,.7); max-width: 720px; }
   .package-feature-grid .detail-card:hover,
   .package-feature-grid .detail-card:nth-child(even):hover { transform: translateY(-3px); }
 }
+
+
+/* =========================================================
+   GOODFORM — 2026 logo refresh
+   Uses the supplied Goodform G/arrow identity across all pages.
+   ========================================================= */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  font-size: 0;
+  line-height: 1;
+  letter-spacing: 0;
+  flex: 0 0 auto;
+}
+.brand-logo {
+  display: block;
+  width: clamp(176px, 15vw, 224px);
+  height: auto;
+  max-width: 100%;
+}
+.brand-footer .brand-logo {
+  width: clamp(166px, 14vw, 205px);
+}
+.brand-mark,
+.brand-dot {
+  display: none !important;
+}
+@media (max-width: 760px) {
+  .brand-logo { width: 166px; }
+  .brand-footer .brand-logo { width: 160px; }
+}
+@media (max-width: 390px) {
+  .brand-logo { width: 150px; }
+}

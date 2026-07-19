@@ -1,1 +1,1 @@
-{"name":"Goodform Web Studio","short_name":"Goodform","start_url":"/","display":"standalone","background_color":"#f6f0e8","theme_color":"#4058ff","icons":[]}
+{"name":"Goodform Web Studio","short_name":"Goodform","start_url":"/","display":"standalone","background_color":"#faf7f3","theme_color":"#131526","icons":[{"src":"assets/icon-192.png","sizes":"192x192","type":"image/png"},{"src":"assets/icon-512.png","sizes":"512x512","type":"image/png"}]}

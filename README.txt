@@ -28,3 +28,7 @@ NEW PAGES
 - starter-package.html: full £399 package details
 - how-it-works.html: expanded three-step process
 - Homepage includes two understated external example links.
+
+
+LOGO REFRESH
+The supplied Goodform logo has been applied to all page headers and footers, favicon/app icons and the social sharing image. Source assets are in /assets/goodform-logo.png and /assets/goodform-mark.png.
