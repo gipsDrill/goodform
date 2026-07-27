@@ -1,0 +1,12 @@
+GOODFORM — READY FOR GITHUB
+
+Upload the contents of this folder to the root of the GitHub repository,
+replacing the existing files.
+
+Corrections in this package:
+- completed Privacy Policy with contact@goodform.org.uk
+- completed Website Terms with a 25% deposit
+- domain registration and hosting clearly listed as separate costs
+- removed an outdated duplicate website folder from the project
+
+Live domain: https://goodform.org.uk/
