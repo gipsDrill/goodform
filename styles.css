@@ -15,7 +15,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 body {
   color: var(--text);
   background: #05050a;
@@ -119,12 +119,12 @@ main { position: relative; z-index: 1; }
 }
 .strip-track b { color: var(--coral); }
 
-.section-heading { margin-bottom: 48px; max-width: 520px; }
-.section-heading h2 {
+.section-heading, .package-intro { margin-bottom: 48px; max-width: 520px; }
+.section-heading h2, .package-intro h2 {
   font-size: clamp(1.8rem, 3.5vw, 2.6rem);
   font-weight: 800; letter-spacing: -0.03em; margin-bottom: 10px;
 }
-.section-heading p { color: var(--text-muted); }
+.section-heading p, .package-intro p { color: var(--text-muted); }
 
 .benefit-stack {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
@@ -382,13 +382,25 @@ main { position: relative; z-index: 1; }
   .field-row { grid-template-columns: 1fr; }
   .main-nav {
     position: fixed; inset: 72px 0 auto 0;
-    flex-direction: column; gap: 0;
+    flex-direction: column; align-items: stretch; gap: 4px;
     background: rgba(5,5,10,0.95); backdrop-filter: blur(20px);
-    padding: 20px; border-bottom: 1px solid var(--glass-border);
+    padding: 16px 20px 20px;
+    border-bottom: 1px solid var(--glass-border);
     display: none;
   }
   .main-nav.is-open { display: flex; }
-  .main-nav a { padding: 14px 0; width: 100%; }
+  .main-nav a {
+    padding: 14px 4px;
+    width: 100%;
+    text-align: left;
+  }
+  .main-nav .nav-cta {
+    margin-top: 10px;
+    padding: 14px 18px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
   .menu-button { display: flex; }
   .hero { min-height: 70vh; padding-top: 60px; }
   .section-pad { padding: 70px 20px; }

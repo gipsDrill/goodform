@@ -13,6 +13,12 @@
       const open = nav.classList.toggle('is-open');
       menuBtn.setAttribute('aria-expanded', open);
     });
+    nav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('is-open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
   }
 
   // Reveal on scroll
