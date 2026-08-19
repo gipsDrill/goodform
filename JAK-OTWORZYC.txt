@@ -1,0 +1,21 @@
+GOODFORM — nowa wersja strony
+==============================
+
+1. Rozpakuj ten ZIP.
+2. Wejdź do folderu goodform.
+3. Kliknij dwukrotnie plik index.html — otworzy się w przeglądarce.
+
+Nie trzeba instalować nic (Node, npm, serwer).
+Tło 3D działa od razu. Przesuń myszką, żeby zobaczyć efekt.
+
+Publikacja na GitHub Pages:
+- wrzuć zawartość folderu do repozytorium gipsDrill/goodform
+- plik CNAME już wskazuje na goodform.org.uk
+
+Podstrony:
+- index.html
+- starter-package.html
+- how-it-works.html
+- privacy.html
+- terms.html
+- juniper-stone/  (przykładowa strona klienta)
