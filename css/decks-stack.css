@@ -1,0 +1,47 @@
+/* Decks — Our work hero. Kills the rounded frame, hosts the 3D canvas. */
+
+.portfolio-orbit.decks-slot,
+.portfolio-orbit.decks-slot::before {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.portfolio-orbit.decks-slot::before,
+.portfolio-orbit.decks-slot::after {
+  content: none !important;
+  display: none !important;
+}
+
+.portfolio-orbit.decks-slot {
+  position: relative;
+  width: min(100%, 560px);
+  min-height: 420px;
+  height: min(58vw, 480px);
+  justify-self: center;
+  align-self: center;
+  display: block !important;
+  overflow: visible;
+  pointer-events: auto;
+  border-radius: 0;
+}
+
+.portfolio-orbit.decks-slot #decks-canvas,
+.portfolio-orbit.decks-slot canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .portfolio-orbit.decks-slot {
+    display: block !important;
+    width: min(100%, 100%);
+    min-height: 320px;
+    height: 340px;
+    margin: 12px auto 8px;
+  }
+}
