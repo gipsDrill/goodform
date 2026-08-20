@@ -850,6 +850,10 @@ main { position: relative; z-index: 1; }
   transition: opacity .35s ease, transform .35s ease;
 }
 .story-accent.wire-accent { align-self: center; }
+.portfolio-orbit.wire-accent {
+  width: min(100%, 520px);
+  min-height: 390px;
+}
 .wire-accent .wire-glow {
   position: absolute;
   inset: 18% 18%;
