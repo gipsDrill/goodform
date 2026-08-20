@@ -335,6 +335,8 @@ main { position: relative; z-index: 1; }
   align-items: stretch;
   gap: 12px;
   max-width: 280px;
+  justify-self: center;
+  transform: translateX(clamp(12px, 2vw, 28px));
 }
 .process-map div {
   background: var(--glass);
@@ -419,6 +421,10 @@ main { position: relative; z-index: 1; }
   .section-pad { padding: 70px 20px; }
   .subhero, .expanded-step, .process-note-grid, .short-list-grid, .detail-grid, .detail-split {
     grid-template-columns: 1fr;
+  }
+  .process-map {
+    justify-self: stretch;
+    transform: translateX(8px);
   }
 }
 
@@ -816,4 +822,133 @@ main { position: relative; z-index: 1; }
 .reactive-cluster:hover .cluster-pill { transform: translateZ(48px) scale(1.03); }
 @media (max-width: 900px) {
   .story-accent.reactive-cluster, .portfolio-accent.reactive-cluster { display: none; }
+}
+
+
+/* 2026-08-20: wireframe reactive accents for story and why-it-matters sections. */
+.subhero-visual {
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wire-accent.reactive-cluster {
+  --cluster-visible: .92;
+  --cluster-rise: 0px;
+  --cluster-rx: 0deg;
+  --cluster-ry: 0deg;
+  --cluster-shift-x: 0px;
+  --cluster-shift-y: 0px;
+  position: relative;
+  width: min(100%, 520px);
+  min-height: 400px;
+  margin-inline: auto;
+  transform-style: preserve-3d;
+  perspective: 1400px;
+  opacity: calc(.18 + (var(--cluster-visible) * .95));
+  transform: translate3d(var(--cluster-shift-x), calc(var(--cluster-shift-y) + var(--cluster-rise)), 0) rotateX(var(--cluster-rx)) rotateY(var(--cluster-ry));
+  transition: opacity .35s ease, transform .35s ease;
+}
+.story-accent.wire-accent { align-self: center; }
+.wire-accent .wire-glow {
+  position: absolute;
+  inset: 18% 18%;
+  background:
+    radial-gradient(circle at 35% 42%, rgba(130,230,223,.16), transparent 34%),
+    radial-gradient(circle at 72% 34%, rgba(155,116,255,.14), transparent 28%),
+    radial-gradient(circle at 64% 75%, rgba(255,104,71,.10), transparent 32%);
+  filter: blur(18px);
+  opacity: calc(.25 + var(--cluster-visible) * .45);
+}
+.wire-accent .wire-orbit {
+  position: absolute;
+  left: 50%; top: 53%;
+  width: min(74%, 340px);
+  height: min(26%, 120px);
+  border: 2px solid rgba(225,252,255,.9);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-17deg) translateZ(24px);
+  box-shadow: 0 0 24px rgba(194,246,255,.18);
+  opacity: calc(.58 + var(--cluster-visible) * .3);
+}
+.wire-accent .wire-shape {
+  position: absolute;
+  transform-style: preserve-3d;
+  border: 1.5px solid rgba(130,230,223,.72);
+  background: linear-gradient(145deg, rgba(130,230,223,.03), rgba(130,230,223,.01));
+}
+.wire-accent .wire-shape::before,
+.wire-accent .wire-shape::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.wire-accent .wire-shape::before {
+  border: inherit;
+  transform: translate(16px, -16px);
+  opacity: .7;
+}
+.wire-accent .wire-shape::after {
+  background:
+    linear-gradient(to top right, transparent calc(50% - .75px), currentColor calc(50% - .75px), currentColor calc(50% + .75px), transparent calc(50% + .75px)),
+    linear-gradient(to bottom right, transparent calc(50% - .75px), currentColor calc(50% - .75px), currentColor calc(50% + .75px), transparent calc(50% + .75px));
+  color: inherit;
+  opacity: .72;
+}
+.wire-accent .wire-shape-main {
+  color: rgba(130,230,223,.86);
+  width: 136px; height: 136px;
+  left: 38%; top: 33%;
+  transform: translate(-50%, -50%) rotate(-4deg) translateZ(28px);
+}
+.wire-accent .wire-shape-left {
+  color: rgba(155,116,255,.8);
+  width: 82px; height: 82px;
+  left: 16%; top: 34%;
+  transform: rotate(8deg) translateZ(16px);
+}
+.wire-accent .wire-shape-top {
+  color: rgba(130,230,223,.78);
+  width: 52px; height: 52px;
+  right: 20%; top: 28%;
+  transform: rotate(7deg) translateZ(12px);
+}
+.wire-accent .wire-shape-bottom {
+  color: rgba(255,104,71,.82);
+  width: 76px; height: 76px;
+  right: 26%; bottom: 22%;
+  transform: rotate(-10deg) translateZ(18px);
+}
+.wire-accent .wire-node {
+  position: absolute;
+  border-radius: 2px;
+  box-shadow: 0 0 18px currentColor;
+  animation: wireNodeFloat 5.5s ease-in-out infinite alternate;
+}
+.wire-accent .wire-node-a {
+  width: 18px; height: 18px; left: 43%; top: 45%;
+  background: rgba(130,230,223,.95); color: rgba(130,230,223,.42);
+}
+.wire-accent .wire-node-b {
+  width: 12px; height: 12px; right: 10%; top: 20%; border-radius: 4px;
+  background: rgba(155,116,255,.94); color: rgba(155,116,255,.4); animation-delay: -1.8s;
+}
+.wire-accent .wire-node-c {
+  width: 10px; height: 10px; left: 74%; bottom: 14%; border-radius: 50%;
+  background: rgba(255,104,71,.95); color: rgba(255,104,71,.35); animation-delay: -3.1s;
+}
+.wire-accent:hover .wire-shape-main { transform: translate(-50%, -50%) rotate(-2deg) translate3d(0,-6px,34px); }
+.wire-accent:hover .wire-shape-left { transform: rotate(12deg) translate3d(-2px,-4px,22px); }
+.wire-accent:hover .wire-shape-top { transform: rotate(9deg) translate3d(0,-5px,18px); }
+.wire-accent:hover .wire-shape-bottom { transform: rotate(-6deg) translate3d(4px,-6px,22px); }
+.wire-accent:hover .wire-orbit { transform: translate(-50%, -50%) rotate(-10deg) translateZ(34px) scale(1.02); }
+@keyframes wireNodeFloat {
+  to { transform: translate3d(8px, -10px, 18px) rotate(18deg); }
+}
+@media (max-width: 900px) {
+  .subhero-visual, .wire-accent.reactive-cluster { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wire-accent .wire-node { animation: none; }
 }
