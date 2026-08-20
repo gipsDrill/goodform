@@ -22,6 +22,7 @@
 <link href="assets/apple-touch-icon.png" rel="apple-touch-icon"/>
 <link href="site.webmanifest" rel="manifest"/>
 <link href="styles.css" rel="stylesheet"/>
+<link href="css/drift-cluster.css" rel="stylesheet"/>
 <meta content="website" property="og:type"/>
 <meta content="en_GB" property="og:locale"/>
 <meta content="Goodform" property="og:site_name"/>
@@ -166,16 +167,8 @@
 </div>
 </section>
 <section aria-labelledby="story-title" class="story">
-<div class="story-accent wire-accent reactive-cluster cluster-story reveal" data-reactive-cluster data-cluster-variant="story" aria-hidden="true">
-  <div class="wire-glow"></div>
-  <div class="wire-orbit"></div>
-  <div class="wire-shape wire-shape-main"></div>
-  <div class="wire-shape wire-shape-left"></div>
-  <div class="wire-shape wire-shape-top"></div>
-  <div class="wire-shape wire-shape-bottom"></div>
-  <span class="wire-node wire-node-a"></span>
-  <span class="wire-node wire-node-b"></span>
-  <span class="wire-node wire-node-c"></span>
+<div class="story-accent drift-slot reveal" aria-hidden="true">
+  <canvas id="drift-canvas"></canvas>
 </div>
 
 <div class="story-copy reveal">
@@ -304,5 +297,6 @@
 <div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><span>© <span id="year"></span> Goodform</span><span class="ico-reg"> · <a href="https://ico.org.uk" target="_blank" rel="noopener">ICO ZC221442</a></span></div>
 </footer>
 <script src="script.js"></script>
+<script src="js/drift-cluster.js"></script>
 </body>
 </html>

@@ -1,0 +1,35 @@
+/* Dryf — "No tech stress" cluster slot. Add after styles.css */
+
+.story-accent.drift-slot {
+  grid-column: 1;
+  position: relative;
+  width: min(100%, 520px);
+  min-height: 380px;
+  height: min(52vw, 460px);
+  justify-self: center;
+  align-self: center;
+  display: block;
+  pointer-events: none;
+  perspective: none;
+  overflow: hidden;
+}
+
+.story-accent.drift-slot #drift-canvas,
+.story-accent.drift-slot canvas,
+.story-accent.drift-slot > div {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .story-accent.drift-slot {
+    display: block !important;
+    width: min(100%, 420px);
+    min-height: 300px;
+    height: 340px;
+    margin-bottom: 8px;
+  }
+}
