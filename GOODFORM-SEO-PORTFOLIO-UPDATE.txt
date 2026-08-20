@@ -1,0 +1,32 @@
+GOODFORM — PORTFOLIO + CASE STUDIES + LOCAL SEO UPDATE
+Date: 20 August 2026
+
+NEW PUBLIC PAGES
+- portfolio.html
+- case-study-fleetslate.html
+- case-study-milena-design.html
+- web-design-tameside.html
+
+UPDATED FILES
+- index.html (current live project links, internal portfolio/case-study links and navigation)
+- starter-package.html (navigation/footer links only)
+- how-it-works.html (navigation/footer links only)
+- styles.css (new page styles and responsive rules)
+- sitemap.xml (7 indexable public URLs)
+
+UNCHANGED
+- Contact form endpoint and JavaScript behaviour
+- £399 package, 25% deposit and 14-day support terms
+- Privacy and terms page content
+- Existing assets and Juniper & Stone concept website
+- CNAME, robots.txt, manifest and favicons
+
+DEPLOYMENT
+Upload the contents of this folder to the root of the existing Goodform GitHub Pages repository, replacing files when asked. Do not upload the outer folder itself.
+
+AFTER DEPLOYMENT
+1. Open all four new pages on desktop and mobile.
+2. Confirm the navigation and contact link work.
+3. Confirm https://goodform.org.uk/sitemap.xml lists 7 URLs.
+4. In Google Search Console, resubmit sitemap.xml or allow Google to recrawl it automatically.
+5. Inspect and request indexing for portfolio.html and web-design-tameside.html first, then both case-study pages.
