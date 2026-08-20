@@ -52,7 +52,7 @@
       benefitTrack.insertAdjacentHTML('beforeend', '<b aria-hidden="true">●</b>' + stripOriginalMarkup);
     }
     const travel = Math.max(260, benefitTrack.scrollWidth - benefitStrip.clientWidth);
-    const duration = Math.max(52000, Math.min(85000, travel * 32));
+    const duration = Math.max(40000, Math.min(68000, travel * 25));
     stripAnimation = benefitTrack.animate(
       [{ transform: 'translate3d(0, 0, 0)' }, { transform: `translate3d(-${travel}px, 0, 0)` }],
       { duration, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' }

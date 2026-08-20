@@ -1,0 +1,20 @@
+GOODFORM PORTFOLIO + LOCAL SEO UPDATE
+=====================================
+Base: user-supplied goodform package (goodform.zip / goodform-main)
+Date: 2026-08-20
+
+New pages:
+- portfolio.html
+- case-study-fleetslate.html
+- case-study-milena-design.html
+- web-design-tameside.html
+
+Requested refinements:
+- original responsive Three.js background retained on every new page
+- moving benefit strip made moderately faster
+- homepage package boxes equalised in height on desktop
+- price box expanded with relevant payment/support information
+- homepage FAQ accordion centred
+- existing visual system, form, legal pages and project links retained
+
+Deploy by copying the UPDATE package into the root of the live Goodform repository and replacing the named files.
