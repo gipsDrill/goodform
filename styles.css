@@ -1463,3 +1463,116 @@ main { position: relative; z-index: 1; }
 .cluster-portfolio-layers:hover .stack-post {
   transform: translate3d(0,-4px,calc(24px + (var(--cluster-layer-pulse) * 10px)));
 }
+
+
+/* 2026-08-20 v6: case-study card hover parity + interactive hero visuals. */
+.case-facts div,
+.case-points article,
+.deliverable-grid article,
+.design-principles span {
+  transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+}
+.case-facts div:hover,
+.case-facts div:focus-within,
+.case-points article:hover,
+.case-points article:focus-within,
+.deliverable-grid article:hover,
+.deliverable-grid article:focus-within,
+.design-principles span:hover,
+.design-principles span:focus-visible {
+  border-color: rgba(130,230,223,.42);
+  box-shadow: 0 18px 46px rgba(0,0,0,.22), 0 0 0 1px rgba(130,230,223,.14), 0 0 28px rgba(130,230,223,.08);
+  transform: translateY(-4px);
+}
+
+.case-hero-visual[data-case-visual] {
+  --case-pointer-x: 0px;
+  --case-pointer-y: 0px;
+  --case-scroll-x: 0px;
+  --case-scroll-y: 0px;
+  --case-rx: 0deg;
+  --case-ry: 0deg;
+  --case-rz: 0deg;
+  --case-scale: 1;
+  --case-opacity: 1;
+  --case-soft-x: 0px;
+  --case-soft-y: 0px;
+  --case-strong-x: 0px;
+  --case-strong-y: 0px;
+  --case-inverse-x: 0px;
+  --case-inverse-y: 0px;
+  transform-style: preserve-3d;
+  perspective: 1300px;
+  transform-origin: center center;
+  opacity: var(--case-opacity);
+  transform:
+    translate3d(
+      calc(var(--case-pointer-x) + var(--case-scroll-x)),
+      calc(var(--case-pointer-y) + var(--case-scroll-y)),
+      0
+    )
+    rotateX(var(--case-rx))
+    rotateY(var(--case-ry))
+    rotateZ(var(--case-rz))
+    scale(var(--case-scale));
+  will-change: transform, opacity;
+  transition: border-color .3s ease, box-shadow .3s ease;
+}
+.case-hero-visual[data-case-visual]:hover {
+  border-color: rgba(130,230,223,.34);
+  box-shadow: 0 30px 80px rgba(0,0,0,.28), 0 0 0 1px rgba(130,230,223,.08), 0 0 34px rgba(130,230,223,.08);
+}
+.case-hero-visual[data-case-visual]::before {
+  transform: translate3d(var(--case-soft-x), var(--case-soft-y), 8px);
+  transition: transform .18s ease-out;
+}
+
+/* FleetSlate hero: dashboard and phone move at different depths. */
+.case-hero-visual[data-case-visual="fleetslate"] .project-browser {
+  transform: translate3d(var(--case-soft-x), var(--case-soft-y), 20px);
+  transition: transform .18s ease-out;
+}
+.case-hero-visual[data-case-visual="fleetslate"] .fleet-dashboard {
+  transform: translate3d(var(--case-soft-x), var(--case-soft-y), 14px);
+  transition: transform .18s ease-out;
+}
+.case-hero-visual[data-case-visual="fleetslate"] .fleet-phone {
+  transform: translate3d(var(--case-strong-x), var(--case-strong-y), 42px) rotateY(var(--case-ry));
+  transition: transform .18s ease-out;
+}
+.case-hero-visual[data-case-visual="fleetslate"] .case-visual-note {
+  transform: translateX(-50%) translate3d(var(--case-inverse-x), var(--case-inverse-y), 32px);
+  transition: transform .18s ease-out;
+}
+
+/* Milena hero: fabrics drift in opposing directions while the label floats above them. */
+.case-hero-visual[data-case-visual="milena"] .fabric-a {
+  transform: translate3d(var(--case-strong-x), var(--case-strong-y), 18px) rotate(16deg);
+  transition: transform .2s ease-out;
+}
+.case-hero-visual[data-case-visual="milena"] .fabric-b {
+  transform: translate3d(var(--case-inverse-x), var(--case-inverse-y), 26px) rotate(-16deg);
+  transition: transform .2s ease-out;
+}
+.case-hero-visual[data-case-visual="milena"] .milena-label {
+  transform: translate(-50%,-50%) translate3d(var(--case-soft-x), var(--case-soft-y), 46px);
+  transition: transform .18s ease-out, border-color .25s ease, box-shadow .25s ease;
+}
+.case-hero-visual[data-case-visual="milena"]:hover .milena-label {
+  border-color: rgba(130,230,223,.28);
+  box-shadow: 0 18px 50px rgba(0,0,0,.34), 0 0 28px rgba(130,230,223,.06);
+}
+.case-hero-visual[data-case-visual="milena"] .case-visual-note {
+  transform: translateX(-50%) translate3d(var(--case-inverse-x), var(--case-inverse-y), 34px);
+  transition: transform .18s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-hero-visual[data-case-visual] {
+    opacity: 1;
+    transform: none;
+  }
+  .case-hero-visual[data-case-visual] * {
+    transition: none !important;
+  }
+}

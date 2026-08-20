@@ -125,7 +125,7 @@
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const lerp = (from, to, amount) => from + (to - from) * amount;
 
-  const clusterStates = reactiveClusters.map((cluster) => ({
+  const clusterStates = reactiveClusters.map((cluster, index) => ({
     cluster,
     variant: cluster.dataset.clusterVariant || 'story',
     pointerX: 0,
@@ -253,6 +253,110 @@
 
     updateClusterScrollState();
     renderClusterStates();
+  }
+
+
+  // Interactive hero graphics on both case-study pages.
+  const caseVisuals = Array.from(document.querySelectorAll('[data-case-visual]'));
+  const caseVisualStates = caseVisuals.map((visual, index) => ({
+    visual,
+    kind: visual.dataset.caseVisual || 'generic',
+    pointerX: 0,
+    pointerY: 0,
+    targetPointerX: 0,
+    targetPointerY: 0,
+    scrollX: 0,
+    scrollY: 0,
+    rotateZ: 0,
+    scale: 1,
+    opacity: 1,
+    seed: index * 1.37
+  }));
+
+  const updateCaseVisualScrollState = () => {
+    if (!caseVisualStates.length) return;
+    const viewportHeight = window.innerHeight || 1;
+    const focusLine = viewportHeight * 0.53;
+
+    caseVisualStates.forEach((state) => {
+      const rect = state.visual.getBoundingClientRect();
+      const midpoint = rect.top + rect.height / 2;
+      const signedDistance = clamp((midpoint - focusLine) / (viewportHeight * 0.86), -1.2, 1.2);
+      const proximity = clamp(1 - Math.abs(signedDistance), 0, 1);
+
+      state.opacity = 0.10 + Math.pow(proximity, 0.82) * 0.90;
+      state.scrollY = signedDistance * 30;
+      state.scrollX = signedDistance * (state.kind === 'milena' ? -12 : 10);
+      state.rotateZ = signedDistance * (state.kind === 'milena' ? -3.8 : 3.2);
+      state.scale = 0.94 + proximity * 0.06;
+    });
+  };
+
+  const renderCaseVisualStates = () => {
+    const time = performance.now() * 0.001;
+
+    caseVisualStates.forEach((state) => {
+      state.pointerX = lerp(state.pointerX, state.targetPointerX, 0.075);
+      state.pointerY = lerp(state.pointerY, state.targetPointerY, 0.075);
+
+      const breatheX = Math.sin(time * 0.72 + state.seed) * 1.4;
+      const breatheY = Math.cos(time * 0.68 + state.seed) * 1.8;
+      const pointerShiftX = state.pointerX * (state.kind === 'milena' ? 9 : 8) + breatheX;
+      const pointerShiftY = state.pointerY * 7 + breatheY;
+      const rotateX = state.pointerY * -7;
+      const rotateY = state.pointerX * 9;
+
+      const softX = state.pointerX * 4 + breatheX * .45;
+      const softY = state.pointerY * 3 + breatheY * .45;
+      const strongX = state.pointerX * 11 + breatheX;
+      const strongY = state.pointerY * 8 + breatheY;
+      const inverseX = state.pointerX * -8 - breatheX * .65;
+      const inverseY = state.pointerY * -6 - breatheY * .65;
+
+      const visual = state.visual;
+      visual.style.setProperty('--case-pointer-x', `${pointerShiftX.toFixed(2)}px`);
+      visual.style.setProperty('--case-pointer-y', `${pointerShiftY.toFixed(2)}px`);
+      visual.style.setProperty('--case-scroll-x', `${state.scrollX.toFixed(2)}px`);
+      visual.style.setProperty('--case-scroll-y', `${state.scrollY.toFixed(2)}px`);
+      visual.style.setProperty('--case-rx', `${rotateX.toFixed(2)}deg`);
+      visual.style.setProperty('--case-ry', `${rotateY.toFixed(2)}deg`);
+      visual.style.setProperty('--case-rz', `${state.rotateZ.toFixed(2)}deg`);
+      visual.style.setProperty('--case-scale', state.scale.toFixed(3));
+      visual.style.setProperty('--case-opacity', state.opacity.toFixed(3));
+      visual.style.setProperty('--case-soft-x', `${softX.toFixed(2)}px`);
+      visual.style.setProperty('--case-soft-y', `${softY.toFixed(2)}px`);
+      visual.style.setProperty('--case-strong-x', `${strongX.toFixed(2)}px`);
+      visual.style.setProperty('--case-strong-y', `${strongY.toFixed(2)}px`);
+      visual.style.setProperty('--case-inverse-x', `${inverseX.toFixed(2)}px`);
+      visual.style.setProperty('--case-inverse-y', `${inverseY.toFixed(2)}px`);
+    });
+
+    if (!reduceMotion && caseVisualStates.length) requestAnimationFrame(renderCaseVisualStates);
+  };
+
+  if (caseVisualStates.length) {
+    caseVisualStates.forEach((state) => {
+      const interactionSurface = state.visual.closest('section') || state.visual;
+
+      if (!reduceMotion) {
+        interactionSurface.addEventListener('pointermove', (event) => {
+          if (event.pointerType === 'touch') return;
+          const rect = state.visual.getBoundingClientRect();
+          state.targetPointerX = clamp(((event.clientX - rect.left) / rect.width) * 2 - 1, -1, 1);
+          state.targetPointerY = clamp(((event.clientY - rect.top) / rect.height) * 2 - 1, -1, 1);
+        }, { passive: true });
+
+        interactionSurface.addEventListener('pointerleave', () => {
+          state.targetPointerX = 0;
+          state.targetPointerY = 0;
+        }, { passive: true });
+      }
+    });
+
+    updateCaseVisualScrollState();
+    renderCaseVisualStates();
+    window.addEventListener('scroll', updateCaseVisualScrollState, { passive: true });
+    window.addEventListener('resize', updateCaseVisualScrollState, { passive: true });
   }
 
   // ========== Interactive 3D Background ==========
