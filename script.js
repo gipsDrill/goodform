@@ -21,6 +21,23 @@
     });
   }
 
+  // Highlight the menu item for the page currently being viewed.
+  const currentPage = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  const pageGroups = {
+    'why-it-matters.html': ['why-it-matters.html', 'web-design-tameside.html'],
+    'starter-package.html': ['starter-package.html'],
+    'how-it-works.html': ['how-it-works.html'],
+    'portfolio.html': ['portfolio.html', 'case-study-fleetslate.html', 'case-study-milena-design.html']
+  };
+  document.querySelectorAll('.main-nav a[href]').forEach((link) => {
+    const href = (link.getAttribute('href') || '').replace(/^\.\//, '').toLowerCase();
+    const relatedPages = pageGroups[href] || [];
+    if (relatedPages.includes(currentPage)) {
+      link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
+    }
+  });
+
   // Reveal on scroll
   const reveals = document.querySelectorAll('.reveal');
   if (reveals.length && 'IntersectionObserver' in window) {
@@ -184,6 +201,63 @@
   const lines = new THREE.LineSegments(lineGeo, lineMat);
   scene.add(lines);
 
+  // Homepage-only reactive 3D accent on the right side of the opening section.
+  const heroAccent = document.body.classList.contains('home-page') ? new THREE.Group() : null;
+  const heroAccentMaterials = [];
+  if (heroAccent) {
+    const accentColours = [0x82e6df, 0x9b74ff, 0xff6847];
+    const cubeSettings = [
+      { size: 3.4, x: 0.0, y: 0.2, z: 0.0, colour: 0 },
+      { size: 2.0, x: -3.1, y: 2.0, z: -1.2, colour: 1 },
+      { size: 1.55, x: 3.0, y: -2.0, z: 1.1, colour: 2 },
+      { size: 1.0, x: 3.7, y: 2.3, z: -0.4, colour: 0 }
+    ];
+
+    cubeSettings.forEach((item, index) => {
+      const geometry = new THREE.BoxGeometry(item.size, item.size, item.size);
+      const material = new THREE.MeshBasicMaterial({
+        color: accentColours[item.colour],
+        wireframe: true,
+        transparent: true,
+        opacity: index === 0 ? 0.38 : 0.28,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+      const cube = new THREE.Mesh(geometry, material);
+      cube.position.set(item.x, item.y, item.z);
+      cube.rotation.set(index * 0.22, index * 0.34, index * 0.14);
+      cube.userData.spin = 0.08 + index * 0.025;
+      heroAccent.add(cube);
+      heroAccentMaterials.push(material);
+    });
+
+    const ringMaterial = new THREE.MeshBasicMaterial({
+      color: 0x82e6df,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.16,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(5.2, 0.045, 8, 72), ringMaterial);
+    ring.rotation.x = Math.PI * 0.42;
+    ring.rotation.y = Math.PI * 0.16;
+    heroAccent.add(ring);
+    heroAccentMaterials.push(ringMaterial);
+
+    heroAccent.position.set(9.2, 0.2, -1.5);
+    heroAccent.scale.setScalar(0.95);
+    scene.add(heroAccent);
+  }
+
+  function updateHeroAccentLayout() {
+    if (!heroAccent) return;
+    heroAccent.visible = window.innerWidth >= 760;
+    heroAccent.position.x = window.innerWidth >= 1200 ? 9.2 : 7.4;
+    heroAccent.scale.setScalar(window.innerWidth >= 1200 ? 0.95 : 0.76);
+  }
+  updateHeroAccentLayout();
+
   // Mouse interaction
   const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
   let scrollY = 0;
@@ -210,6 +284,7 @@
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    updateHeroAccentLayout();
   }, { passive: true });
 
   // Animation
@@ -229,6 +304,23 @@
     lines.rotation.y = particles.rotation.y;
     lines.rotation.x = particles.rotation.x;
     lines.position.copy(particles.position);
+
+    if (heroAccent) {
+      const heroVisibility = Math.max(0, 1 - scrollY / 720);
+      heroAccent.rotation.y = t * 0.10 + mouse.x * 0.18;
+      heroAccent.rotation.x = Math.sin(t * 0.32) * 0.07 + mouse.y * 0.10;
+      heroAccent.position.y = 0.2 + mouse.y * 0.55 - scrollY * 0.002;
+      heroAccent.children.forEach((object, index) => {
+        if (object.userData.spin) {
+          object.rotation.x += object.userData.spin * 0.004;
+          object.rotation.y += object.userData.spin * 0.006;
+        }
+      });
+      heroAccentMaterials.forEach((accentMaterial, index) => {
+        const baseOpacity = index === 0 ? 0.38 : (index === heroAccentMaterials.length - 1 ? 0.16 : 0.28);
+        accentMaterial.opacity = baseOpacity * heroVisibility;
+      });
+    }
 
     // Subtle pulse
     material.opacity = 0.7 + Math.sin(t * 0.8) * 0.15;

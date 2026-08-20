@@ -58,8 +58,11 @@ button { cursor: pointer; border: 0; background: none; }
 .brand { display: inline-flex; align-items: center; }
 .brand-logo { height: 40px; width: auto; }
 .main-nav { display: flex; align-items: center; gap: 28px; font-weight: 600; font-size: 0.9rem; }
-.main-nav a { opacity: 0.85; transition: opacity 0.2s; }
-.main-nav a:hover { opacity: 1; }
+.main-nav a { opacity: 0.85; transition: color 0.2s, opacity 0.2s; }
+.main-nav a:not(.nav-cta):hover,
+.main-nav a:not(.nav-cta):focus-visible { color: var(--coral); opacity: 1; }
+.main-nav a.active,
+.main-nav a[aria-current="page"] { color: var(--aqua); opacity: 1; }
 .nav-cta {
   padding: 10px 18px; border-radius: 999px;
   background: var(--coral); color: #fff; font-weight: 700;
@@ -146,10 +149,10 @@ main { position: relative; z-index: 1; }
 .benefit-copy p { color: var(--text-muted); font-size: 0.95rem; }
 
 .story {
-  display: grid; grid-template-columns: 1fr; gap: 0; align-items: center;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
   padding: 80px max(20px, calc((100vw - var(--max))/2));
 }
-.story-copy { max-width: 640px; }
+.story-copy { grid-column: 2; max-width: 640px; }
 .story-note { color: var(--text-muted); margin-bottom: 28px; font-size: 0.95rem; }
 .story-photo {
   border-radius: var(--radius); overflow: hidden;
@@ -388,6 +391,7 @@ main { position: relative; z-index: 1; }
   .benefit-stack, .story, .package-grid, .contact, .site-footer, .example-grid {
     grid-template-columns: 1fr;
   }
+  .story-copy { grid-column: 1; }
   .field-row { grid-template-columns: 1fr; }
   .main-nav {
     position: fixed; inset: 72px 0 auto 0;
@@ -430,7 +434,6 @@ main { position: relative; z-index: 1; }
 .faq .section-heading { margin-left: auto; margin-right: auto; text-align: center; }
 .faq-list { width: min(100%, 760px); margin-left: auto; margin-right: auto; }
 .work-more { display: flex; justify-content: center; padding-top: 28px; }
-.main-nav a.active { color: var(--aqua); opacity: 1; }
 
 .portfolio-subhero, .case-subhero, .local-subhero { min-height: 650px; padding-top: 92px; padding-bottom: 72px; }
 .portfolio-orbit, .case-hero-visual, .local-map-card {
