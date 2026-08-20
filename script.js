@@ -119,34 +119,50 @@
     });
   }
 
-  // Small reactive 3D accent in the left side of the story section.
-  const storySection = document.querySelector('.story');
-  const storyAccent = document.getElementById('story-accent');
-  const storyAccentStage = storyAccent ? storyAccent.querySelector('.story-accent-stage') : null;
+  // Reactive accent graphics for the story section and portfolio header.
+  const reactiveClusters = Array.from(document.querySelectorAll('[data-reactive-cluster]'));
   const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (storySection && storyAccent && storyAccentStage && !reduceMotion) {
-    const updateStoryAccent = (clientX, clientY) => {
-      const rect = storySection.getBoundingClientRect();
-      const x = Math.max(-1, Math.min(1, ((clientX - rect.left) / rect.width) * 2 - 1));
-      const y = Math.max(-1, Math.min(1, ((clientY - rect.top) / rect.height) * 2 - 1));
-      storyAccent.style.setProperty('--story-ry', `${x * 8}deg`);
-      storyAccent.style.setProperty('--story-rx', `${y * -6}deg`);
-      storyAccent.style.setProperty('--story-shift-x', `${x * 7}px`);
-      storyAccent.style.setProperty('--story-shift-y', `${y * 5}px`);
-    };
+  const resetReactiveCluster = (cluster) => {
+    cluster.style.setProperty('--cluster-ry', '0deg');
+    cluster.style.setProperty('--cluster-rx', '0deg');
+    cluster.style.setProperty('--cluster-shift-x', '0px');
+    cluster.style.setProperty('--cluster-shift-y', '0px');
+  };
 
-    storySection.addEventListener('pointermove', (event) => {
-      if (event.pointerType === 'touch') return;
-      updateStoryAccent(event.clientX, event.clientY);
-    }, { passive: true });
+  const updateReactiveClusterScroll = () => {
+    if (!reactiveClusters.length) return;
+    const vh = window.innerHeight || 1;
+    reactiveClusters.forEach((cluster) => {
+      const rect = cluster.getBoundingClientRect();
+      const midpoint = rect.top + rect.height / 2;
+      const distance = Math.abs(midpoint - vh * 0.55);
+      const visibility = Math.max(0, Math.min(1, 1 - distance / (vh * 0.92)));
+      cluster.style.setProperty('--cluster-visible', visibility.toFixed(3));
+      cluster.style.setProperty('--cluster-rise', `${((1 - visibility) * 26).toFixed(2)}px`);
+    });
+  };
 
-    storySection.addEventListener('pointerleave', () => {
-      storyAccent.style.setProperty('--story-ry', '0deg');
-      storyAccent.style.setProperty('--story-rx', '0deg');
-      storyAccent.style.setProperty('--story-shift-x', '0px');
-      storyAccent.style.setProperty('--story-shift-y', '0px');
-    }, { passive: true });
+  if (reactiveClusters.length) {
+    reactiveClusters.forEach((cluster) => {
+      if (!reduceMotion) {
+        const interactionSurface = cluster.closest('section') || cluster;
+        interactionSurface.addEventListener('pointermove', (event) => {
+          if (event.pointerType === 'touch') return;
+          const rect = cluster.getBoundingClientRect();
+          const x = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width) * 2 - 1));
+          const y = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height) * 2 - 1));
+          cluster.style.setProperty('--cluster-ry', `${(x * 9).toFixed(2)}deg`);
+          cluster.style.setProperty('--cluster-rx', `${(y * -7).toFixed(2)}deg`);
+          cluster.style.setProperty('--cluster-shift-x', `${(x * 8).toFixed(2)}px`);
+          cluster.style.setProperty('--cluster-shift-y', `${(y * 6).toFixed(2)}px`);
+        }, { passive: true });
+        interactionSurface.addEventListener('pointerleave', () => resetReactiveCluster(cluster), { passive: true });
+      } else {
+        cluster.style.setProperty('--cluster-visible', '1');
+      }
+    });
+    updateReactiveClusterScroll();
   }
 
   // ========== Interactive 3D Background ==========
@@ -299,6 +315,7 @@
 
   window.addEventListener('scroll', () => {
     scrollY = window.scrollY;
+    updateReactiveClusterScroll();
   }, { passive: true });
 
   // Touch support
@@ -315,6 +332,7 @@
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
     updateHeroAccentLayout();
+    updateReactiveClusterScroll();
   }, { passive: true });
 
   // Animation
