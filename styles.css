@@ -961,106 +961,114 @@ main { position: relative; z-index: 1; }
 
 /* Variant-specific wireframe layouts so each page gets a distinct moving accent. */
 .cluster-portfolio .wire-glow {
-  inset: 12% 8% 10% 10%;
+  inset: 8% 8% 10% 8%;
   background:
-    radial-gradient(circle at 28% 36%, rgba(130,230,223,.17), transparent 32%),
-    radial-gradient(circle at 72% 68%, rgba(255,104,71,.12), transparent 30%),
-    radial-gradient(circle at 76% 22%, rgba(155,116,255,.16), transparent 24%);
+    radial-gradient(circle at 24% 34%, rgba(130,230,223,.18), transparent 32%),
+    radial-gradient(circle at 66% 28%, rgba(155,116,255,.15), transparent 24%),
+    radial-gradient(circle at 72% 74%, rgba(255,104,71,.12), transparent 28%);
 }
 .cluster-portfolio .wire-orbit {
-  left: 53%;
-  top: 58%;
-  width: min(80%, 390px);
-  height: min(24%, 112px);
-  transform: translate(-50%, -50%) rotate(-11deg) translateZ(24px);
+  left: 49%;
+  top: 56%;
+  width: min(84%, 412px);
+  height: min(26%, 126px);
+  transform: translate(-50%, -50%) rotate(12deg) translateZ(24px);
 }
 .cluster-portfolio .wire-shape-main {
-  width: 154px;
-  height: 154px;
-  left: 36%;
-  top: 34%;
-  transform: translate(-50%, -50%) rotate(-6deg) translateZ(26px);
+  color: rgba(130,230,223,.86);
+  width: 196px;
+  height: 118px;
+  left: 38%;
+  top: 45%;
+  transform: translate(-50%, -50%) rotate(-7deg) translateZ(28px);
 }
 .cluster-portfolio .wire-shape-left {
+  color: rgba(155,116,255,.82);
   width: 96px;
   height: 96px;
-  left: 11%;
-  top: 42%;
-  transform: rotate(10deg) translateZ(14px);
+  left: 12%;
+  top: 36%;
+  transform: rotate(11deg) translateZ(16px);
 }
 .cluster-portfolio .wire-shape-top {
-  width: 86px;
-  height: 86px;
+  color: rgba(130,230,223,.76);
+  width: 92px;
+  height: 132px;
   right: 14%;
-  top: 28%;
-  transform: rotate(8deg) translateZ(16px);
+  top: 25%;
+  transform: rotate(7deg) translateZ(18px);
 }
 .cluster-portfolio .wire-shape-bottom {
-  width: 92px;
-  height: 92px;
-  right: 22%;
-  bottom: 14%;
-  transform: rotate(-7deg) translateZ(18px);
+  color: rgba(255,104,71,.84);
+  width: 112px;
+  height: 112px;
+  right: 20%;
+  bottom: 10%;
+  transform: rotate(13deg) translateZ(20px);
 }
-.cluster-portfolio .wire-node-a { left: 43%; top: 52%; width: 16px; height: 16px; }
-.cluster-portfolio .wire-node-b { right: 8%; top: 16%; width: 20px; height: 20px; border-radius: 8px; }
-.cluster-portfolio .wire-node-c { right: 16%; bottom: 8%; width: 14px; height: 14px; }
-.cluster-portfolio:hover .wire-shape-main { transform: translate(-50%, -50%) rotate(-3deg) translate3d(0,-8px,36px); }
-.cluster-portfolio:hover .wire-shape-left { transform: rotate(13deg) translate3d(-2px,-5px,22px); }
-.cluster-portfolio:hover .wire-shape-top { transform: rotate(12deg) translate3d(0,-5px,20px); }
-.cluster-portfolio:hover .wire-shape-bottom { transform: rotate(-4deg) translate3d(6px,-8px,24px); }
-.cluster-portfolio:hover .wire-orbit { transform: translate(-50%, -50%) rotate(-4deg) translateZ(36px) scale(1.025); }
+.cluster-portfolio .wire-node-a { left: 47%; top: 52%; width: 18px; height: 18px; }
+.cluster-portfolio .wire-node-b { right: 8%; top: 16%; width: 18px; height: 18px; border-radius: 8px; }
+.cluster-portfolio .wire-node-c { right: 18%; bottom: 7%; width: 14px; height: 14px; }
+.cluster-portfolio:hover .wire-shape-main { transform: translate(-50%, -50%) rotate(-4deg) translate3d(0,-8px,36px); }
+.cluster-portfolio:hover .wire-shape-left { transform: rotate(15deg) translate3d(-1px,-6px,22px); }
+.cluster-portfolio:hover .wire-shape-top { transform: rotate(10deg) translate3d(1px,-6px,22px); }
+.cluster-portfolio:hover .wire-shape-bottom { transform: rotate(16deg) translate3d(6px,-8px,24px); }
+.cluster-portfolio:hover .wire-orbit { transform: translate(-50%, -50%) rotate(18deg) translateZ(36px) scale(1.03); }
 
 .cluster-why .wire-glow {
-  inset: 10% 10% 12% 12%;
+  inset: 8% 10% 14% 10%;
   background:
-    radial-gradient(circle at 38% 34%, rgba(130,230,223,.16), transparent 30%),
-    radial-gradient(circle at 68% 60%, rgba(255,104,71,.11), transparent 26%),
-    radial-gradient(circle at 22% 56%, rgba(155,116,255,.14), transparent 26%);
+    radial-gradient(circle at 30% 32%, rgba(130,230,223,.15), transparent 30%),
+    radial-gradient(circle at 56% 28%, rgba(155,116,255,.13), transparent 22%),
+    radial-gradient(circle at 72% 70%, rgba(255,104,71,.13), transparent 28%);
 }
 .cluster-why .wire-orbit {
-  left: 48%;
-  top: 63%;
-  width: min(78%, 360px);
-  height: min(28%, 130px);
-  transform: translate(-50%, -50%) rotate(-9deg) translateZ(24px);
+  left: 51%;
+  top: 58%;
+  width: min(86%, 408px);
+  height: min(22%, 104px);
+  transform: translate(-50%, -50%) rotate(-18deg) translateZ(24px);
 }
 .cluster-why .wire-shape-main {
-  width: 170px;
-  height: 170px;
-  left: 34%;
-  top: 32%;
-  transform: translate(-50%, -50%) rotate(-2deg) translateZ(28px);
+  color: rgba(130,230,223,.86);
+  width: 168px;
+  height: 168px;
+  left: 42%;
+  top: 38%;
+  transform: translate(-50%, -50%) rotate(6deg) translateZ(30px);
 }
 .cluster-why .wire-shape-left {
-  width: 104px;
-  height: 104px;
-  left: 12%;
-  top: 46%;
-  transform: rotate(9deg) translateZ(16px);
+  color: rgba(155,116,255,.82);
+  width: 90px;
+  height: 136px;
+  left: 13%;
+  top: 42%;
+  transform: rotate(-8deg) translateZ(16px);
 }
 .cluster-why .wire-shape-top {
-  width: 78px;
-  height: 78px;
-  right: 16%;
+  color: rgba(130,230,223,.74);
+  width: 84px;
+  height: 84px;
+  right: 15%;
   top: 30%;
-  transform: rotate(7deg) translateZ(14px);
+  transform: rotate(8deg) translateZ(16px);
 }
 .cluster-why .wire-shape-bottom {
-  width: 108px;
-  height: 108px;
+  color: rgba(255,104,71,.84);
+  width: 104px;
+  height: 104px;
   right: 24%;
-  bottom: 10%;
-  transform: rotate(-6deg) translateZ(18px);
+  bottom: 13%;
+  transform: rotate(-11deg) translateZ(20px);
 }
-.cluster-why .wire-node-a { left: 45%; top: 53%; width: 18px; height: 18px; }
-.cluster-why .wire-node-b { right: 10%; top: 18%; width: 16px; height: 16px; border-radius: 6px; }
-.cluster-why .wire-node-c { right: 25%; bottom: 10%; width: 15px; height: 15px; }
-.cluster-why:hover .wire-shape-main { transform: translate(-50%, -50%) rotate(0deg) translate3d(0,-6px,34px); }
-.cluster-why:hover .wire-shape-left { transform: rotate(13deg) translate3d(-2px,-4px,22px); }
-.cluster-why:hover .wire-shape-top { transform: rotate(11deg) translate3d(2px,-5px,18px); }
-.cluster-why:hover .wire-shape-bottom { transform: rotate(-3deg) translate3d(6px,-6px,22px); }
-.cluster-why:hover .wire-orbit { transform: translate(-50%, -50%) rotate(-3deg) translateZ(34px) scale(1.02); }
+.cluster-why .wire-node-a { left: 43%; top: 55%; width: 18px; height: 18px; }
+.cluster-why .wire-node-b { right: 9%; top: 18%; width: 16px; height: 16px; border-radius: 7px; }
+.cluster-why .wire-node-c { right: 17%; bottom: 9%; width: 15px; height: 15px; }
+.cluster-why:hover .wire-shape-main { transform: translate(-50%, -50%) rotate(8deg) translate3d(0,-7px,36px); }
+.cluster-why:hover .wire-shape-left { transform: rotate(-4deg) translate3d(-2px,-5px,22px); }
+.cluster-why:hover .wire-shape-top { transform: rotate(12deg) translate3d(2px,-5px,18px); }
+.cluster-why:hover .wire-shape-bottom { transform: rotate(-8deg) translate3d(6px,-7px,22px); }
+.cluster-why:hover .wire-orbit { transform: translate(-50%, -50%) rotate(-11deg) translateZ(34px) scale(1.025); }
 
 /* Hover glow parity on Why it matters cards. */
 .expanded-step,
