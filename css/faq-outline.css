@@ -1,0 +1,15 @@
+/* FAQ tiles — same aqua outline as other cards, on hover and when open.
+   Add after styles.css: <link href="css/faq-outline.css" rel="stylesheet"/> */
+
+.faq-list details {
+  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+.faq-list details:hover,
+.faq-list details:focus-within,
+.faq-list details[open] {
+  border-color: rgba(130,230,223,.42);
+  box-shadow:
+    0 18px 46px rgba(0,0,0,.22),
+    0 0 0 1px rgba(130,230,223,.14),
+    0 0 28px rgba(130,230,223,.08);
+}
