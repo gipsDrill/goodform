@@ -119,50 +119,133 @@
     });
   }
 
-  // Reactive accent graphics for the story section and portfolio header.
+  // Each wireframe accent has its own motion language while preserving the same visual design.
   const reactiveClusters = Array.from(document.querySelectorAll('[data-reactive-cluster]'));
   const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  const lerp = (from, to, amount) => from + (to - from) * amount;
 
-  const resetReactiveCluster = (cluster) => {
-    cluster.style.setProperty('--cluster-ry', '0deg');
-    cluster.style.setProperty('--cluster-rx', '0deg');
-    cluster.style.setProperty('--cluster-shift-x', '0px');
-    cluster.style.setProperty('--cluster-shift-y', '0px');
-  };
+  const clusterStates = reactiveClusters.map((cluster) => ({
+    cluster,
+    variant: cluster.dataset.clusterVariant || 'story',
+    pointerX: 0,
+    pointerY: 0,
+    targetPointerX: 0,
+    targetPointerY: 0,
+    scrollX: 0,
+    scrollY: 0,
+    rotateZ: 0,
+    scale: 1,
+    opacity: 1,
+    orbitTurn: 0
+  }));
 
-  const updateReactiveClusterScroll = () => {
-    if (!reactiveClusters.length) return;
-    const vh = window.innerHeight || 1;
-    reactiveClusters.forEach((cluster) => {
-      const rect = cluster.getBoundingClientRect();
+  const updateClusterScrollState = () => {
+    if (!clusterStates.length) return;
+    const viewportHeight = window.innerHeight || 1;
+    const focusLine = viewportHeight * 0.54;
+
+    clusterStates.forEach((state) => {
+      const rect = state.cluster.getBoundingClientRect();
       const midpoint = rect.top + rect.height / 2;
-      const distance = Math.abs(midpoint - vh * 0.55);
-      const visibility = Math.max(0, Math.min(1, 1 - distance / (vh * 0.92)));
-      cluster.style.setProperty('--cluster-visible', visibility.toFixed(3));
-      cluster.style.setProperty('--cluster-rise', `${((1 - visibility) * 26).toFixed(2)}px`);
-    });
-  };
+      const signedDistance = clamp((midpoint - focusLine) / (viewportHeight * 0.82), -1.15, 1.15);
+      const proximity = clamp(1 - Math.abs(signedDistance), 0, 1);
 
-  if (reactiveClusters.length) {
-    reactiveClusters.forEach((cluster) => {
-      if (!reduceMotion) {
-        const interactionSurface = cluster.closest('section') || cluster;
-        interactionSurface.addEventListener('pointermove', (event) => {
-          if (event.pointerType === 'touch') return;
-          const rect = cluster.getBoundingClientRect();
-          const x = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width) * 2 - 1));
-          const y = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height) * 2 - 1));
-          cluster.style.setProperty('--cluster-ry', `${(x * 9).toFixed(2)}deg`);
-          cluster.style.setProperty('--cluster-rx', `${(y * -7).toFixed(2)}deg`);
-          cluster.style.setProperty('--cluster-shift-x', `${(x * 8).toFixed(2)}px`);
-          cluster.style.setProperty('--cluster-shift-y', `${(y * 6).toFixed(2)}px`);
-        }, { passive: true });
-        interactionSurface.addEventListener('pointerleave', () => resetReactiveCluster(cluster), { passive: true });
+      if (state.variant === 'why') {
+        // Sideways arrival, counter-rotation and a long, soft fade.
+        state.opacity = 0.08 + Math.pow(proximity, 0.68) * 0.92;
+        state.scrollX = signedDistance * 46;
+        state.scrollY = signedDistance * -9;
+        state.rotateZ = signedDistance * -8.5;
+        state.scale = 0.90 + proximity * 0.10;
+        state.orbitTurn = signedDistance * -24;
+      } else if (state.variant === 'portfolio') {
+        // A deeper zoom/pivot movement with a sharper cinematic fade.
+        state.opacity = 0.04 + Math.pow(proximity, 1.55) * 0.96;
+        state.scrollX = signedDistance * -12;
+        state.scrollY = signedDistance * 48;
+        state.rotateZ = signedDistance * 11;
+        state.scale = 1.04 - Math.abs(signedDistance) * 0.11;
+        state.orbitTurn = signedDistance * 36;
       } else {
-        cluster.style.setProperty('--cluster-visible', '1');
+        // Gentle vertical drift and restrained rotation for the homepage story accent.
+        state.opacity = 0.16 + Math.pow(proximity, 0.95) * 0.84;
+        state.scrollX = signedDistance * 5;
+        state.scrollY = signedDistance * 29;
+        state.rotateZ = signedDistance * 4.5;
+        state.scale = 0.94 + proximity * 0.06;
+        state.orbitTurn = signedDistance * 10;
       }
     });
-    updateReactiveClusterScroll();
+  };
+
+  const renderClusterStates = () => {
+    clusterStates.forEach((state) => {
+      state.pointerX = lerp(state.pointerX, state.targetPointerX, 0.075);
+      state.pointerY = lerp(state.pointerY, state.targetPointerY, 0.075);
+
+      let pointerShiftX = 0;
+      let pointerShiftY = 0;
+      let rotateX = 0;
+      let rotateY = 0;
+
+      if (state.variant === 'why') {
+        pointerShiftX = state.pointerX * -13;
+        pointerShiftY = state.pointerY * 5;
+        rotateX = state.pointerY * 5;
+        rotateY = state.pointerX * -12;
+      } else if (state.variant === 'portfolio') {
+        pointerShiftX = state.pointerX * 7;
+        pointerShiftY = state.pointerY * -11;
+        rotateX = state.pointerY * -10;
+        rotateY = state.pointerX * 7;
+      } else {
+        pointerShiftX = state.pointerX * 10;
+        pointerShiftY = state.pointerY * 6;
+        rotateX = state.pointerY * -6;
+        rotateY = state.pointerX * 10;
+      }
+
+      const cluster = state.cluster;
+      cluster.style.setProperty('--cluster-pointer-x', `${pointerShiftX.toFixed(2)}px`);
+      cluster.style.setProperty('--cluster-pointer-y', `${pointerShiftY.toFixed(2)}px`);
+      cluster.style.setProperty('--cluster-scroll-x', `${state.scrollX.toFixed(2)}px`);
+      cluster.style.setProperty('--cluster-scroll-y', `${state.scrollY.toFixed(2)}px`);
+      cluster.style.setProperty('--cluster-rx', `${rotateX.toFixed(2)}deg`);
+      cluster.style.setProperty('--cluster-ry', `${rotateY.toFixed(2)}deg`);
+      cluster.style.setProperty('--cluster-rz', `${state.rotateZ.toFixed(2)}deg`);
+      cluster.style.setProperty('--cluster-scale', state.scale.toFixed(3));
+      cluster.style.setProperty('--cluster-opacity', state.opacity.toFixed(3));
+      cluster.style.setProperty('--cluster-orbit-turn', `${state.orbitTurn.toFixed(2)}deg`);
+    });
+
+    if (!reduceMotion && clusterStates.length) requestAnimationFrame(renderClusterStates);
+  };
+
+  if (clusterStates.length) {
+    clusterStates.forEach((state) => {
+      const interactionSurface = state.cluster.closest('section') || state.cluster;
+
+      if (!reduceMotion) {
+        interactionSurface.addEventListener('pointermove', (event) => {
+          if (event.pointerType === 'touch') return;
+          const rect = state.cluster.getBoundingClientRect();
+          state.targetPointerX = clamp(((event.clientX - rect.left) / rect.width) * 2 - 1, -1, 1);
+          state.targetPointerY = clamp(((event.clientY - rect.top) / rect.height) * 2 - 1, -1, 1);
+        }, { passive: true });
+
+        interactionSurface.addEventListener('pointerleave', () => {
+          state.targetPointerX = 0;
+          state.targetPointerY = 0;
+        }, { passive: true });
+      } else {
+        state.opacity = 1;
+        state.scale = 1;
+      }
+    });
+
+    updateClusterScrollState();
+    renderClusterStates();
   }
 
   // ========== Interactive 3D Background ==========
@@ -315,7 +398,7 @@
 
   window.addEventListener('scroll', () => {
     scrollY = window.scrollY;
-    updateReactiveClusterScroll();
+    updateClusterScrollState();
   }, { passive: true });
 
   // Touch support
@@ -332,7 +415,7 @@
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
     updateHeroAccentLayout();
-    updateReactiveClusterScroll();
+    updateClusterScrollState();
   }, { passive: true });
 
   // Animation

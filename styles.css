@@ -956,3 +956,63 @@ main { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) {
   .wire-accent .wire-node { animation: none; }
 }
+
+
+/* FINAL interaction pass: each wireframe accent moves and fades independently. */
+.wire-accent.reactive-cluster {
+  --cluster-pointer-x: 0px;
+  --cluster-pointer-y: 0px;
+  --cluster-scroll-x: 0px;
+  --cluster-scroll-y: 0px;
+  --cluster-rx: 0deg;
+  --cluster-ry: 0deg;
+  --cluster-rz: 0deg;
+  --cluster-scale: 1;
+  --cluster-opacity: 1;
+  --cluster-orbit-turn: 0deg;
+  opacity: var(--cluster-opacity);
+  transform:
+    translate3d(
+      calc(var(--cluster-pointer-x) + var(--cluster-scroll-x)),
+      calc(var(--cluster-pointer-y) + var(--cluster-scroll-y)),
+      0
+    )
+    rotateX(var(--cluster-rx))
+    rotateY(var(--cluster-ry))
+    rotateZ(var(--cluster-rz))
+    scale(var(--cluster-scale));
+  will-change: transform, opacity;
+}
+.wire-accent .wire-orbit {
+  transform: translate(-50%, -50%) rotate(calc(-17deg + var(--cluster-orbit-turn))) translateZ(24px);
+  will-change: transform;
+}
+.wire-accent:hover .wire-orbit {
+  transform: translate(-50%, -50%) rotate(calc(-10deg + var(--cluster-orbit-turn))) translateZ(34px) scale(1.02);
+}
+.cluster-story .wire-node { animation-duration: 6.8s; }
+.cluster-why .wire-node { animation-direction: alternate-reverse; animation-duration: 4.6s; }
+.cluster-why .wire-node-b { animation-delay: -3.4s; }
+.cluster-portfolio .wire-node { animation-duration: 3.9s; }
+.cluster-portfolio .wire-node-a { animation-direction: alternate-reverse; }
+.cluster-portfolio .wire-node-c { animation-delay: -1.2s; }
+
+/* Match the homepage information-card hover treatment on What you get and How it works. */
+.package-page :is(.subhero-card, .detail-card, .short-list-card, .detail-panel),
+.process-page :is(.process-map div, .expanded-step, .process-note-grid article) {
+  transition: border-color .25s ease, transform .25s ease;
+}
+.package-page :is(.subhero-card, .detail-card, .short-list-card, .detail-panel):hover,
+.package-page :is(.subhero-card, .detail-card, .short-list-card, .detail-panel):focus-within,
+.process-page :is(.process-map div, .expanded-step, .process-note-grid article):hover,
+.process-page :is(.process-map div, .expanded-step, .process-note-grid article):focus-within {
+  border-color: rgba(130,230,223,0.4);
+  transform: translateY(-4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wire-accent.reactive-cluster {
+    opacity: 1;
+    transform: none;
+  }
+}
