@@ -151,7 +151,7 @@
       const signedDistance = clamp((midpoint - focusLine) / (viewportHeight * 0.82), -1.15, 1.15);
       const proximity = clamp(1 - Math.abs(signedDistance), 0, 1);
 
-      if (state.variant === 'why') {
+      if (state.variant === 'why-orbits') {
         // Sideways arrival, counter-rotation and a long, soft fade.
         state.opacity = 0.08 + Math.pow(proximity, 0.68) * 0.92;
         state.scrollX = signedDistance * 46;
@@ -159,7 +159,7 @@
         state.rotateZ = signedDistance * -8.5;
         state.scale = 0.90 + proximity * 0.10;
         state.orbitTurn = signedDistance * -24;
-      } else if (state.variant === 'portfolio') {
+      } else if (state.variant === 'portfolio-layers') {
         // A deeper zoom/pivot movement with a sharper cinematic fade.
         state.opacity = 0.04 + Math.pow(proximity, 1.55) * 0.96;
         state.scrollX = signedDistance * -12;
@@ -189,12 +189,12 @@
       let rotateX = 0;
       let rotateY = 0;
 
-      if (state.variant === 'why') {
+      if (state.variant === 'why-orbits') {
         pointerShiftX = state.pointerX * -13;
         pointerShiftY = state.pointerY * 5;
         rotateX = state.pointerY * 5;
         rotateY = state.pointerX * -12;
-      } else if (state.variant === 'portfolio') {
+      } else if (state.variant === 'portfolio-layers') {
         pointerShiftX = state.pointerX * 7;
         pointerShiftY = state.pointerY * -11;
         rotateX = state.pointerY * -10;
