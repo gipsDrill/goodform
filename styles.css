@@ -1382,3 +1382,84 @@ main { position: relative; z-index: 1; }
 @media (max-width: 900px) {
   .cluster-why-orbits, .cluster-portfolio-layers { display: none; }
 }
+
+
+/* 2026-08-20 v5: requested motion refinements.
+   - Why it matters: orbital cluster gets continuous rotational motion.
+   - Our work: layered grid cluster breathes with near/far layer depth motion. */
+.wire-accent.reactive-cluster {
+  --cluster-auto-turn: 0deg;
+  --cluster-layer-pulse: 0;
+}
+
+.cluster-why-orbits .orbital-ellipse-a {
+  transform: translate(-50%, -50%) rotate(calc(11deg + var(--cluster-orbit-turn) + var(--cluster-auto-turn))) translateZ(18px);
+}
+.cluster-why-orbits .orbital-ellipse-b {
+  transform: translate(-50%, -50%) rotate(calc(-18deg + (var(--cluster-orbit-turn) * 0.55) - (var(--cluster-auto-turn) * 0.82))) translateZ(14px);
+}
+.cluster-why-orbits .orbital-ellipse-c {
+  transform: translate(-50%, -50%) rotate(calc(-2deg + (var(--cluster-orbit-turn) * -0.35) + (var(--cluster-auto-turn) * 0.48))) translateZ(10px);
+}
+.cluster-why-orbits .orbital-core {
+  transform: translate(-50%, -50%) rotate(calc(18deg + (var(--cluster-auto-turn) * 0.58))) translateZ(36px);
+}
+.cluster-why-orbits .satellite-a {
+  transform: translate3d(0, calc(-3px + (var(--cluster-layer-pulse) * 2px)), 22px);
+}
+.cluster-why-orbits .satellite-b {
+  transform: translate3d(0, calc(2px + (var(--cluster-layer-pulse) * -2px)), 24px);
+}
+.cluster-why-orbits .satellite-c {
+  transform: translate3d(0, calc(-1px + (var(--cluster-layer-pulse) * 1.2px)), 14px);
+}
+.cluster-why-orbits .orbital-node-center {
+  transform: translateZ(calc(46px + (var(--cluster-layer-pulse) * 5px)));
+}
+.cluster-why-orbits .orbital-node-a {
+  transform: translateZ(calc(14px + (var(--cluster-layer-pulse) * 2px)));
+}
+.cluster-why-orbits .orbital-node-b {
+  transform: translateZ(calc(12px + (var(--cluster-layer-pulse) * -2px)));
+}
+.cluster-why-orbits .orbital-node-c {
+  transform: translateZ(calc(16px + (var(--cluster-layer-pulse) * 3px)));
+}
+
+.cluster-portfolio-layers .stack-layer-top {
+  transform: translateX(-50%) perspective(700px) rotateX(72deg) translateZ(calc(34px + (var(--cluster-layer-pulse) * 20px)));
+}
+.cluster-portfolio-layers .stack-layer-mid {
+  transform: translateX(-50%) perspective(700px) rotateX(72deg) translateZ(calc(16px + (var(--cluster-layer-pulse) * 8px)));
+}
+.cluster-portfolio-layers .stack-layer-bottom {
+  transform: translateX(-50%) perspective(700px) rotateX(72deg) translateZ(calc(0px + (var(--cluster-layer-pulse) * -14px)));
+}
+.cluster-portfolio-layers .stack-post {
+  transform: translateZ(calc(18px + (var(--cluster-layer-pulse) * 8px)));
+  opacity: .55;
+}
+.cluster-portfolio-layers .stack-cube {
+  transform: translate(-50%, -50%) translateZ(calc(40px + (var(--cluster-layer-pulse) * 18px))) rotate(calc(12deg + (var(--cluster-layer-pulse) * 5deg)));
+}
+.cluster-portfolio-layers .node-a,
+.cluster-portfolio-layers .node-b,
+.cluster-portfolio-layers .node-c,
+.cluster-portfolio-layers .node-d {
+  transform: translateY(calc(var(--cluster-layer-pulse) * -6px));
+}
+.cluster-portfolio-layers:hover .stack-layer-top {
+  transform: translateX(-50%) perspective(700px) rotateX(72deg) translate3d(0,-6px,calc(42px + (var(--cluster-layer-pulse) * 22px)));
+}
+.cluster-portfolio-layers:hover .stack-layer-mid {
+  transform: translateX(-50%) perspective(700px) rotateX(72deg) translate3d(0,-3px,calc(22px + (var(--cluster-layer-pulse) * 10px)));
+}
+.cluster-portfolio-layers:hover .stack-layer-bottom {
+  transform: translateX(-50%) perspective(700px) rotateX(72deg) translate3d(0,2px,calc(4px + (var(--cluster-layer-pulse) * -15px)));
+}
+.cluster-portfolio-layers:hover .stack-cube {
+  transform: translate(-50%, -50%) translate3d(0,-6px,calc(50px + (var(--cluster-layer-pulse) * 20px))) rotate(calc(16deg + (var(--cluster-layer-pulse) * 6deg))) scale(1.02);
+}
+.cluster-portfolio-layers:hover .stack-post {
+  transform: translate3d(0,-4px,calc(24px + (var(--cluster-layer-pulse) * 10px)));
+}

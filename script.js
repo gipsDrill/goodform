@@ -137,7 +137,8 @@
     rotateZ: 0,
     scale: 1,
     opacity: 1,
-    orbitTurn: 0
+    orbitTurn: 0,
+    seed: index * 0.87
   }));
 
   const updateClusterScrollState = () => {
@@ -180,6 +181,7 @@
   };
 
   const renderClusterStates = () => {
+    const time = performance.now() * 0.001;
     clusterStates.forEach((state) => {
       state.pointerX = lerp(state.pointerX, state.targetPointerX, 0.075);
       state.pointerY = lerp(state.pointerY, state.targetPointerY, 0.075);
@@ -207,6 +209,9 @@
       }
 
       const cluster = state.cluster;
+      const cycle = time + state.seed;
+      const autoTurn = state.variant === 'why-orbits' ? ((cycle * 16) + Math.sin(cycle * 0.75) * 6) : 0;
+      const layerPulse = state.variant === 'portfolio-layers' ? Math.sin(cycle * 1.15) : 0;
       cluster.style.setProperty('--cluster-pointer-x', `${pointerShiftX.toFixed(2)}px`);
       cluster.style.setProperty('--cluster-pointer-y', `${pointerShiftY.toFixed(2)}px`);
       cluster.style.setProperty('--cluster-scroll-x', `${state.scrollX.toFixed(2)}px`);
@@ -217,6 +222,8 @@
       cluster.style.setProperty('--cluster-scale', state.scale.toFixed(3));
       cluster.style.setProperty('--cluster-opacity', state.opacity.toFixed(3));
       cluster.style.setProperty('--cluster-orbit-turn', `${state.orbitTurn.toFixed(2)}deg`);
+      cluster.style.setProperty('--cluster-auto-turn', `${autoTurn.toFixed(2)}deg`);
+      cluster.style.setProperty('--cluster-layer-pulse', layerPulse.toFixed(3));
     });
 
     if (!reduceMotion && clusterStates.length) requestAnimationFrame(renderClusterStates);
