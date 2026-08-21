@@ -1,7 +1,6 @@
 /**
  * Goodform — Deck stack for the Our work / portfolio hero.
- * Drop-in: requires vendor/three.min.js. Mounts on #decks-canvas.
- * No frame. Three grid plates, poles, cube. Always-on motion + mouse + scroll.
+ * Smaller plates (no edge clip) + breathing layers + ping-pong scan rays.
  */
 (function () {
   if (typeof THREE === "undefined") return;
@@ -17,9 +16,9 @@
   var driveT = 0.35;
 
   var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(38, 1, 0.1, 80);
-  camera.position.set(0, 2.35, 6.4);
-  camera.lookAt(0, 0.15, 0);
+  var camera = new THREE.PerspectiveCamera(32, 1, 0.1, 80);
+  camera.position.set(0, 2.95, 8.85);
+  camera.lookAt(0, 0.06, 0);
 
   var renderer = new THREE.WebGLRenderer({
     canvas: canvas,
@@ -53,10 +52,12 @@
     return g;
   }
 
+  var PW = 2.22;
+  var PD = 1.18;
   var PLATES = [
-    { y: 1.18, color: CYAN, fill: 0x133a38, w: 4.35, d: 2.35, nx: 10, nz: 6 },
-    { y: 0.08, color: PURPLE, fill: 0x1a1438, w: 4.35, d: 2.35, nx: 10, nz: 6 },
-    { y: -1.02, color: EMBER, fill: 0x3a1812, w: 4.35, d: 2.35, nx: 10, nz: 6 },
+    { y: 0.64, color: CYAN, fill: 0x133a38 },
+    { y: 0.03, color: PURPLE, fill: 0x1a1438 },
+    { y: -0.58, color: EMBER, fill: 0x3a1812 },
   ];
 
   var root = new THREE.Group();
@@ -66,7 +67,7 @@
   PLATES.forEach(function (spec, idx) {
     var g = new THREE.Group();
     var lines = new THREE.LineSegments(
-      gridGeo(spec.w, spec.d, spec.nx, spec.nz),
+      gridGeo(PW, PD, 8, 5),
       new THREE.LineBasicMaterial({
         color: spec.color,
         transparent: true,
@@ -79,7 +80,7 @@
     glow.material.opacity = 0.22;
     glow.scale.set(1.01, 1, 1.01);
     var fill = new THREE.Mesh(
-      new THREE.PlaneGeometry(spec.w, spec.d),
+      new THREE.PlaneGeometry(PW, PD),
       new THREE.MeshBasicMaterial({
         color: spec.fill,
         transparent: true,
@@ -93,10 +94,10 @@
     fill.position.y = -0.01;
     var rim = new THREE.LineLoop(
       new THREE.BufferGeometry().setFromPoints([
-        new THREE.Vector3(-spec.w / 2, 0, -spec.d / 2),
-        new THREE.Vector3(spec.w / 2, 0, -spec.d / 2),
-        new THREE.Vector3(spec.w / 2, 0, spec.d / 2),
-        new THREE.Vector3(-spec.w / 2, 0, spec.d / 2),
+        new THREE.Vector3(-PW / 2, 0, -PD / 2),
+        new THREE.Vector3(PW / 2, 0, -PD / 2),
+        new THREE.Vector3(PW / 2, 0, PD / 2),
+        new THREE.Vector3(-PW / 2, 0, PD / 2),
       ]),
       new THREE.LineBasicMaterial({
         color: spec.color,
@@ -105,45 +106,55 @@
         toneMapped: false,
       })
     );
-    var scan = new THREE.Mesh(
-      new THREE.BoxGeometry(0.045, 0.02, spec.d * 0.96),
+    var scanX = new THREE.Mesh(
+      new THREE.BoxGeometry(0.05, 0.022, PD * 0.96),
       new THREE.MeshBasicMaterial({
         color: spec.color,
         transparent: true,
-        opacity: 0.7,
+        opacity: 0.78,
         toneMapped: false,
       })
     );
-    scan.position.y = 0.02;
-    g.add(fill, lines, glow, rim, scan);
+    scanX.position.y = 0.02;
+    var scanZ = new THREE.Mesh(
+      new THREE.BoxGeometry(PW * 0.96, 0.018, 0.04),
+      new THREE.MeshBasicMaterial({
+        color: spec.color,
+        transparent: true,
+        opacity: 0.55,
+        toneMapped: false,
+      })
+    );
+    scanZ.position.y = 0.025;
+    g.add(fill, lines, glow, rim, scanX, scanZ);
     g.position.y = spec.y;
-    g.userData = { spec: spec, idx: idx, scan: scan };
+    g.userData = { spec: spec, idx: idx, scanX: scanX, scanZ: scanZ };
     root.add(g);
     plates.push(g);
   });
 
   var POSTS = [
-    { x: -1.55, z: -0.72 },
-    { x: -0.52, z: -0.88 },
-    { x: 0.62, z: -0.7 },
-    { x: 1.52, z: -0.82 },
+    { x: -0.76, z: -0.36 },
+    { x: -0.26, z: -0.44 },
+    { x: 0.32, z: -0.34 },
+    { x: 0.76, z: -0.4 },
   ];
   var posts = [];
   POSTS.forEach(function (p) {
     var g = new THREE.Group();
-    var h = 2.42;
+    var h = 1.42;
     var pole = new THREE.Mesh(
-      new THREE.BoxGeometry(0.028, h, 0.028),
+      new THREE.BoxGeometry(0.024, h, 0.024),
       new THREE.MeshBasicMaterial({ color: WHITE, transparent: true, opacity: 0.72, toneMapped: false })
     );
-    pole.position.y = h / 2 - 1.08;
+    pole.position.y = h / 2 - 0.64;
     var cap = new THREE.Mesh(
-      new THREE.SphereGeometry(0.07, 12, 12),
+      new THREE.SphereGeometry(0.062, 12, 12),
       new THREE.MeshBasicMaterial({ color: WHITE, transparent: true, opacity: 0.95, toneMapped: false })
     );
-    cap.position.y = h - 1.08;
+    cap.position.y = h - 0.64;
     var halo = new THREE.Mesh(
-      new THREE.SphereGeometry(0.14, 10, 10),
+      new THREE.SphereGeometry(0.12, 10, 10),
       new THREE.MeshBasicMaterial({
         color: CYAN_HOT,
         transparent: true,
@@ -157,31 +168,33 @@
     g.position.set(p.x, 0, p.z);
     g.userData.halo = halo;
     g.userData.cap = cap;
+    g.userData.pole = pole;
     root.add(g);
     posts.push(g);
   });
 
   var cube = new THREE.Group();
-  var cubeBody = new THREE.Mesh(
-    new THREE.BoxGeometry(0.38, 0.38, 0.38),
-    new THREE.MeshBasicMaterial({ color: CYAN, transparent: true, opacity: 0.88, toneMapped: false })
+  cube.add(
+    new THREE.Mesh(
+      new THREE.BoxGeometry(0.32, 0.32, 0.32),
+      new THREE.MeshBasicMaterial({ color: CYAN, transparent: true, opacity: 0.88, toneMapped: false })
+    ),
+    new THREE.Mesh(
+      new THREE.BoxGeometry(0.52, 0.52, 0.52),
+      new THREE.MeshBasicMaterial({
+        color: CYAN_HOT,
+        transparent: true,
+        opacity: 0.16,
+        depthWrite: false,
+        toneMapped: false,
+      })
+    )
   );
-  var cubeGlow = new THREE.Mesh(
-    new THREE.BoxGeometry(0.62, 0.62, 0.62),
-    new THREE.MeshBasicMaterial({
-      color: CYAN_HOT,
-      transparent: true,
-      opacity: 0.16,
-      depthWrite: false,
-      toneMapped: false,
-    })
-  );
-  cube.add(cubeBody, cubeGlow);
   root.add(cube);
 
-  var dustN = 42;
+  var dustN = 36;
   var dust = new THREE.InstancedMesh(
-    new THREE.BoxGeometry(0.04, 0.04, 0.04),
+    new THREE.BoxGeometry(0.035, 0.035, 0.035),
     new THREE.MeshBasicMaterial({ toneMapped: false }),
     dustN
   );
@@ -194,9 +207,9 @@
     var hy = Math.sin(di * 19.3) * 23421.1;
     var hz = Math.sin(di * 7.1) * 9123.4;
     var seed = {
-      x: (hx - Math.floor(hx) - 0.5) * 7.2,
-      y: (hy - Math.floor(hy) - 0.5) * 3.4,
-      z: (hz - Math.floor(hz) - 0.5) * 4.2,
+      x: (hx - Math.floor(hx) - 0.5) * 5.8,
+      y: (hy - Math.floor(hy) - 0.5) * 2.8,
+      z: (hz - Math.floor(hz) - 0.5) * 3.4,
       ph: di * 0.41,
     };
     dummy.position.set(seed.x, seed.y, seed.z);
@@ -210,26 +223,9 @@
   if (dust.instanceColor) dust.instanceColor.needsUpdate = true;
   root.add(dust);
 
-  function smooth(a, b, t) {
-    t = Math.max(0, Math.min(1, t));
-    t = t * t * (3 - 2 * t);
-    return a + (b - a) * t;
-  }
-  function seqY(cycle) {
-    // looping choreography: rest → fan → cube up → cube down → rest
-    if (cycle < 0.22) return smooth(0, 1, cycle / 0.22);
-    if (cycle < 0.42) return 1;
-    if (cycle < 0.62) return smooth(1, 0.15, (cycle - 0.42) / 0.2);
-    if (cycle < 0.82) return smooth(0.15, 0, (cycle - 0.62) / 0.2);
-    return 0;
-  }
-  function seqCube(cycle) {
-    if (cycle < 0.22) return 0;
-    if (cycle < 0.4) return smooth(0, 1, (cycle - 0.22) / 0.18);
-    if (cycle < 0.55) return 1;
-    if (cycle < 0.78) return smooth(1, -0.85, (cycle - 0.55) / 0.23);
-    if (cycle < 0.92) return smooth(-0.85, 0, (cycle - 0.78) / 0.14);
-    return 0;
+  function pingpong(u) {
+    u = ((u % 1) + 1) % 1;
+    return u < 0.5 ? u * 2 : 2 - u * 2;
   }
 
   function resize() {
@@ -249,8 +245,8 @@
       var rect = canvas.getBoundingClientRect();
       var cx = rect.left + rect.width / 2;
       var cy = rect.top + rect.height / 2;
-      target.x = (e.clientX - cx) / Math.max(1, rect.width * 0.5);
-      target.y = -((e.clientY - cy) / Math.max(1, rect.height * 0.5));
+      target.x = Math.max(-0.45, Math.min(0.45, (e.clientX - cx) / Math.max(1, rect.width * 0.5)));
+      target.y = Math.max(-0.45, Math.min(0.45, -((e.clientY - cy) / Math.max(1, rect.height * 0.5))));
       hoverT =
         e.clientX >= rect.left &&
         e.clientX <= rect.right &&
@@ -267,7 +263,7 @@
     var mid = rect.top + rect.height / 2;
     var view = window.innerHeight / 2;
     var dist = (mid - view) / Math.max(1, window.innerHeight);
-    driveT = 0.32 + Math.max(-0.25, Math.min(0.55, -dist * 0.7));
+    driveT = 0.32 + Math.max(-0.2, Math.min(0.4, -dist * 0.55));
   }
   window.addEventListener("scroll", updateDriveFromScroll, { passive: true });
   updateDriveFromScroll();
@@ -281,50 +277,59 @@
     hover += (hoverT - hover) * 0.08;
     drive += (driveT - drive) * 0.06;
 
-    var cycle = ((t * 0.12 * k) % 1 + 1) % 1;
-    var fan = seqY(cycle) * 0.55 + hover * 0.35 + (drive - 0.32) * 0.9;
-    var hop = seqCube(cycle) * 0.95 + hover * 0.18;
+    var breath = Math.sin(t * 0.52 * k);
+    var spread = 0.78 + breath * 0.32 + hover * 0.12 + (drive - 0.32) * 0.22;
 
-    root.rotation.y = Math.sin(t * 0.16 * k) * 0.18 + pointer.x * 0.32;
-    root.rotation.x = 0.18 + Math.sin(t * 0.11 * k) * 0.05 - pointer.y * 0.22;
+    root.rotation.y = Math.sin(t * 0.12 * k) * 0.04 + pointer.x * 0.06;
+    root.rotation.x = 0.32 + Math.sin(t * 0.08 * k) * 0.015 - pointer.y * 0.04;
 
     plates.forEach(function (g) {
       var i = g.userData.idx;
-      var base = g.userData.spec.y;
       var sign = i - 1;
-      g.position.y = base + fan * sign * 0.42 + Math.sin(t * 0.7 * k + i) * 0.04;
-      g.position.x = pointer.x * (0.18 + (2 - i) * 0.07);
-      g.position.z = pointer.y * (0.08 + i * 0.03);
-      g.rotation.z = pointer.x * (0.05 - i * 0.02);
-      g.rotation.y = Math.sin(t * 0.2 * k + i) * 0.03;
-      var scan = g.userData.scan;
-      var u = (t * (0.22 + i * 0.05) * k + i * 0.33) % 1;
-      scan.position.x = -2.05 + u * 4.1;
-      scan.material.opacity = 0.35 + 0.4 * Math.sin(u * Math.PI);
+      g.position.y = g.userData.spec.y * spread + Math.sin(t * 0.7 * k + i) * 0.02;
+      g.position.x = pointer.x * (0.06 + (2 - i) * 0.025);
+      g.position.z = pointer.y * 0.035;
+      g.rotation.z = pointer.x * 0.018;
+      g.rotation.y = Math.sin(t * 0.18 * k + i) * 0.015;
+
+      var sx = g.userData.scanX;
+      var sz = g.userData.scanZ;
+      var ux = pingpong(t * (0.16 + i * 0.045) * k + i * 0.28);
+      var uz = pingpong(t * (0.12 + i * 0.03) * k + 0.42 + i * 0.2);
+      sx.position.x = -PW * 0.46 + ux * PW * 0.92;
+      sx.position.z = Math.sin(t * 0.9 * k + i) * 0.12;
+      sx.scale.x = 1 + Math.sin(t * 2.4 * k + i) * 0.35;
+      sx.material.opacity = 0.38 + 0.42 * Math.sin(ux * Math.PI);
+      sz.position.z = -PD * 0.46 + uz * PD * 0.92;
+      sz.position.x = Math.sin(t * 0.75 * k + i * 1.3) * 0.18;
+      sz.scale.z = 1 + Math.sin(t * 1.8 * k + i) * 0.28;
+      sz.material.opacity = 0.28 + 0.38 * Math.sin(uz * Math.PI);
     });
 
-    cube.position.x = Math.sin(t * 0.55 * k) * 0.62 + pointer.x * 0.7;
-    cube.position.z = Math.cos(t * 0.42 * k) * 0.38 + pointer.y * 0.35;
-    cube.position.y = 0.32 + hop * 0.95 + Math.sin(t * 1.4 * k) * 0.06;
-    cube.rotation.x = t * 0.65 * k;
-    cube.rotation.y = t * 0.85 * k + pointer.x * 0.4;
-    var cs = 1 + hover * 0.12 + Math.sin(t * 2.1 * k) * 0.04;
-    cube.scale.setScalar(cs);
+    var hop = Math.sin(t * 0.52 * k) * 0.42;
+    cube.position.x = Math.sin(t * 0.48 * k) * 0.32 + pointer.x * 0.28;
+    cube.position.z = Math.cos(t * 0.38 * k) * 0.2 + pointer.y * 0.14;
+    cube.position.y = 0.22 + hop * spread + Math.sin(t * 1.3 * k) * 0.04;
+    cube.rotation.x = t * 0.62 * k;
+    cube.rotation.y = t * 0.8 * k + pointer.x * 0.3;
+    cube.scale.setScalar(1 + hover * 0.1 + Math.sin(t * 2.0 * k) * 0.04);
 
+    var poleH = 1.18 + spread * 0.38;
     posts.forEach(function (g, i) {
-      g.rotation.z = pointer.x * 0.06;
-      g.rotation.x = -pointer.y * 0.05;
-      var pulse = 0.85 + Math.sin(t * 2.2 * k + i) * 0.15 + hover * 0.1;
+      g.rotation.z = pointer.x * 0.04;
+      g.rotation.x = -pointer.y * 0.03;
+      g.userData.pole.scale.y = poleH / 1.42;
+      var pulse = 0.85 + Math.sin(t * 2.1 * k + i) * 0.16 + hover * 0.08;
       g.userData.halo.scale.setScalar(pulse);
-      g.userData.cap.scale.setScalar(0.9 + Math.sin(t * 2.2 * k + i) * 0.12);
+      g.userData.cap.scale.setScalar(0.9 + Math.sin(t * 2.1 * k + i) * 0.1);
     });
 
     for (var j = 0; j < dustSeeds.length; j++) {
       var s = dustSeeds[j];
       dummy.position.set(
-        s.x + Math.sin(t * 0.14 * k + s.ph) * 0.32,
-        s.y + Math.cos(t * 0.11 * k + s.ph) * 0.22,
-        s.z + Math.sin(t * 0.09 * k + s.ph) * 0.2
+        s.x + Math.sin(t * 0.14 * k + s.ph) * 0.28,
+        s.y + Math.cos(t * 0.11 * k + s.ph) * 0.18,
+        s.z + Math.sin(t * 0.09 * k + s.ph) * 0.16
       );
       dummy.rotation.set(t * 0.2 + s.ph, t * 0.14, 0);
       dummy.scale.setScalar(0.65 + Math.sin(t * 0.9 + s.ph) * 0.25);
