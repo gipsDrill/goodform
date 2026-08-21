@@ -13,8 +13,8 @@
   var target = { x: 0, y: 0 };
 
   var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(42, 1, 0.1, 80);
-  camera.position.set(0, 0.08, 6.1);
+  var camera = new THREE.PerspectiveCamera(38, 1, 0.1, 80);
+  camera.position.set(0, 0.06, 6.9);
 
   var renderer = new THREE.WebGLRenderer({
     canvas: canvas,
@@ -90,12 +90,12 @@
   }
 
   var CLUSTER = [
-    { x: -1.55, y: -0.18, z: 0.28, size: 1.08, diag: PURPLE, rx: 0.18, ry: 0.12, rz: 0.07 },
-    { x: -0.22, y: 0.52, z: -0.18, size: 1.62, diag: CYAN, rx: 0.1, ry: 0.16, rz: 0.05, nested: true },
-    { x: 1.62, y: 0.52, z: 0.32, size: 0.7, diag: CYAN, rx: 0.22, ry: -0.14, rz: 0.09 },
-    { x: 1.98, y: 0.88, z: -0.22, size: 0.48, diag: CYAN, rx: -0.16, ry: 0.2, rz: 0.08 },
-    { x: 1.12, y: -1.12, z: 0.18, size: 1.02, diag: EMBER, rx: 0.14, ry: -0.18, rz: 0.06 },
-    { x: 2.28, y: 1.32, z: 0.55, size: 0.2, diag: PURPLE, rx: 0.4, ry: 0.35, rz: 0.2, fill: 0.55 },
+    { x: -1.22, y: -0.14, z: 0.22, size: 0.88, diag: PURPLE, rx: 0.18, ry: 0.12, rz: 0.07 },
+    { x: -0.18, y: 0.42, z: -0.14, size: 1.32, diag: CYAN, rx: 0.1, ry: 0.16, rz: 0.05, nested: true },
+    { x: 1.28, y: 0.42, z: 0.26, size: 0.56, diag: CYAN, rx: 0.22, ry: -0.14, rz: 0.09 },
+    { x: 1.56, y: 0.7, z: -0.18, size: 0.38, diag: CYAN, rx: -0.16, ry: 0.2, rz: 0.08 },
+    { x: 0.9, y: -0.9, z: 0.14, size: 0.82, diag: EMBER, rx: 0.14, ry: -0.18, rz: 0.06 },
+    { x: 1.78, y: 1.02, z: 0.44, size: 0.16, diag: PURPLE, rx: 0.4, ry: 0.35, rz: 0.2, fill: 0.55 },
   ];
 
   var root = new THREE.Group();
@@ -120,7 +120,7 @@
     var e = new THREE.EllipseCurve(0, 0, rx, ry, 0, Math.PI * 2, false, 0);
     return e.getPoints(n).map(function (p) { return new THREE.Vector3(p.x, p.y, 0); });
   }
-  var ringPts = ellipsePts(2.55, 1.38, 128);
+  var ringPts = ellipsePts(2.08, 1.12, 128);
   var ring = new THREE.Group();
   ring.rotation.set(0.42, 0.22, 0.1);
   var ringLine = new THREE.Line(
@@ -128,11 +128,11 @@
     new THREE.LineBasicMaterial({ color: WHITE, transparent: true, opacity: 0.85, toneMapped: false })
   );
   var ringGlow = new THREE.Line(
-    new THREE.BufferGeometry().setFromPoints(ellipsePts(2.55, 1.38, 64)),
+    new THREE.BufferGeometry().setFromPoints(ellipsePts(2.08, 1.12, 64)),
     new THREE.LineBasicMaterial({ color: CYAN, transparent: true, opacity: 0.28, toneMapped: false })
   );
   ring.add(ringLine, ringGlow);
-  var sat = wireBox(0.22, CYAN, CYAN, 0.55);
+  var sat = wireBox(0.18, CYAN, CYAN, 0.55);
   ring.add(sat);
   root.add(ring);
 
@@ -205,8 +205,8 @@
     var rect = canvas.getBoundingClientRect();
     var cx = rect.left + rect.width / 2;
     var cy = rect.top + rect.height / 2;
-    target.x = (e.clientX - cx) / Math.max(1, rect.width);
-    target.y = -((e.clientY - cy) / Math.max(1, rect.height));
+    target.x = Math.max(-0.65, Math.min(0.65, (e.clientX - cx) / Math.max(1, rect.width)));
+    target.y = Math.max(-0.65, Math.min(0.65, -((e.clientY - cy) / Math.max(1, rect.height))));
   }, { passive: true });
 
   var clock = new THREE.Clock();
@@ -216,8 +216,8 @@
     pointer.x += (target.x - pointer.x) * 0.06;
     pointer.y += (target.y - pointer.y) * 0.06;
 
-    root.rotation.y = Math.sin(t * 0.08 * k) * 0.1 + pointer.x * 0.22;
-    root.rotation.x = Math.sin(t * 0.06 * k) * 0.05 - pointer.y * 0.14;
+    root.rotation.y = Math.sin(t * 0.08 * k) * 0.07 + pointer.x * 0.12;
+    root.rotation.x = Math.sin(t * 0.06 * k) * 0.035 - pointer.y * 0.08;
 
     cubes.children.forEach(function (child) {
       var spec = child.userData;
