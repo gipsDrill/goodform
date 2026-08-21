@@ -1,4 +1,4 @@
-/* FleetSlate dashboard thumbnail + Milena logo. Add after styles.css. */
+/* Project card visuals. Add after styles.css. */
 
 .fleet-dashboard {
   padding: 0 !important;
@@ -36,3 +36,24 @@
   line-height: 1.35;
   color: var(--text-muted, rgba(245,240,232,.62));
 }
+
+.doc-page {
+  padding: 0 !important;
+  overflow: hidden;
+  background: #0b0b12 url("../assets/docora-preview.jpg") 72% 18% / cover no-repeat !important;
+  color: transparent !important;
+}
+.doc-page b,
+.doc-page i { display: none !important; }
+.doc-tools { z-index: 3; }
+
+.invoice-sheet {
+  padding: 0 !important;
+  overflow: hidden;
+  background: #eef1f6 url("../assets/billora-preview.jpg") 55% 8% / cover no-repeat !important;
+  color: transparent !important;
+}
+.invoice-sheet span,
+.invoice-sheet i,
+.invoice-sheet b { display: none !important; }
+.invoice-chip { z-index: 3; }
