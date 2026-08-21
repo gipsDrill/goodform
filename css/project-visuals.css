@@ -1,0 +1,38 @@
+/* FleetSlate dashboard thumbnail + Milena logo. Add after styles.css. */
+
+.fleet-dashboard {
+  padding: 0 !important;
+  display: block !important;
+  overflow: hidden;
+  background-color: #0b1016;
+  background-image: url("../assets/fleetslate-office-preview.jpg");
+  background-size: cover;
+  background-position: 58% 10%;
+  background-repeat: no-repeat;
+}
+.fleet-dashboard i { display: none !important; }
+.project-browser { z-index: 2; }
+.fleet-phone { z-index: 4; }
+
+.milena-label {
+  padding-top: 16px !important;
+}
+.milena-label::before {
+  content: "";
+  display: block;
+  width: 86px;
+  height: 76px;
+  margin: 0 auto 8px;
+  background: url("../assets/milena-design-logo.png") center / contain no-repeat;
+}
+.milena-label small {
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+.milena-label small::before {
+  content: "EST. 2015 · MANCHESTER";
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  color: var(--text-muted, rgba(245,240,232,.62));
+}

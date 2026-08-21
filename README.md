@@ -1,5 +1,20 @@
-# Goodform
+# Nadpisz w repo GitHub
 
-Affordable websites for small businesses in Tameside, Greater Manchester and across the UK.
+Wgraj / zastąp 1:1 (te same ścieżki):
 
-See `README.txt` for upload and SEO notes.
+```
+assets/fleetslate-office-preview.jpg
+assets/milena-design-logo.png
+css/project-visuals.css
+portfolio.html
+case-study-fleetslate.html
+case-study-milena-design.html
+```
+
+HTML z paczki ma już dopięty `css/project-visuals.css`.
+
+UWAGA: jeśli w `portfolio.html` masz już Decks (canvas Our work),
+NIE nadpisuj całego portfolio.html — wgraj tylko assets/, css/
+i dopisz w <head>:
+
+<link href="css/project-visuals.css" rel="stylesheet"/>
