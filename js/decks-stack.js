@@ -17,7 +17,7 @@
 
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(32, 1, 0.1, 80);
-  camera.position.set(0, 2.95, 8.85);
+  camera.position.set(0, 2.88, 8.55);
   camera.lookAt(0, 0.06, 0);
 
   var renderer = new THREE.WebGLRenderer({
@@ -52,8 +52,8 @@
     return g;
   }
 
-  var PW = 2.22;
-  var PD = 1.18;
+  var PW = 2.48;
+  var PD = 1.32;
   var PLATES = [
     { y: 0.64, color: CYAN, fill: 0x133a38 },
     { y: 0.03, color: PURPLE, fill: 0x1a1438 },
@@ -245,8 +245,8 @@
       var rect = canvas.getBoundingClientRect();
       var cx = rect.left + rect.width / 2;
       var cy = rect.top + rect.height / 2;
-      target.x = Math.max(-0.85, Math.min(0.85, (e.clientX - cx) / Math.max(1, rect.width * 0.5)));
-      target.y = Math.max(-0.85, Math.min(0.85, -((e.clientY - cy) / Math.max(1, rect.height * 0.5))));
+      target.x = Math.max(-0.7, Math.min(0.7, (e.clientX - cx) / Math.max(1, rect.width * 0.5)));
+      target.y = Math.max(-0.7, Math.min(0.7, -((e.clientY - cy) / Math.max(1, rect.height * 0.5))));
       hoverT =
         e.clientX >= rect.left &&
         e.clientX <= rect.right &&
@@ -272,55 +272,52 @@
   function tick() {
     var t = clock.getElapsedTime();
     var k = reduce ? 0.28 : 1;
-    pointer.x += (target.x - pointer.x) * 0.16;
-    pointer.y += (target.y - pointer.y) * 0.16;
-    hover += (hoverT - hover) * 0.12;
+    pointer.x += (target.x - pointer.x) * 0.12;
+    pointer.y += (target.y - pointer.y) * 0.12;
+    hover += (hoverT - hover) * 0.1;
     drive += (driveT - drive) * 0.06;
 
-    var breath = Math.sin(t * 0.52 * k);
-    var spread = 0.78 + breath * 0.32 + hover * 0.16 + (drive - 0.32) * 0.22;
+    var breath = Math.sin(t * 0.48 * k);
+    var spread = 0.82 + breath * 0.28 + hover * 0.12 + (drive - 0.32) * 0.2;
+    var slide = Math.sin(t * 0.22 * k);
+    var yaw = Math.sin(t * 0.09 * k) * 0.06;
 
-    root.rotation.y = Math.sin(t * 0.11 * k) * 0.05 + pointer.x * 0.24;
-    root.rotation.x = 0.32 + Math.sin(t * 0.09 * k) * 0.03 - pointer.y * 0.18;
-    root.rotation.z = pointer.x * 0.05 + Math.sin(t * 0.07 * k) * 0.02;
+    root.rotation.y = yaw + pointer.x * 0.2;
+    root.rotation.x = 0.34 + Math.sin(t * 0.07 * k) * 0.02 - pointer.y * 0.12;
+    root.rotation.z = pointer.x * 0.02;
 
     plates.forEach(function (g) {
       var i = g.userData.idx;
-      var depth = (2 - i) * 0.5;
-      var dir = i % 2 ? 1 : -1;
-      g.position.y = g.userData.spec.y * spread + Math.sin(t * (0.55 + i * 0.13) * k + i) * 0.045;
-      g.position.x =
-        Math.sin(t * (0.27 + i * 0.06) * k + i * 2.1) * 0.07 + pointer.x * (0.14 + depth * 0.12);
-      g.position.z =
-        Math.cos(t * (0.23 + i * 0.07) * k + i * 1.4) * 0.05 + pointer.y * (0.08 + depth * 0.06);
-      g.rotation.x =
-        Math.sin(t * (0.21 + i * 0.08) * k + i) * 0.07 + pointer.y * (0.1 + depth * 0.08);
-      g.rotation.y =
-        t * 0.045 * k * dir + Math.sin(t * (0.19 + i * 0.05) * k + i) * 0.055 + pointer.x * (0.12 + depth * 0.1);
-      g.rotation.z =
-        Math.sin(t * (0.17 + i * 0.09) * k + i * 1.7) * 0.06 + pointer.x * 0.09 * dir;
+      var sign = i - 1;
+      var stagger = (i - 1) * 0.55;
+      g.rotation.set(0, 0, 0);
+      g.position.y = g.userData.spec.y * spread + Math.sin(t * 0.48 * k + i * 0.4) * 0.02;
+      g.position.x = slide * sign * 0.16 + pointer.x * (0.1 + (2 - i) * 0.06);
+      g.position.z = pointer.y * 0.05;
+      g.rotation.y = Math.sin(t * 0.14 * k + stagger) * 0.025;
+      g.rotation.z = pointer.x * 0.02 * sign;
 
       var sx = g.userData.scanX;
       var sz = g.userData.scanZ;
       var ux = pingpong(t * (0.16 + i * 0.045) * k + i * 0.28);
       var uz = pingpong(t * (0.12 + i * 0.03) * k + 0.42 + i * 0.2);
-      sx.position.x = (-PW * 0.46 + ux * PW * 0.92) * 0.55 + pointer.x * PW * 0.38;
-      sx.position.z = Math.sin(t * 0.9 * k + i) * 0.1 + pointer.y * 0.08;
-      sx.scale.x = 1 + Math.sin(t * 2.4 * k + i) * 0.35 + hover * 0.2;
-      sx.material.opacity = 0.38 + 0.42 * Math.sin(ux * Math.PI) + hover * 0.15;
-      sz.position.z = (-PD * 0.46 + uz * PD * 0.92) * 0.55 + pointer.y * PD * 0.32;
-      sz.position.x = Math.sin(t * 0.75 * k + i * 1.3) * 0.14 + pointer.x * 0.16;
-      sz.scale.z = 1 + Math.sin(t * 1.8 * k + i) * 0.28;
-      sz.material.opacity = 0.28 + 0.38 * Math.sin(uz * Math.PI) + hover * 0.12;
+      sx.position.x = -PW * 0.46 + ux * PW * 0.92;
+      sx.position.z = 0;
+      sx.scale.x = 1 + Math.sin(t * 2.2 * k + i) * 0.25 + hover * 0.15;
+      sx.material.opacity = 0.4 + 0.4 * Math.sin(ux * Math.PI);
+      sz.position.z = -PD * 0.46 + uz * PD * 0.92;
+      sz.position.x = 0;
+      sz.scale.z = 1 + Math.sin(t * 1.7 * k + i) * 0.22;
+      sz.material.opacity = 0.3 + 0.35 * Math.sin(uz * Math.PI);
     });
 
-    var hop = Math.sin(t * 0.52 * k) * 0.42;
-    cube.position.x = Math.sin(t * 0.48 * k) * 0.2 + pointer.x * 0.58;
-    cube.position.z = Math.cos(t * 0.38 * k) * 0.12 + pointer.y * 0.38;
-    cube.position.y = 0.22 + hop * spread + Math.sin(t * 1.3 * k) * 0.04 + hover * 0.08;
-    cube.rotation.x = t * 0.62 * k + pointer.y * 0.4;
-    cube.rotation.y = t * 0.8 * k + pointer.x * 0.7;
-    cube.scale.setScalar(1 + hover * 0.16 + Math.sin(t * 2.0 * k) * 0.04);
+    var hop = Math.sin(t * 0.48 * k) * 0.28;
+    cube.position.x = Math.sin(t * 0.35 * k) * 0.22 + pointer.x * 0.42;
+    cube.position.z = Math.cos(t * 0.28 * k) * 0.12 + pointer.y * 0.22;
+    cube.position.y = 0.2 + hop * spread + hover * 0.06;
+    cube.rotation.x = t * 0.55 * k;
+    cube.rotation.y = t * 0.7 * k + pointer.x * 0.35;
+    cube.scale.setScalar(1 + hover * 0.12 + Math.sin(t * 1.8 * k) * 0.03);
 
     var poleH = 1.18 + spread * 0.38;
     posts.forEach(function (g, i) {
