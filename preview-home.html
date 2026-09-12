@@ -10,21 +10,35 @@
 </script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>PREVIEW — Goodform home + network bg</title>
-<meta content="Web design in Tameside, Stalybridge and Greater Manchester. Clear small-business websites from £399, built to be found on Google." name="description"/>
+<title>PREVIEW — original bg + network</title>
 <meta content="noindex,nofollow" name="robots"/>
 <meta content="#0a0a12" name="theme-color"/>
 <link href="https://goodform.org.uk/preview-home.html" rel="canonical"/>
 <link href="favicon.svg" rel="icon" type="image/svg+xml"/>
 <link href="favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
 <link href="assets/apple-touch-icon.png" rel="apple-touch-icon"/>
-<link href="site.webmanifest" rel="manifest"/>
 <link href="styles.css" rel="stylesheet"/>
 <link href="css/drift-cluster.css" rel="stylesheet"/>
+<style>
+  /* Preview only: keep original Three.js layer, dim it, stack network on top */
+  #bg-canvas {
+    opacity: .52;
+    filter: brightness(.68) saturate(.9);
+  }
+  #bg-canvas-net {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: .88;
+  }
+</style>
 </head>
 <body class="home-page">
+<canvas id="bg-canvas"></canvas>
 <canvas id="bg-canvas-net"></canvas>
-<style>#bg-canvas-net{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}</style>
 <a class="skip-link" href="#main">Skip to main content</a>
 <header class="site-header" id="top">
 <a aria-label="Goodform Web Studio home" class="brand" href="https://goodform.org.uk/"><img alt="Goodform" class="brand-logo" height="62" src="assets/goodform-logo.webp" width="256"/></a>
