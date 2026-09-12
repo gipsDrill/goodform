@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2JG9DE1CXG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -9,7 +8,6 @@
   gtag('js', new Date());
   gtag('config', 'G-2JG9DE1CXG');
 </script>
-
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Why a Good Website Matters for Small Businesses | Goodform</title>
@@ -22,6 +20,7 @@
 <link href="assets/apple-touch-icon.png" rel="apple-touch-icon"/>
 <link href="site.webmanifest" rel="manifest"/>
 <link href="styles.css" rel="stylesheet"/>
+<link href="css/bg-layers.css" rel="stylesheet"/>
 <script src="vendor/three.min.js"></script>
 <meta content="website" property="og:type"/>
 <meta content="en_GB" property="og:locale"/>
@@ -36,6 +35,7 @@
 </head>
 <body class="inner-page">
 <canvas id="bg-canvas"></canvas>
+<canvas id="bg-canvas-net"></canvas>
 <a class="skip-link" href="#main">Skip to main content</a>
 <header class="site-header" id="top">
 <a aria-label="Goodform Web Studio home" class="brand" href="index.html"><img alt="Goodform" class="brand-logo" height="246" src="assets/goodform-logo.png" width="1024"/></a>
@@ -43,10 +43,11 @@
 <span></span><span></span><span></span><span class="sr-only">Open menu</span>
 </button>
 <nav aria-label="Main navigation" class="main-nav" id="main-nav">
-<a href="why-it-matters.html" class="active">Why it matters</a>
+<a href="why-it-matters.html">Why it matters</a>
 <a href="starter-package.html">What you get</a>
 <a href="how-it-works.html">How it works</a>
 <a href="portfolio.html">Our work</a>
+<a href="web-design-tameside.html">Tameside & areas</a>
 <a class="nav-cta" href="index.html#contact">Start a website</a>
 </nav>
 </header>
@@ -78,13 +79,11 @@
 </div>
 </div>
 </section>
-
 <section class="expanded-process">
 <div class="detail-heading reveal">
 <p class="eyebrow eyebrow-dark"><span></span> Three practical reasons</p>
 <h2>What a clear website actually does.</h2>
 </div>
-
 <article class="expanded-step step-a reveal">
 <div class="expanded-number">01</div>
 <div class="expanded-copy">
@@ -92,14 +91,8 @@
 <h3>Explain what you do</h3>
 <p>Clear services, simple wording and no technical jargon. People should understand your offer in a few seconds.</p>
 </div>
-<ul>
-<li>Straightforward service descriptions</li>
-<li>Language that matches how customers speak</li>
-<li>No clutter or confusing navigation</li>
-<li>Focus on the information that matters</li>
-</ul>
+<ul><li>Straightforward service descriptions</li><li>Language that matches how customers speak</li><li>No clutter or confusing navigation</li><li>Focus on the information that matters</li></ul>
 </article>
-
 <article class="expanded-step step-b reveal">
 <div class="expanded-number">02</div>
 <div class="expanded-copy">
@@ -107,14 +100,8 @@
 <h3>Help people trust you</h3>
 <p>A professional website makes your business feel established and reliable, even if you are just starting out.</p>
 </div>
-<ul>
-<li>Clean, modern design</li>
-<li>Consistent branding and colours</li>
-<li>Proper contact details and location</li>
-<li>A polished first impression on every device</li>
-</ul>
+<ul><li>Clean, modern design</li><li>Consistent branding and colours</li><li>Proper contact details and location</li><li>A polished first impression on every device</li></ul>
 </article>
-
 <article class="expanded-step step-c reveal">
 <div class="expanded-number">03</div>
 <div class="expanded-copy">
@@ -122,36 +109,20 @@
 <h3>Make contact simple</h3>
 <p>Clear buttons, contact details and one easy enquiry form so people can reach you without friction.</p>
 </div>
-<ul>
-<li>Obvious call-to-action buttons</li>
-<li>One simple contact form</li>
-<li>Phone and email easy to find</li>
-<li>Works well on phones and tablets</li>
-</ul>
+<ul><li>Obvious call-to-action buttons</li><li>One simple contact form</li><li>Phone and email easy to find</li><li>Works well on phones and tablets</li></ul>
 </article>
 </section>
-
 <section class="process-notes">
 <div class="detail-heading reveal">
 <p class="eyebrow eyebrow-dark"><span></span> Built for busy owners</p>
 <h2>No tech stress. Just a useful website.</h2>
 </div>
 <div class="process-note-grid">
-<article class="reveal">
-<strong>You know the business</strong>
-<p>Send your logo, photos, services and rough ideas. We turn them into clear pages.</p>
-</article>
-<article class="reveal">
-<strong>We handle the rest</strong>
-<p>Structure, wording, design and the technical setup so you can stay focused on your work.</p>
-</article>
-<article class="reveal">
-<strong>One clear price</strong>
-<p>The starter package covers everything needed to get a proper small-business website online.</p>
-</article>
+<article class="reveal"><strong>You know the business</strong><p>Send your logo, photos, services and rough ideas. We turn them into clear pages.</p></article>
+<article class="reveal"><strong>We handle the rest</strong><p>Structure, wording, design and the technical setup so you can stay focused on your work.</p></article>
+<article class="reveal"><strong>One clear price</strong><p>The starter package covers everything needed to get a proper small-business website online.</p></article>
 </div>
 </section>
-
 <section class="page-cta">
 <div class="reveal">
 <p class="eyebrow eyebrow-light"><span></span> Ready when you are</p>
@@ -169,6 +140,8 @@
 <div class="footer-links">
 <a href="starter-package.html">Website package</a>
 <a href="how-it-works.html">Process</a>
+<a href="portfolio.html">Our work</a>
+<a href="web-design-tameside.html">Web design areas</a>
 <a href="index.html#contact">Contact</a>
 </div>
 <div class="footer-links">
@@ -177,6 +150,7 @@
 <span>© <span id="year"></span> Goodform</span><span class="ico-reg"> · <a href="https://ico.org.uk" target="_blank" rel="noopener">ICO ZC221442</a></span>
 </div>
 </footer>
+<script src="js/site-layers.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
