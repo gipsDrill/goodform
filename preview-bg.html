@@ -4,301 +4,186 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="noindex,nofollow"/>
-<title>Goodform — tła (podgląd)</title>
+<title>Goodform — sieć (podgląd 2)</title>
 <style>
-  :root {
-    --bg: #05050a;
-    --text: #f5f0e8;
-    --muted: #9aa3a8;
-    --coral: #ff6847;
-    --mint: #82e6df;
-    --violet: #9b74ff;
-  }
+  :root { --bg:#05050a; --text:#f5f0e8; --muted:#9aa3a8; --coral:#ff6847; --mint:#82e6df; }
   * { box-sizing: border-box; }
-  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
-  canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
-  .ui {
-    position: relative; z-index: 2; min-height: 100%;
-    display: flex; flex-direction: column; justify-content: space-between;
-    padding: 28px 32px 24px; pointer-events: none;
+  html, body { margin:0; min-height:220vh; background:var(--bg); color:var(--text); font-family:Inter,ui-sans-serif,system-ui,sans-serif; }
+  canvas { position:fixed; inset:0; width:100%; height:100%; z-index:0; display:block; pointer-events:none; }
+  .veil { position:fixed; inset:0; z-index:1; pointer-events:none;
+    background:
+      radial-gradient(ellipse 70% 55% at 18% 28%, rgba(5,5,10,.15), transparent 55%),
+      linear-gradient(180deg, rgba(5,5,10,.18), transparent 22%, transparent 78%, rgba(5,5,10,.45));
   }
-  .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; }
-  .brand { font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--mint); }
-  .copy { max-width: 520px; }
-  h1 { font-size: clamp(28px, 4vw, 48px); line-height: 1.05; margin: 10px 0 12px; font-weight: 560; }
-  h1 em { color: var(--coral); font-style: normal; }
-  p { margin: 0; color: var(--muted); line-height: 1.5; max-width: 46ch; }
-  .tabs { pointer-events: auto; display: flex; flex-wrap: wrap; gap: 8px; }
-  button {
-    appearance: none; border: 1px solid rgba(245,240,232,.14);
-    background: rgba(5,5,10,.55); color: var(--text); cursor: pointer;
-    padding: 9px 12px; border-radius: 999px; font: 500 12px/1 Inter, sans-serif;
-    letter-spacing: .02em; backdrop-filter: blur(8px);
-  }
-  button.on { border-color: rgba(255,104,71,.7); background: rgba(255,104,71,.16); }
-  button:hover { border-color: rgba(130,230,223,.45); }
-  .hint { font-size: 12px; color: #6f777c; }
+  .ui { position:relative; z-index:2; padding:32px; max-width:560px; }
+  .brand { font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--mint); }
+  h1 { font-size:clamp(32px,4.4vw,52px); line-height:1.05; font-weight:560; margin:10px 0 12px; }
+  h1 em { color:var(--coral); font-style:normal; }
+  p { color:var(--muted); line-height:1.55; max-width:42ch; }
+  .note { margin-top:28px; font-size:13px; color:#6f777c; }
+  .spacer { height:140vh; }
 </style>
 </head>
 <body>
 <canvas id="c"></canvas>
+<div class="veil"></div>
 <div class="ui">
-  <div class="top">
-    <div class="copy">
-      <div class="brand">Goodform · podgląd tła</div>
-      <h1 id="title">Siatka konstrukcyjna</h1>
-      <p id="desc">Rusz myszką. Linie budują ramki strony, potem się rozchodzą.</p>
-    </div>
-    <div class="tabs" id="tabs"></div>
-  </div>
-  <div class="hint">Tylko podgląd — nieindeksowane. Wybierz wariant u góry.</div>
+  <div class="brand">Goodform · wariant 2</div>
+  <h1>Węzły i <em>połączenia.</em></h1>
+  <p>Rusz myszką i przewiń stronę. Sieć zgęstnieje przy kursorze, fale idą od kliknięcia, pakiety lecą po krawędziach.</p>
+  <p class="note">Podgląd — noindex. To nie jest jeszcze home.</p>
 </div>
+<div class="spacer" aria-hidden="true"></div>
 <script>
-const C = {
-  coral: [255,104,71],
-  mint: [130,230,223],
-  violet: [155,116,255],
-  cream: [245,240,232]
-};
-const canvas = document.getElementById('c');
-const ctx = canvas.getContext('2d');
-const mouse = { x: 0.62, y: 0.42, tx: 0.62, ty: 0.42 };
-let w = 0, h = 0, dpr = 1, mode = 0;
-
-const variants = [
-  { name: '1 · Siatka konstrukcyjna', title: 'Siatka konstrukcyjna', desc: 'Blueprint, który składa się w ramki strony. Kursor ugina siatkę.' },
-  { name: '2 · Węzły i połączenia', title: 'Węzły i połączenia', desc: 'Sieć pojawia się przy kursorze. Reszta tła zostaje pusta i droga.' },
-  { name: '3 · Warstwy UI', title: 'Warstwy UI w głębi', desc: 'Karty desktop / tablet / phone w perspektywie. Ruch myszy je rozsuwa.' },
-  { name: '4 · Ścieżka sygnału', title: 'Ścieżka sygnału', desc: 'Jedna nitka: zapytanie → ramka strony → live. Pulsuje wzdłuż trasy.' },
-  { name: '5 · Sieć dróg', title: 'Miasto z lotu ptaka', desc: 'Abstrakcyjny plan dróg. Kursor zapala najbliższy węzeł i odnogi.' }
-];
-
-const tabs = document.getElementById('tabs');
-variants.forEach((v, i) => {
-  const b = document.createElement('button');
-  b.textContent = v.name;
-  b.onclick = () => setMode(i);
-  tabs.appendChild(b);
-});
-function setMode(i) {
-  mode = i;
-  document.getElementById('title').textContent = variants[i].title;
-  document.getElementById('desc').textContent = variants[i].desc;
-  [...tabs.children].forEach((b, n) => b.classList.toggle('on', n === i));
-}
-setMode(0);
-
-function resize() {
-  dpr = Math.min(devicePixelRatio || 1, 2);
-  w = innerWidth; h = innerHeight;
-  canvas.width = w * dpr; canvas.height = h * dpr;
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-}
-addEventListener('resize', resize); resize();
-addEventListener('pointermove', e => {
-  mouse.tx = e.clientX / w; mouse.ty = e.clientY / h;
-}, { passive: true });
-
-function rgba(c, a) { return `rgba(${c[0]},${c[1]},${c[2]},${a})`; }
-function lerp(a,b,n){ return a + (b-a)*n; }
-
-const nodes = Array.from({length: 42}, (_, i) => {
-  const s = Math.sin(i * 12.9898) * 43758.5453;
-  const s2 = Math.sin(i * 78.233) * 23421.631;
-  return { x: s - Math.floor(s), y: s2 - Math.floor(s2), p: i };
-});
-const roads = [];
-for (let i = 0; i < 18; i++) {
-  const a = nodes[i];
-  const b = nodes[(i * 3 + 7) % nodes.length];
-  roads.push({ a, b });
-}
-
-function clear() {
-  ctx.fillStyle = '#05050a';
-  ctx.fillRect(0,0,w,h);
-  const g = ctx.createRadialGradient(w*mouse.x, h*mouse.y, 40, w*0.5, h*0.4, Math.max(w,h)*0.8);
-  g.addColorStop(0, 'rgba(18,22,32,0.55)');
-  g.addColorStop(1, 'rgba(5,5,10,0)');
-  ctx.fillStyle = g; ctx.fillRect(0,0,w,h);
-}
-
-function drawGrid(now) {
-  const gap = 56;
-  const ox = (mouse.x - 0.5) * 28;
-  const oy = (mouse.y - 0.5) * 18;
-  ctx.lineWidth = 1;
-  for (let x = -gap; x < w + gap; x += gap) {
-    const bend = Math.sin((x / w) * 6 + now * 0.0004) * 8 + ox * ((x/w) - 0.3);
-    ctx.beginPath();
-    ctx.strokeStyle = rgba(C.mint, 0.06);
-    ctx.moveTo(x + bend * 0.15, 0);
-    ctx.lineTo(x - bend * 0.1, h);
-    ctx.stroke();
+(() => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const canvas = document.getElementById("c");
+  const ctx = canvas.getContext("2d", { alpha: false });
+  const mouse = { x: 0.58, y: 0.36, tx: 0.58, ty: 0.36, vx: 0, vy: 0 };
+  let w = 0, h = 0, dpr = 1, scroll = 0, tscroll = 0;
+  let nodes = [], sparks = [], ripples = [];
+  const CORAL = [255, 104, 71];
+  const MINT = [130, 230, 223];
+  const VIOLET = [155, 116, 255];
+  const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+  const lerp = (a, b, n) => a + (b - a) * n;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const hash = (i, s) => {
+    const x = Math.sin(i * 12.9898 + s * 78.233) * 43758.5453;
+    return x - Math.floor(x);
+  };
+  function resize() {
+    dpr = Math.min(devicePixelRatio || 1, 1.75);
+    w = innerWidth; h = innerHeight;
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    build();
   }
-  for (let y = -gap; y < h + gap; y += gap) {
-    const bend = Math.cos((y / h) * 5 + now * 0.00035) * 6 + oy;
-    ctx.beginPath();
-    ctx.strokeStyle = rgba(C.cream, 0.045);
-    ctx.moveTo(0, y + bend * 0.12);
-    ctx.lineTo(w, y - bend * 0.08);
-    ctx.stroke();
+  function build() {
+    const count = reduce ? 28 : clamp(Math.round((w * h) / 18000), 36, 72);
+    nodes = Array.from({ length: count }, (_, i) => ({
+      bx: hash(i, 1), by: hash(i, 2),
+      z: 0.35 + hash(i, 3) * 0.65,
+      phase: hash(i, 4) * Math.PI * 2,
+      spin: 0.15 + hash(i, 5) * 0.55,
+      hue: hash(i, 6) < 0.12 ? CORAL : hash(i, 7) < 0.22 ? VIOLET : MINT,
+      pulse: hash(i, 8)
+    }));
+    sparks = []; ripples = [];
   }
-  const frames = [
-    [0.52, 0.18, 0.38, 0.22],
-    [0.58, 0.44, 0.18, 0.28],
-    [0.78, 0.44, 0.14, 0.16]
-  ];
-  const pulse = (Math.sin(now * 0.0012) + 1) / 2;
-  frames.forEach((f, i) => {
-    const x = f[0]*w + ox*0.4, y = f[1]*h + oy*0.3, fw = f[2]*w, fh = f[3]*h;
-    ctx.strokeStyle = rgba(i ? C.mint : C.coral, 0.18 + pulse * 0.18);
-    ctx.lineWidth = 1.2;
-    ctx.strokeRect(x, y, fw, fh);
-    ctx.fillStyle = rgba(C.mint, 0.03);
-    ctx.fillRect(x, y, fw, fh);
-  });
-}
-
-function drawNodes(now) {
-  const mx = mouse.x * w, my = mouse.y * h;
-  nodes.forEach(n => {
-    n.px = 80 + n.x * (w - 160);
-    n.py = 70 + n.y * (h - 140);
-  });
-  ctx.lineWidth = 1;
-  for (let i = 0; i < nodes.length; i++) {
-    for (let j = i + 1; j < nodes.length; j++) {
-      const a = nodes[i], b = nodes[j];
-      const dx = a.px - b.px, dy = a.py - b.py;
-      const d = Math.hypot(dx, dy);
-      if (d > 170) continue;
-      const da = Math.hypot(a.px - mx, a.py - my);
-      const db = Math.hypot(b.px - mx, b.py - my);
-      const near = Math.min(da, db);
-      if (near > 240) continue;
-      const alpha = (1 - d/170) * (1 - near/240) * 0.55;
-      ctx.strokeStyle = rgba(near < 90 ? C.coral : C.mint, alpha);
-      ctx.beginPath(); ctx.moveTo(a.px, a.py); ctx.lineTo(b.px, b.py); ctx.stroke();
-    }
+  function pos(n, now) {
+    const driftX = Math.sin(now * 0.00018 * n.spin + n.phase) * 0.035 * n.z;
+    const driftY = Math.cos(now * 0.00014 * n.spin + n.phase * 1.3) * 0.028 * n.z;
+    const parX = (mouse.x - 0.5) * 0.07 * n.z;
+    const parY = (mouse.y - 0.5) * 0.05 * n.z;
+    const sc = (scroll - 0.5) * 0.06 * n.z;
+    return {
+      x: 48 + (n.bx + driftX + parX) * (w - 96),
+      y: 40 + (n.by + driftY + parY + sc) * (h - 80)
+    };
   }
-  nodes.forEach(n => {
-    const d = Math.hypot(n.px - mx, n.py - my);
-    const r = d < 160 ? 2.6 : 1.4;
-    ctx.fillStyle = rgba(d < 120 ? C.coral : C.mint, d < 220 ? 0.85 : 0.22);
-    ctx.beginPath(); ctx.arc(n.px, n.py, r, 0, Math.PI*2); ctx.fill();
-  });
-}
-
-function drawUI(now) {
-  const cards = [
-    { w: 340, h: 210 },
-    { w: 210, h: 280 },
-    { w: 110, h: 210 }
-  ];
-  const cx = w * 0.68 + (mouse.x - 0.5) * 40;
-  const cy = h * 0.42 + (mouse.y - 0.5) * 24;
-  cards.forEach((c, i) => {
-    const ox = (i - 1) * 70 + (mouse.x - 0.5) * (28 + i * 22);
-    const oy = i * 16 + Math.sin(now * 0.001 + i) * 6;
-    const x = cx + ox - c.w/2;
-    const y = cy + oy - c.h/2;
-    ctx.save();
-    ctx.translate(x + c.w/2, y + c.h/2);
-    ctx.rotate(((mouse.x - 0.5) * 0.06) + i * 0.02);
-    ctx.translate(-c.w/2, -c.h/2);
-    ctx.fillStyle = `rgba(12,14,20,${0.35 + i*0.08})`;
-    ctx.strokeStyle = rgba(i === 0 ? C.coral : C.mint, 0.28);
-    ctx.lineWidth = 1.2;
-    ctx.fillRect(0,0,c.w,c.h);
-    ctx.strokeRect(0,0,c.w,c.h);
-    ctx.fillStyle = rgba(C.cream, 0.08);
-    ctx.fillRect(16, 18, c.w - 32, 10);
-    ctx.fillRect(16, 38, c.w * 0.45, 8);
-    ctx.strokeStyle = rgba(C.mint, 0.18);
-    ctx.strokeRect(16, 58, c.w - 32, c.h - 80);
-    ctx.restore();
-  });
-}
-
-function drawSignal(now) {
-  const pts = [
-    [0.08, 0.62], [0.22, 0.58], [0.34, 0.48], [0.48, 0.50],
-    [0.60, 0.38], [0.72, 0.42], [0.84, 0.28], [0.92, 0.22]
-  ].map(p => [p[0]*w + (mouse.x-0.5)*12, p[1]*h + (mouse.y-0.5)*10]);
-  ctx.beginPath();
-  ctx.moveTo(pts[0][0], pts[0][1]);
-  for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
-  ctx.strokeStyle = rgba(C.mint, 0.22);
-  ctx.lineWidth = 1.4;
-  ctx.stroke();
-  const u = ((now * 0.00018) % 1);
-  const idx = u * (pts.length - 1);
-  const i0 = Math.floor(idx), i1 = Math.min(i0+1, pts.length-1), f = idx - i0;
-  const x = lerp(pts[i0][0], pts[i1][0], f);
-  const y = lerp(pts[i0][1], pts[i1][1], f);
-  ctx.fillStyle = rgba(C.coral, 0.95);
-  ctx.beginPath(); ctx.arc(x,y,4.2,0,Math.PI*2); ctx.fill();
-  ctx.strokeStyle = rgba(C.coral, 0.25);
-  ctx.beginPath(); ctx.arc(x,y,12 + Math.sin(now*0.006)*3,0,Math.PI*2); ctx.stroke();
-  drawGlyph(pts[0][0], pts[0][1]-22, 'enquiry');
-  drawGlyph(pts[4][0], pts[4][1]-28, 'layout');
-  drawGlyph(pts[7][0], pts[7][1]-22, 'live');
-}
-function drawGlyph(x,y,kind) {
-  ctx.strokeStyle = rgba(C.cream, 0.28);
-  ctx.lineWidth = 1;
-  if (kind === 'enquiry') {
-    ctx.strokeRect(x-10, y-7, 20, 14);
-    ctx.beginPath(); ctx.moveTo(x-10,y-7); ctx.lineTo(x,y+1); ctx.lineTo(x+10,y-7); ctx.stroke();
-  } else if (kind === 'layout') {
-    ctx.strokeRect(x-14, y-10, 28, 20);
-    ctx.strokeRect(x-10, y-6, 12, 8);
-  } else {
-    ctx.beginPath(); ctx.arc(x,y,7,0,Math.PI*2); ctx.stroke();
-    ctx.beginPath(); ctx.arc(x,y,2.2,0,Math.PI*2); ctx.fillStyle = rgba(C.coral, 0.7); ctx.fill();
-  }
-}
-
-function drawCity() {
-  ctx.lineWidth = 1;
-  roads.forEach((r) => {
-    const ax = 60 + r.a.x * (w-120), ay = 50 + r.a.y * (h-100);
-    const bx = 60 + r.b.x * (w-120), by = 50 + r.b.y * (h-100);
-    ctx.strokeStyle = rgba(C.mint, 0.08);
-    ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke();
-  });
-  const mx = mouse.x * w, my = mouse.y * h;
-  nodes.forEach(n => {
-    const x = 60 + n.x * (w-120), y = 50 + n.y * (h-100);
-    const d = Math.hypot(x-mx, y-my);
-    ctx.fillStyle = rgba(d < 130 ? C.coral : C.mint, d < 180 ? 0.9 : 0.2);
-    ctx.beginPath(); ctx.arc(x,y, d<130?3:1.4, 0, Math.PI*2); ctx.fill();
-    if (d < 160) {
-      nodes.forEach(m => {
-        const x2 = 60 + m.x*(w-120), y2 = 50 + m.y*(h-100);
-        const dd = Math.hypot(x-x2,y-y2);
-        if (dd < 170 && dd > 1) {
-          ctx.strokeStyle = rgba(C.coral, (1-dd/170)*0.28);
-          ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x2,y2); ctx.stroke();
-        }
-      });
+  addEventListener("resize", resize, { passive: true });
+  addEventListener("pointermove", (e) => {
+    const nx = e.clientX / w, ny = e.clientY / h;
+    mouse.vx = nx - mouse.tx; mouse.vy = ny - mouse.ty;
+    mouse.tx = nx; mouse.ty = ny;
+  }, { passive: true });
+  addEventListener("pointerdown", (e) => {
+    ripples.push({ x: e.clientX, y: e.clientY, r: 8, life: 1 });
+    if (reduce) return;
+    for (let i = 0; i < 10; i++) {
+      const a = Math.random() * Math.PI * 2;
+      const s = 0.6 + Math.random() * 2.2;
+      sparks.push({ x: e.clientX, y: e.clientY, vx: Math.cos(a)*s, vy: Math.sin(a)*s, life: 1, c: Math.random() < 0.45 ? CORAL : MINT });
     }
   });
-}
-
-function frame(now) {
-  mouse.x = lerp(mouse.x, mouse.tx, 0.06);
-  mouse.y = lerp(mouse.y, mouse.ty, 0.06);
-  clear();
-  if (mode === 0) drawGrid(now);
-  if (mode === 1) drawNodes(now);
-  if (mode === 2) drawUI(now);
-  if (mode === 3) drawSignal(now);
-  if (mode === 4) drawCity();
+  addEventListener("scroll", () => {
+    const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    tscroll = scrollY / max;
+  }, { passive: true });
+  let lastPacket = 0;
+  function maybePacket(now, pts) {
+    if (reduce || now - lastPacket < 420 || pts.length < 2) return;
+    if (Math.random() > 0.08) return;
+    const a = pts[(Math.random() * pts.length) | 0];
+    const b = pts[(Math.random() * pts.length) | 0];
+    if (a === b) return;
+    lastPacket = now;
+    sparks.push({ x: a.x, y: a.y, tx: b.x, ty: b.y, packet: true, life: 1, c: CORAL });
+  }
+  function frame(now) {
+    mouse.x = lerp(mouse.x, mouse.tx, 0.07);
+    mouse.y = lerp(mouse.y, mouse.ty, 0.07);
+    scroll = lerp(scroll, tscroll, 0.06);
+    const speed = Math.hypot(mouse.vx, mouse.vy);
+    mouse.vx *= 0.86; mouse.vy *= 0.86;
+    ctx.fillStyle = "#05050a";
+    ctx.fillRect(0, 0, w, h);
+    const glow = ctx.createRadialGradient(mouse.x * w, mouse.y * h, 20, mouse.x * w, mouse.y * h, 340);
+    glow.addColorStop(0, "rgba(130,230,223,0.07)");
+    glow.addColorStop(0.45, "rgba(155,116,255,0.03)");
+    glow.addColorStop(1, "rgba(5,5,10,0)");
+    ctx.fillStyle = glow; ctx.fillRect(0, 0, w, h);
+    const pts = nodes.map((n) => { const p = pos(n, now); n.px = p.x; n.py = p.y; return n; });
+    const mx = mouse.x * w, my = mouse.y * h;
+    const linkDist = reduce ? 120 : 168;
+    const influence = 210 + speed * 420;
+    ctx.lineWidth = 1;
+    for (let i = 0; i < pts.length; i++) {
+      const a = pts[i];
+      for (let j = i + 1; j < pts.length; j++) {
+        const b = pts[j];
+        const d = Math.hypot(a.px - b.px, a.py - b.py);
+        if (d > linkDist || d < 8) continue;
+        const near = Math.min(Math.hypot(a.px - mx, a.py - my), Math.hypot(b.px - mx, b.py - my));
+        if (near > influence) continue;
+        const alpha = (1 - d / linkDist) * (1 - near / influence) * 0.62;
+        ctx.strokeStyle = rgba(near < 90 + speed * 80 ? CORAL : MINT, alpha);
+        ctx.beginPath(); ctx.moveTo(a.px, a.py); ctx.lineTo(b.px, b.py); ctx.stroke();
+      }
+    }
+    maybePacket(now, pts.map(n => ({ x: n.px, y: n.py })));
+    pts.forEach((n) => {
+      const d = Math.hypot(n.px - mx, n.py - my);
+      const beat = 0.55 + Math.sin(now * 0.003 + n.pulse * 8) * 0.45;
+      const r = (d < 150 ? 2.8 : 1.35) * (0.75 + n.z * 0.5) * (reduce ? 1 : beat);
+      ctx.fillStyle = rgba(d < 110 ? CORAL : n.hue, d < 230 ? 0.92 : 0.18 + n.z * 0.2);
+      ctx.beginPath(); ctx.arc(n.px, n.py, r, 0, Math.PI * 2); ctx.fill();
+      if (d < 130 && !reduce) {
+        ctx.strokeStyle = rgba(n.hue, 0.16 * beat);
+        ctx.beginPath(); ctx.arc(n.px, n.py, r + 6 + beat * 4, 0, Math.PI * 2); ctx.stroke();
+      }
+    });
+    ctx.fillStyle = rgba(CORAL, 0.9);
+    ctx.beginPath(); ctx.arc(mx, my, 2.2, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = rgba(MINT, 0.22);
+    ctx.beginPath(); ctx.arc(mx, my, 16 + Math.sin(now * 0.004) * 3 + speed * 28, 0, Math.PI * 2); ctx.stroke();
+    ripples = ripples.filter((r) => r.life > 0);
+    ripples.forEach((r) => {
+      r.r += 3.4; r.life -= 0.016;
+      ctx.strokeStyle = rgba(CORAL, r.life * 0.35);
+      ctx.beginPath(); ctx.arc(r.x, r.y, r.r, 0, Math.PI * 2); ctx.stroke();
+      ctx.strokeStyle = rgba(MINT, r.life * 0.18);
+      ctx.beginPath(); ctx.arc(r.x, r.y, r.r * 0.62, 0, Math.PI * 2); ctx.stroke();
+    });
+    sparks = sparks.filter((s) => s.life > 0);
+    sparks.forEach((s) => {
+      if (s.packet) {
+        s.x = lerp(s.x, s.tx, 0.08); s.y = lerp(s.y, s.ty, 0.08); s.life -= 0.012;
+        ctx.fillStyle = rgba(s.c, s.life);
+        ctx.beginPath(); ctx.arc(s.x, s.y, 2.6, 0, Math.PI * 2); ctx.fill();
+      } else {
+        s.x += s.vx; s.y += s.vy; s.vx *= 0.96; s.vy *= 0.96; s.life -= 0.02;
+        ctx.fillStyle = rgba(s.c, s.life * 0.8);
+        ctx.beginPath(); ctx.arc(s.x, s.y, 1.5, 0, Math.PI * 2); ctx.fill();
+      }
+    });
+    requestAnimationFrame(frame);
+  }
+  resize();
   requestAnimationFrame(frame);
-}
-requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>
