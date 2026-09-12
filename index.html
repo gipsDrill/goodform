@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2JG9DE1CXG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -9,7 +8,6 @@
   gtag('js', new Date());
   gtag('config', 'G-2JG9DE1CXG');
 </script>
-
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Web Design Tameside | Affordable Sites from £399 | Goodform</title>
@@ -23,6 +21,7 @@
 <link href="site.webmanifest" rel="manifest"/>
 <link href="styles.css" rel="stylesheet"/>
 <link href="css/drift-cluster.css" rel="stylesheet"/>
+<link href="css/bg-layers.css" rel="stylesheet"/>
 <meta content="website" property="og:type"/>
 <meta content="en_GB" property="og:locale"/>
 <meta content="Goodform" property="og:site_name"/>
@@ -39,72 +38,10 @@
 <meta content="Clear, mobile-friendly websites for small businesses in Tameside, Greater Manchester and across the UK. Starter websites from £399." name="twitter:description"/>
 <meta content="https://goodform.org.uk/assets/goodform-social.webp" name="twitter:image"/>
 <meta content="Goodform website design service shown across desktop and mobile screens" name="twitter:image:alt"/>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "ProfessionalService",
-      "@id": "https://goodform.org.uk/#business",
-      "name": "Goodform",
-      "alternateName": "Goodform Web Studio",
-      "url": "https://goodform.org.uk/",
-      "logo": "https://goodform.org.uk/assets/goodform-logo.png",
-      "image": "https://goodform.org.uk/assets/goodform-social.webp",
-      "description": "Affordable, mobile-friendly websites for small businesses in Tameside, Greater Manchester and across the UK.",
-      "priceRange": "£399+",
-      "knowsAbout": ["web design Tameside", "small business websites", "essential SEO"],
-      "areaServed": ["Tameside", "Stalybridge", "Ashton-under-Lyne", "Hyde", "Manchester", "Greater Manchester", "United Kingdom"],
-      "address": {
-        "@type": "PostalAddress",
-        "addressRegion": "Greater Manchester",
-        "addressCountry": "GB"
-      },
-      "email": "contact@goodform.org.uk"
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://goodform.org.uk/#website",
-      "url": "https://goodform.org.uk/",
-      "name": "Goodform",
-      "publisher": {"@id": "https://goodform.org.uk/#business"}
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is included in the £399 website package?",
-          "acceptedAnswer": {"@type": "Answer", "text": "The starter package includes up to four standard pages, a mobile-friendly design, one contact form, essential on-page SEO, help with clear website text, a simple starter logo if needed, one round of changes and 14 days of launch support."}
-        },
-        {
-          "@type": "Question",
-          "name": "How long does a small business website take?",
-          "acceptedAnswer": {"@type": "Answer", "text": "A straightforward starter website normally takes around one to two weeks once the business details, photos and feedback are ready."}
-        },
-        {
-          "@type": "Question",
-          "name": "Will the website work on phones?",
-          "acceptedAnswer": {"@type": "Answer", "text": "Yes. Every website is designed to work clearly on mobile phones, tablets and desktop computers."}
-        },
-        {
-          "@type": "Question",
-          "name": "Are domain and hosting included?",
-          "acceptedAnswer": {"@type": "Answer", "text": "Domain and hosting are paid separately because the cost depends on the provider. Goodform can help with setup and keep the account in the client's name."}
-        },
-        {
-          "@type": "Question",
-          "name": "How does payment work?",
-          "acceptedAnswer": {"@type": "Answer", "text": "A 25% deposit books the project. The remaining balance is paid after final approval and before the website goes live."}
-        }
-      ]
-    }
-  ]
-}
-</script>
 </head>
 <body class="home-page">
 <canvas id="bg-canvas"></canvas>
+<canvas id="bg-canvas-net"></canvas>
 <a class="skip-link" href="#main">Skip to main content</a>
 <header class="site-header" id="top">
 <a aria-label="Goodform Web Studio home" class="brand" href="https://goodform.org.uk/"><img alt="Goodform" class="brand-logo" height="62" src="assets/goodform-logo.webp" width="256"/></a>
@@ -153,25 +90,13 @@
 <p>For your customers and for you.</p>
 </div>
 <div class="benefit-stack">
-<article class="benefit-card benefit-a reveal">
-<div class="benefit-number">01</div>
-<div class="benefit-copy"><h3>Explain what you do</h3><p>Clear services, simple wording and no technical jargon.</p></div>
-</article>
-<article class="benefit-card benefit-b reveal">
-<div class="benefit-number">02</div>
-<div class="benefit-copy"><h3>Help people trust you</h3><p>A professional website makes your business feel established.</p></div>
-</article>
-<article class="benefit-card benefit-c reveal">
-<div class="benefit-number">03</div>
-<div class="benefit-copy"><h3>Make contact simple</h3><p>Clear buttons, contact details and one easy enquiry form.</p></div>
-</article>
+<article class="benefit-card benefit-a reveal"><div class="benefit-number">01</div><div class="benefit-copy"><h3>Explain what you do</h3><p>Clear services, simple wording and no technical jargon.</p></div></article>
+<article class="benefit-card benefit-b reveal"><div class="benefit-number">02</div><div class="benefit-copy"><h3>Help people trust you</h3><p>A professional website makes your business feel established.</p></div></article>
+<article class="benefit-card benefit-c reveal"><div class="benefit-number">03</div><div class="benefit-copy"><h3>Make contact simple</h3><p>Clear buttons, contact details and one easy enquiry form.</p></div></article>
 </div>
 </section>
 <section aria-labelledby="story-title" class="story">
-<div class="story-accent drift-slot reveal" aria-hidden="true">
-  <canvas id="drift-canvas"></canvas>
-</div>
-
+<div class="story-accent drift-slot reveal" aria-hidden="true"><canvas id="drift-canvas"></canvas></div>
 <div class="story-copy reveal">
 <p class="eyebrow"><span></span> No tech stress</p>
 <h2 id="story-title">You know your business.<br/>We will sort the website.</h2>
@@ -187,80 +112,34 @@
 <p>A focused package for a straightforward small business website.</p>
 </div>
 <div class="package-grid">
-<div class="package-list reveal">
-<ul>
-<li>Up to four standard pages</li>
-<li>Mobile-friendly design</li>
-<li>One contact form</li>
-<li>Essential on-page SEO</li>
-<li>Help with clear website text</li>
-<li>Simple starter logo if needed</li>
-<li>One round of changes</li>
-<li>14 days of launch support</li>
-</ul>
-</div>
+<div class="package-list reveal"><ul>
+<li>Up to four standard pages</li><li>Mobile-friendly design</li><li>One contact form</li><li>Essential on-page SEO</li><li>Help with clear website text</li><li>Simple starter logo if needed</li><li>One round of changes</li><li>14 days of launch support</li>
+</ul></div>
 <div class="package-price-card reveal">
-<strong>£399</strong>
-<span>one-off starter package</span>
+<strong>£399</strong><span>one-off starter package</span>
 <p>Domain and hosting are paid separately, with practical help available for setup.</p>
-<ul class="price-card-notes" aria-label="Starter package payment and support details">
-<li>25% deposit books the project</li>
-<li>One clear round of final changes</li>
-<li>14 days of launch support included</li>
-</ul>
+<ul class="price-card-notes"><li>25% deposit books the project</li><li>One clear round of final changes</li><li>14 days of launch support included</li></ul>
 <a class="button button-coral" href="#contact">Start with this package <span>↗</span></a>
-</div>
-</div>
+</div></div>
 </section>
 <section aria-labelledby="faq-title" class="faq section-pad" id="faq">
-<div class="section-heading reveal">
-<p class="eyebrow eyebrow-dark"><span></span> Common questions</p>
-<h2 id="faq-title">Straight answers before you start.</h2>
-</div>
+<div class="section-heading reveal"><p class="eyebrow eyebrow-dark"><span></span> Common questions</p><h2 id="faq-title">Straight answers before you start.</h2></div>
 <div class="faq-list">
 <details class="reveal"><summary>What is included in the £399 website package?</summary><p>The starter package includes up to four standard pages, a mobile-friendly design, one contact form, essential on-page SEO, help with clear website text, a simple starter logo if needed, one round of changes and 14 days of launch support.</p></details>
 <details class="reveal"><summary>How long does a small business website take?</summary><p>A straightforward starter website normally takes around one to two weeks once the business details, photos and feedback are ready.</p></details>
 <details class="reveal"><summary>Will the website work on phones?</summary><p>Yes. Every website is designed to work clearly on mobile phones, tablets and desktop computers.</p></details>
 <details class="reveal"><summary>Are domain and hosting included?</summary><p>Domain and hosting are paid separately because the cost depends on the provider. Goodform can help with setup and keep the account in the client's name.</p></details>
 <details class="reveal"><summary>How does payment work?</summary><p>A 25% deposit books the project. The remaining balance is paid after final approval and before the website goes live.</p></details>
-</div>
-</section>
+</div></section>
 <section aria-labelledby="examples-title" class="work section-pad" id="work">
-<div class="section-heading reveal">
-<p class="eyebrow eyebrow-dark"><span></span> Live examples</p>
-<h2 id="examples-title">A few websites to explore.</h2>
-</div>
+<div class="section-heading reveal"><p class="eyebrow eyebrow-dark"><span></span> Live examples</p><h2 id="examples-title">A few websites to explore.</h2></div>
 <div class="example-grid">
-<a class="example-card reveal" href="case-study-fleetslate.html">
-<strong>FleetSlate</strong>
-<span>Fleet management product, website and customer journey</span>
-<b>View case study →</b>
-</a>
-<a class="example-card reveal" href="https://docora.uk/" rel="noopener noreferrer" target="_blank">
-<strong>Docora</strong>
-<span>Fast, simple online PDF editing tools</span>
-<b>Visit website ↗</b>
-</a>
-<a class="example-card reveal" href="https://billora.uk/" rel="noopener noreferrer" target="_blank">
-<strong>Billora</strong>
-<span>Smart invoice and business document creator</span>
-<b>Visit website ↗</b>
-</a>
-<a class="example-card reveal" href="case-study-milena-design.html">
-<strong>Milena Design</strong>
-<span>B2B garment and textile manufacturing website</span>
-<b>View case study →</b>
-</a>
-<a class="example-card reveal" href="https://gipsdrill.github.io/guy-ripley-logistics/" rel="noopener noreferrer" target="_blank">
-<strong>Guy Ripley Logistics</strong>
-<span>Transport and logistics website</span>
-<b>Visit website ↗</b>
-</a>
-<a class="example-card reveal" href="juniper-stone/" rel="nofollow noopener noreferrer" target="_blank">
-<strong>Juniper & Stone</strong>
-<span>Landscaping concept website</span>
-<b>View concept ↗</b>
-</a>
+<a class="example-card reveal" href="case-study-fleetslate.html"><strong>FleetSlate</strong><span>Fleet management product, website and customer journey</span><b>View case study →</b></a>
+<a class="example-card reveal" href="https://docora.uk/" rel="noopener noreferrer" target="_blank"><strong>Docora</strong><span>Fast, simple online PDF editing tools</span><b>Visit website ↗</b></a>
+<a class="example-card reveal" href="https://billora.uk/" rel="noopener noreferrer" target="_blank"><strong>Billora</strong><span>Smart invoice and business document creator</span><b>Visit website ↗</b></a>
+<a class="example-card reveal" href="case-study-milena-design.html"><strong>Milena Design</strong><span>B2B garment and textile manufacturing website</span><b>View case study →</b></a>
+<a class="example-card reveal" href="https://gipsdrill.github.io/guy-ripley-logistics/" rel="noopener noreferrer" target="_blank"><strong>Guy Ripley Logistics</strong><span>Transport and logistics website</span><b>Visit website ↗</b></a>
+<a class="example-card reveal" href="juniper-stone/" rel="nofollow noopener noreferrer" target="_blank"><strong>Juniper & Stone</strong><span>Landscaping concept website</span><b>View concept ↗</b></a>
 </div>
 <div class="work-more reveal"><a class="button button-dark" href="portfolio.html">Explore the full portfolio <span>→</span></a></div>
 </section>
@@ -298,6 +177,7 @@
 <div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><span>© <span id="year"></span> Goodform</span><span class="ico-reg"> · <a href="https://ico.org.uk" target="_blank" rel="noopener">ICO ZC221442</a></span></div>
 </footer>
 <script src="vendor/three.min.js"></script>
+<script src="js/site-layers.js"></script>
 <script src="script.js"></script>
 <script src="js/drift-cluster.js"></script>
 </body>
