@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /juniper-stone/
+Disallow: /goodform-logo-home-fix-ready/
 
 Sitemap: https://goodform.org.uk/sitemap.xml
