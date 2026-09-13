@@ -1,0 +1,26 @@
+.example-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 820px;
+}
+.example-card {
+  padding: 16px 18px 15px;
+  gap: 6px;
+}
+.example-card strong { font-size: 1.02rem; }
+.example-card span { font-size: .86rem; line-height: 1.35; }
+.example-card b { font-size: .8rem; margin-top: 4px; }
+.example-card:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  width: min(100%, calc(50% - 6px));
+  justify-self: center;
+}
+@media (max-width: 900px) {
+  .example-grid { grid-template-columns: 1fr; max-width: none; }
+  .example-card:last-child:nth-child(odd) {
+    grid-column: auto;
+    width: auto;
+    justify-self: stretch;
+  }
+}
