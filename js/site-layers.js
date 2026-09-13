@@ -12,11 +12,26 @@
     const after = document.getElementById('bg-canvas');
     after.parentNode.insertBefore(c, after.nextSibling);
   }
+  function ensureSheet(href, flag) {
+    if (document.querySelector('link[' + flag + ']')) return;
+    const l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = href;
+    l.setAttribute(flag.replace(/[=\[\]]/g, '') ? flag.split('=')[0].replace('[', '') : flag, '1');
+    document.head.appendChild(l);
+  }
   if (!document.querySelector('link[data-bg-layers]')) {
     const l = document.createElement('link');
     l.rel = 'stylesheet';
     l.href = 'css/bg-layers.css';
     l.setAttribute('data-bg-layers', '1');
+    document.head.appendChild(l);
+  }
+  if (!document.querySelector('link[data-ui-motion]')) {
+    const l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = 'css/ui-motion.css';
+    l.setAttribute('data-ui-motion', '1');
     document.head.appendChild(l);
   }
   if (!document.querySelector('script[data-network-bg]')) {

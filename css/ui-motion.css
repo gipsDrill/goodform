@@ -1,0 +1,169 @@
+/* Compact nearby-towns row */
+#towns .deliverable-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+#towns .deliverable-grid article {
+  padding: 14px 14px 16px;
+}
+#towns .deliverable-grid b {
+  font-size: .92rem;
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+#towns .deliverable-grid p {
+  font-size: .8rem;
+  line-height: 1.4;
+}
+@media (max-width: 980px) {
+  #towns .deliverable-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  #towns .deliverable-grid { grid-template-columns: 1fr; }
+}
+
+.portfolio-more {
+  max-width: 640px;
+  margin: 28px auto 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: .95rem;
+  letter-spacing: .01em;
+}
+.portfolio-more em {
+  font-style: normal;
+  color: var(--text);
+}
+
+/* Shared chroma for buttons + text links */
+@keyframes gf-chroma-shift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+@keyframes gf-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes gf-nav-flow {
+  0% { color: var(--coral); }
+  50% { color: #6cb6ff; }
+  100% { color: var(--aqua); }
+}
+
+.button,
+.nav-cta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  z-index: 0;
+}
+.button::before,
+.nav-cta::before {
+  content: "";
+  position: absolute;
+  inset: -140%;
+  background: conic-gradient(
+    from 0deg,
+    #ff6847,
+    #ffd65a,
+    #82e6df,
+    #6cb6ff,
+    #9b74ff,
+    #ff6847
+  );
+  opacity: 0;
+  z-index: -2;
+  animation: gf-spin 2.8s linear infinite;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+.button::after,
+.nav-cta::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: inherit;
+  background: inherit;
+  z-index: -1;
+  pointer-events: none;
+}
+.button-coral::after { background: var(--coral); }
+.button-dark::after { background: #12121c; }
+.nav-cta::after { background: var(--coral); }
+.button:hover::before,
+.button:focus-visible::before,
+.nav-cta:hover::before,
+.nav-cta:focus-visible::before { opacity: 1; }
+
+.button:hover,
+.button:focus-visible,
+.nav-cta:hover,
+.nav-cta:focus-visible {
+  color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    #ff6847,
+    #ffd65a,
+    #82e6df,
+    #6cb6ff,
+    #9b74ff,
+    #ff6847
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: gf-chroma-shift 2.2s linear infinite;
+  transform: none;
+}
+
+.text-link,
+.project-actions a,
+.hero-location a,
+.footer-links a,
+.work-more a.button-dark {
+  background-image: linear-gradient(
+    90deg,
+    currentColor,
+    currentColor
+  );
+  background-size: 220% 100%;
+  background-clip: text;
+}
+.text-link:hover,
+.text-link:focus-visible,
+.project-actions a:hover,
+.project-actions a:focus-visible,
+.hero-location a:hover,
+.footer-links a:hover {
+  color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    #ff6847,
+    #ffd65a,
+    #82e6df,
+    #6cb6ff,
+    #9b74ff,
+    #ff6847
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: gf-chroma-shift 2.2s linear infinite;
+  opacity: 1;
+}
+
+.main-nav a:not(.nav-cta):hover,
+.main-nav a:not(.nav-cta):focus-visible {
+  animation: gf-nav-flow 1.7s ease-in-out infinite alternate;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button::before,
+  .nav-cta::before,
+  .button:hover,
+  .nav-cta:hover,
+  .text-link:hover,
+  .project-actions a:hover,
+  .main-nav a:not(.nav-cta):hover {
+    animation: none !important;
+  }
+}
