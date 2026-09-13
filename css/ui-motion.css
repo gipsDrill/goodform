@@ -35,7 +35,6 @@
   color: var(--text);
 }
 
-/* Shared chroma for buttons + text links */
 @keyframes gf-chroma-shift {
   0% { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
@@ -47,6 +46,14 @@
   0% { color: var(--coral); }
   50% { color: #6cb6ff; }
   100% { color: var(--aqua); }
+}
+@keyframes gf-label-flow {
+  0% { color: #ff6847; }
+  20% { color: #ffd65a; }
+  40% { color: #82e6df; }
+  60% { color: #6cb6ff; }
+  80% { color: #9b74ff; }
+  100% { color: #ff6847; }
 }
 
 .button,
@@ -97,57 +104,29 @@
 .button:hover,
 .button:focus-visible,
 .nav-cta:hover,
-.nav-cta:focus-visible {
-  color: transparent;
-  background-image: linear-gradient(
-    90deg,
-    #ff6847,
-    #ffd65a,
-    #82e6df,
-    #6cb6ff,
-    #9b74ff,
-    #ff6847
-  );
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: gf-chroma-shift 2.2s linear infinite;
+.nav-cta:focus-visible,
+.button:hover span,
+.nav-cta:hover span {
+  color: #ffd65a;
+  animation: gf-label-flow 2.2s linear infinite;
   transform: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  background-image: none;
 }
 
-.text-link,
-.project-actions a,
-.hero-location a,
-.footer-links a,
-.work-more a.button-dark {
-  background-image: linear-gradient(
-    90deg,
-    currentColor,
-    currentColor
-  );
-  background-size: 220% 100%;
-  background-clip: text;
-}
 .text-link:hover,
 .text-link:focus-visible,
 .project-actions a:hover,
 .project-actions a:focus-visible,
 .hero-location a:hover,
 .footer-links a:hover {
-  color: transparent;
-  background-image: linear-gradient(
-    90deg,
-    #ff6847,
-    #ffd65a,
-    #82e6df,
-    #6cb6ff,
-    #9b74ff,
-    #ff6847
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: gf-chroma-shift 2.2s linear infinite;
+  color: #ffd65a;
+  animation: gf-label-flow 2.2s linear infinite;
   opacity: 1;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  background-image: none;
 }
 
 .main-nav a:not(.nav-cta):hover,
