@@ -55,6 +55,10 @@
   80% { color: #9b74ff; }
   100% { color: #ff6847; }
 }
+@keyframes gf-cta-label-flow {
+  0%, 100% { color: #6cb6ff; }
+  50% { color: #fff; }
+}
 
 .button,
 .nav-cta {
@@ -101,14 +105,15 @@
 .nav-cta:hover::before,
 .nav-cta:focus-visible::before { opacity: 1; }
 
-.button:hover,
-.button:focus-visible,
+.button-coral:hover,
+.button-coral:focus-visible,
 .nav-cta:hover,
 .nav-cta:focus-visible,
-.button:hover span,
+.button-coral:hover span,
+.button-coral:focus-visible span,
 .nav-cta:hover span {
-  color: #ffd65a;
-  animation: gf-label-flow 2.2s linear infinite;
+  color: #6cb6ff;
+  animation: gf-cta-label-flow 2.2s linear infinite;
   transform: none;
   -webkit-background-clip: initial;
   background-clip: initial;
