@@ -16,7 +16,7 @@ LOCAL SEO UPDATE
 - Updated the homepage title and meta description for affordable web design in Tameside.
 - Updated Open Graph and Twitter sharing descriptions.
 - Expanded ProfessionalService structured data with Tameside, Greater Manchester and UK service areas.
-- Added a £399 Offer and WebSite structured data on the homepage.
+- Added a £199 Offer and WebSite structured data on the homepage.
 - Updated Service, HowTo and breadcrumb structured data on the two main subpages.
 - Added a visible Greater Manchester service-area line in the footer.
 - Updated sitemap modification dates and the web app manifest description.

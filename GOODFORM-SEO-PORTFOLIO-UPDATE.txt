@@ -16,7 +16,7 @@ UPDATED FILES
 
 UNCHANGED
 - Contact form endpoint and JavaScript behaviour
-- £399 package, 25% deposit and 14-day support terms
+- £199 package, 25% deposit and 14-day support terms
 - Privacy and terms page content
 - Existing assets and Juniper & Stone concept website
 - CNAME, robots.txt, manifest and favicons

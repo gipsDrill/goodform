@@ -25,7 +25,7 @@ The Privacy Policy and Terms are practical starter documents, not a substitute f
 
 
 NEW PAGES
-- starter-package.html: full £399 package details
+- starter-package.html: full £199 package details
 - how-it-works.html: expanded three-step process
 - Homepage includes two understated external example links.
 
