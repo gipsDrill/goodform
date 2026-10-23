@@ -56,3 +56,16 @@
   window.addEventListener('scroll', fade, { passive: true });
   window.addEventListener('resize', fade, { passive: true });
 })();
+
+/* Optional decorative video; existing canvas layers above are unchanged. */
+(function () {
+  const base = new URL('.', document.currentScript.src);
+  const sheet = document.createElement('link');
+  sheet.rel = 'stylesheet';
+  sheet.href = new URL('../css/nebula-overlay.css', base).href;
+  const script = document.createElement('script');
+  script.src = new URL('nebula-overlay.js', base).href;
+  // Never show an unstyled video if its stylesheet fails to load.
+  sheet.addEventListener('load', () => document.body.appendChild(script), { once: true });
+  document.head.appendChild(sheet);
+})();
