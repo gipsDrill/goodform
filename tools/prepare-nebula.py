@@ -1,7 +1,7 @@
-"""Rebuild both silent, pre-blended 28-second loops (FFmpeg 7+ required).
+"""Build silent, seamless 9-second loops from NEW Nebula.mp4 (10s, 1440p60).
 
 python tools/prepare-nebula.py SOURCE.mp4 --ffmpeg /path/to/ffmpeg
-The supplied source contains 1671 frames at 60 fps (27.85 s of video).
+The supplied source contains 600 frames at 60 fps (10 s of video).
 """
 import argparse
 from pathlib import Path
@@ -14,17 +14,17 @@ args = parser.parse_args()
 out = Path(__file__).resolve().parents[1] / 'assets' / 'video'
 out.mkdir(parents=True, exist_ok=True)
 
-for width, height, fps, crf in [(1920, 1080, 60, 20), (1280, 720, 30, 21)]:
-    # Start at source t=2. Blend the last 2 seconds with source t=0..2.
-    # The loop boundary is then two adjacent source frames around t=2.
-    # Gently slow the resulting 25.85 s cycle to exactly 28 s.
+for width, height, fps, crf in [(2560, 1440, 60, 18), (1280, 720, 30, 19)]:
+    # Start at source t=1. Blend source t=9..10 with t=0..1.
+    # The loop boundary joins adjacent source frames around t=1.
+    # Preserve playback speed; only the one-second overlap shortens the cycle.
     filters = (
         f'[0:v]scale={width}:{height}:flags=lanczos,setsar=1,'
         'split=2[body][head];'
-        '[body]trim=start=2:end=27.85,setpts=PTS-STARTPTS,fps=60[b];'
-        '[head]trim=start=0:end=2,setpts=PTS-STARTPTS,fps=60[h];'
-        '[b][h]xfade=transition=fade:duration=2:offset=23.85,'
-        f'setpts=PTS*28/25.85,fps={fps},trim=duration=28,format=yuv420p[v]'
+        '[body]trim=start=1:end=10,setpts=PTS-STARTPTS,fps=60[b];'
+        '[head]trim=start=0:end=1,setpts=PTS-STARTPTS,fps=60[h];'
+        '[b][h]xfade=transition=fade:duration=1:offset=8,'
+        f'fps={fps},trim=duration=9,format=yuv420p[v]'
     )
     subprocess.run([
         args.ffmpeg, '-hide_banner', '-y', '-i', str(args.source),
@@ -34,5 +34,5 @@ for width, height, fps, crf in [(1920, 1080, 60, 20), (1280, 720, 30, 21)]:
         '-threads', '4', '-profile:v', 'high', '-g', str(fps * 2),
         '-color_primaries', 'bt709', '-color_trc', 'bt709',
         '-colorspace', 'bt709', '-color_range', 'tv',
-        '-movflags', '+faststart', str(out / f'nebula-{height}p.mp4')
+        '-movflags', '+faststart', str(out / f'nebula-v2-{height}p.mp4')
     ], check=True)

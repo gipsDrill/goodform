@@ -1,139 +1,99 @@
-# Nakładka Nebula — przygotowanie i testy
+# Nakładka Nebula — nowy klip, 8%
 
-Raport etapu przygotowania: 23 października 2026. Zmiana przygotowana na gałęzi
-`codex/subtle-nebula-overlay` i przetestowana przed publikacją.
-Baza: `e934a5f`.
+Aktualizacja: 23 października 2026. Baza zmiany: `8aab29c`.
 
-## Wygląd i pliki
+## Wprowadzone zmiany
 
-Widoczność nebuli: **5%** (`opacity: .05`), mieszanie **screen**.
-Po pierwszej publikacji zwiększono widoczność z 3% do 5% na życzenie użytkownika.
-Dodatkowe przyciemnienie: **0%**. Czerń filmu jest neutralna w tym trybie.
-Nie zmieniono istniejących ustawień jasności, kolorów ani animacji tła.
-`script.js`, `styles.css`, `css/bg-layers.css`, `js/network-bg.js`
-i `js/drift-cluster.js` pozostały identyczne z bazą.
+Poprzednie filmy `nebula-1080p.mp4` i `nebula-720p.mp4` usunięto z bieżącego
+repozytorium. Zastępują je warianty NOWEGO załącznika `Nebula.mp4`.
+Widoczność nakładki wynosi dokładnie `opacity: 0.08` po łagodnym wejściu 1,5 s.
+Tryb `screen` zachowuje neutralną czerń. Dodatkowe przyciemnienie wynosi 0%.
 
-| Plik | Rola |
-| --- | --- |
-| `js/site-layers.js` | Dopisany niezależny loader; uruchamia nakładkę dopiero po załadowaniu jej CSS. |
-| `css/nebula-overlay.css` | Stała warstwa za treścią, screen, 5%, bez przechwytywania kliknięć. |
-| `js/nebula-overlay.js` | Jeden odtwarzacz, wybór wariantu, opóźniony start i obsługa preferencji/błędów. |
-| `assets/video/nebula-1080p.mp4` | Wariant desktopowy. |
-| `assets/video/nebula-720p.mp4` | Wariant mobilny i dla urządzeń z małą pamięcią. |
-| `tools/prepare-nebula.py` | Odtworzenie obu plików z dostarczonego oryginału. |
-| `tools/verify-nebula.py` | Dekodowanie wszystkich klatek i pomiar granicy pętli. |
-| `tools/test-nebula.cjs` | Testy przeglądarkowe oraz zrzuty. |
-| `tools/compare-nebula-screenshots.py` | Pomiar braku przyciemnienia i limitu widoczności. |
+Kod i ustawienia istniejącego tła nie zostały zmienione: `script.js`,
+`styles.css`, `css/bg-layers.css`, `js/network-bg.js`, `js/drift-cluster.js`
+oraz część inicjalizująca tła w `js/site-layers.js` są identyczne z bazą
+(po normalizacji końców linii). W loaderze nakładki dodano wersję URL CSS i JS,
+a nowe nazwy filmów zapobiegają użyciu poprzedniego klipu z pamięci podręcznej.
 
-Nakładka działa na wszystkich 10 publicznych stronach używających wspólnego
-`site-layers.js`. Archiwalny katalog `goodform-logo-home-fix-ready`, strony
-`preview-*` i osobny projekt `juniper-stone` pozostają bez zmian.
+Wideo jest po obu canvasach (z-index 0) i pod zawartością (main: 1,
+nagłówek: 100); nie przechwytuje kliknięć. Nakładka działa na wszystkich
+10 publicznych stronach korzystających ze wspólnego `js/site-layers.js`.
 
-## Rzeczywiste parametry
+## Źródło i przygotowane pliki
 
-Źródło: `Nebula Animation in Blender (2160p_30fps_VP9-128kbit_AAC)_1_apo8_prob4.mp4`.
-Plik odnaleziono w załączniku rozmowy; ścieżka `/mnt/data/…` dotyczyła poprzedniego
-środowiska. Użyto tego załącznika, bez pobierania zamiennika z YouTube.
+Użyto załącznika `Nebula.mp4` odczytanego z poprzedniej rozmowy, bez pobierania
+zamiennika. Ścieżka `/mnt/data/Nebula.mp4` dotyczyła poprzedniego środowiska.
+SHA-256 oryginalnego załącznika:
+`66acbe75b68849eee97ed3ef432656f89278e67f1a9acab9040245a3b03feefe`.
 
-| Parametr | Źródło | Desktop | Mobile |
+| Parametr | Nowy oryginał | Desktop | Mobile |
 | --- | --- | --- | --- |
-| Rozdzielczość | 3840×2160 | 1920×1080 | 1280×720 |
+| Plik | Nebula.mp4 | nebula-v2-1440p.mp4 | nebula-v2-720p.mp4 |
+| Rozdzielczość | 2560×1440 | 2560×1440 | 1280×720 |
 | Klatkaż | 60 fps | 60 fps | 30 fps |
-| Liczba klatek | 1671 | 1680 | 840 |
-| Czas obrazu | 27,85 s | 28,00 s | 28,00 s |
-| Rozmiar | 189 572 445 B | 9 809 905 B | 3 621 857 B |
-| Kodek obrazu | H.264 | H.264 High | H.264 High |
-| Dźwięk | AAC 128 kb/s | brak | brak |
-| Kompresja | ok. 54,3 Mb/s | CRF 20, preset slow | CRF 21, preset slow |
-| Kolor | BT.709, zakres TV | BT.709, zakres TV | BT.709, zakres TV |
-| Format pikseli | yuv420p | yuv420p | yuv420p |
-| Szybki start MP4 | — | moov przed mdat | moov przed mdat |
+| Czas | 10 s | 9 s | 9 s |
+| Klatki | 600 | 540 | 270 |
+| Rozmiar | 11 322 409 B | 7 356 921 B | 1 749 590 B |
+| Kodek | H.264 + AAC | H.264 High, CRF 18 | H.264 High, CRF 19 |
+| Audio | obecne | usunięte | usunięte |
+| Kolor | BT.709, TV | BT.709, TV | BT.709, TV |
 
-Cały kontener źródłowy trwa 28,119138 s z powodu dłuższego audio. Nazwa pliku
-jest myląca: rzeczywisty kodek to H.264, a klatkaż 60 fps. Metadane źródła
-informują, że wcześniej przeliczono klatkaż do 60 fps przez interpolację.
-Nie jest to potwierdzenie natywnego nagrania 60 fps.
+Oba warianty mają szybki start MP4 (`moov` przed `mdat`). Desktop zachowuje
+pełną rozdzielczość i klatkaż nowego źródła. SSIM wersji desktopowej względem
+oryginału poza zaplanowanym przejściem: **0,995335** (480 klatek, odcinek 8 s).
+To obiektywny pomiar kompresji, nie gwarancja percepcyjna dla każdego ekranu.
 
-Wersja 4K nie jest wysyłana do przeglądarki. Przy widoczności 5% wariant 1080p
-zachowuje subtelne detale przy znacznie niższym koszcie dekodowania i transferu.
-Źródło pozostaje bez zmian poza repozytorium.
+## Pętla i obsługa mobilna
 
-## Pętla i wydajność
+Cykl zaczyna się od t=1 s źródła. Ostatnia sekunda źródła (9–10 s) płynnie
+przechodzi w pierwszą (0–1 s). Prędkość pozostaje oryginalna; jednosekundowe
+nakładanie skraca cykl z 10 do 9 s. Przejście zapisano w pliku: działa jeden
+odtwarzacz, bez dodatkowego dekodera i bez rysowania filmu do canvas.
 
-Oryginał nie jest seamless. Dwusekundowy crossfade ostatnich klatek z pierwszymi
-zapisano w samym pliku. Cykl zaczyna się od t=2 s źródła, następnie przechodzi
-z końca do t=0…2 s, więc granica pętli wypada pomiędzy sąsiednimi klatkami
-około t=2 s. Cykl 25,85 s wydłużono do dokładnie 28 s (prędkość 92,32%
-oryginału). Crossfade po tym przeliczeniu trwa około 2,17 s.
+Film jest wyciszony, dekoracyjny, odtwarzany inline i pomijany przez klawiaturę.
+Wariant 720p wybierany jest przy szerokości do 900 px, wskaźniku dotykowym
+lub raportowanej pamięci do 4 GB. Wideo pauzuje w ukrytej karcie.
+Przy ograniczeniu ruchu, oszczędzaniu danych, 2G lub braku `screen` nie jest
+pobierane. Błąd filmu/CSS lub odmowa autoplay zachowują oryginalne tło.
 
-Przeglądarka używa jednego elementu wideo i jednego dekodera; nie ma dwóch
-filmów, pętli JavaScript ani renderowania filmu do canvas. Wideo jest wyciszone,
-odtwarzane inline, dekoracyjne i wyłączone z obsługi klawiatury. Start następuje
-po załadowaniu strony i w wolnej chwili. Nakładka łagodnie pojawia się przez 1,5 s.
+## Weryfikacja przed publikacją
 
-Wariant 720p wybierany jest dla szerokości do 900 px, głównego wskaźnika dotykowego
-lub raportowanej pamięci urządzenia do 4 GB. Wybór następuje raz, bez ponownego
-pobierania przy obrocie telefonu. W tle karty wideo jest pauzowane.
+Edge 155.0.4283.62, Windows: **23 kontrole PASS, zero błędów JavaScript**.
+Desktop 1440×960; emulacja mobilna 390×844 z dotykiem.
 
-Przy `prefers-reduced-motion`, `saveData`, połączeniu 2G albo braku obsługi screen
-film nie jest pobierany. Zmiana preferencji ruchu usuwa odtwarzacz i zwalnia jego
-źródło. Brak filmu, brak CSS lub blokada autoplay pozostawiają dotychczasowe tło.
+- Wszystkie 10 stron: nowy film, prawidłowa rozdzielczość, warstwowanie,
+  wyciszenie, inline, pętla i działające canvasy.
+- Desktop i mobile: obliczona widoczność `0.08`.
+- Mobile: wariant 720p, działające menu, brak poziomego przepełnienia.
+- Ograniczenie ruchu, oszczędzanie danych, 2G i brak screen: zero żądań filmu.
+- Odmowa autoplay, brak filmu i brak CSS: niewidoczny fallback.
+- Rzeczywiste przejście końca 9-sekundowej pętli w początek, pagehide/pageshow
+  i zmiana preferencji ruchu podczas działania.
+- Zamrożone porównanie przed/po: zero przyciemnionych kanałów;
+  różnica kanału RGB min 0, max +20, średnio +3,284 (skala 0–255).
+- Zdekodowano wszystkie 540 + 270 klatek; poprawny format, czas i brak audio.
+- Krótka próbka startowa dekodera: 115 klatek, 5 pominiętych;
+  nie jest to długotrwały pomiar wydajności ani baterii.
 
-## Wyniki pierwotnych testów (widoczność 3%)
+Pomiar granicy pętli w RGB po przeskalowaniu do 256×144:
 
-**Edge 155.0.4283.62, Windows, tryb headless: 23 kontrole zakończone powodzeniem.**
-Widok desktopowy 1440×960, mobilny 390×844 z emulacją dotyku.
-
-- Na wszystkich 10 stronach film odtwarza się za treścią i za nagłówkiem,
-  nad oboma istniejącymi canvasami; ma właściwe parametry i neutralną obsługę kliknięć.
-- Telefon otrzymuje wariant 720p; menu działa, nie ma poziomego przepełnienia.
-- Ograniczenie ruchu, oszczędzanie danych, 2G i brak screen: zero żądań wideo.
-- Blokada autoplay, błąd wideo 404 i brak CSS: bezpieczny, niewidoczny fallback.
-- Sprawdzono rzeczywisty powrót z końca 28-sekundowego filmu do początku,
-  obsługę zdarzeń pagehide/pageshow oraz zmianę preferencji ruchu podczas działania.
-- Brak nieobsłużonych błędów JavaScript. Krótka próbka startowa dekodera:
-  114 klatek, 2 pominięte; to wynik laboratoryjny, nie pomiar baterii ani telefonu.
-- Porównanie nieruchomego widoku przed/po: **0 przyciemnionych kanałów**,
-  różnica minimalna 0, maksymalna +8, średnia +1,064 w skali 0–255.
-- Zdekodowano wszystkie 1680 + 840 klatek. Oba filmy mają dokładnie 28 s,
-  prawidłowy klatkaż, brak audio i szybki start MP4.
-
-Pomiar różnicy RGB między końcem a początkiem, po przeskalowaniu do 256×144:
-
-| Materiał | Średnia różnica na granicy | Maks. różnica średnia między zwykłymi sąsiadami | Wpływ granicy przy 3% |
+| Wariant | Średnia różnica na granicy | Maks. zwykła różnica sąsiednich klatek | Wpływ granicy przy 8% |
 | --- | --- | --- | --- |
-| Oryginał | 24,635 | — | — |
-| Desktop | 0,646 | 1,644 | ≤0,0194 |
-| Mobile | 0,806 | 1,679 | ≤0,0242 |
+| Desktop | 0,661 | 1,164 | ≤0,0529 |
+| Mobile | 1,185 | 1,281 | ≤0,0949 |
 
-To pomiar numeryczny, a nie gwarancja percepcyjna na każdym ekranie. Przejście
-jest dużo łagodniejsze niż zwykła pętla oryginału; sama granica mieści się
-w zakresie zmian występujących pomiędzy innymi klatkami filmu.
+Granica mieści się w zakresie zmian występujących wewnątrz filmu.
+Nie testowano fizycznego iPhone'a, Androida ani Safari w tym przebiegu.
 
-**Granice weryfikacji:** nie testowano fizycznego Androida ani iPhone'a.
-Dodatkowa próba Playwright WebKit 26.5 na Windows zatrzymała się przed
-`loadedmetadata` (`readyState=0`, bez zgłoszonego błędu mediów), mimo deklarowanej
-obsługi H.264. Ten test nie przeszedł i nie potwierdza zgodności z Safari.
-Przed publikacją należy obejrzeć pętlę na rzeczywistym Safari/iOS oraz sprawdzić
-płynność i pobór energii na docelowym telefonie.
-
-## Odtworzenie testów
-
-Narzędzia są potrzebne tylko do przygotowania i testów; witryna pozostaje statyczna.
+## Odtworzenie
 
 ```sh
-python tools/prepare-nebula.py SOURCE.mp4 --ffmpeg /path/to/ffmpeg
+python tools/prepare-nebula.py NOWY_Nebula.mp4 --ffmpeg /path/to/ffmpeg
 python tools/verify-nebula.py --report media-verification.json
 node tools/test-nebula.cjs
 python tools/compare-nebula-screenshots.py test-results
 ```
 
-Przygotowanie: Python + FFmpeg 7.1 z libx264. Weryfikacja mediów: PyAV + numpy.
-Zrzuty: Node + Playwright + Edge; porównanie pikseli: Pillow + numpy.
-`QA_OUTPUT` ustawia katalog raportów i zrzutów. Opcjonalnie `QA_BROWSER=webkit`
-oraz `QA_WEBKIT_EXECUTABLE` wybierają instalację WebKit.
-
-Ten raport opisuje testy przed publikacją. Bieżący status scalenia jest w
-[PR #4](https://github.com/gipsDrill/goodform/pull/4), a wynik publikacji w
-[GitHub Actions](https://github.com/gipsDrill/goodform/actions).
-Publikacja korzysta z istniejącego GitHub Pages dla `main`, bez zmian konfiguracji hostingu.
+Potrzebne: FFmpeg 7+ z libx264, Python z PyAV/numpy/Pillow oraz Node z
+Playwright i Edge. `QA_OUTPUT` wybiera folder raportów i zrzutów.
+Publikacja korzysta z istniejącego GitHub Pages dla `main`.

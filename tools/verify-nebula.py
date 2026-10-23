@@ -2,7 +2,7 @@
 
 python tools/verify-nebula.py [--report report.json]
 Metrics use RGB frames downsampled to 256x144; values are in 0..255 units.
-The 5% seam metrics are upper bounds before screen's backdrop attenuation.
+The 8% seam metrics are upper bounds before screen's backdrop attenuation.
 """
 import argparse
 import json
@@ -15,8 +15,8 @@ parser.add_argument('--report', type=Path)
 args = parser.parse_args()
 root = Path(__file__).resolve().parents[1]
 results = []
-for height, fps in [(1080, 60), (720, 30)]:
-    p = root / 'assets' / 'video' / f'nebula-{height}p.mp4'
+for height, fps in [(1440, 60), (720, 30)]:
+    p = root / 'assets' / 'video' / f'nebula-v2-{height}p.mp4'
     c = av.open(str(p))
     s = c.streams.video[0]
     first = prev = None
@@ -39,12 +39,13 @@ for height, fps in [(1080, 60), (720, 30)]:
         adjacent_MAE_p95=float(np.percentile(diffs, 95)),
         adjacent_MAE_max=float(np.max(diffs)), seam_MAE=float(np.mean(seam)),
         seam_p99=float(np.percentile(seam, 99)),
-        seam_at_5pct_MAE=float(np.mean(seam))*.05,
+        seam_at_8pct_MAE=float(np.mean(seam))*.08,
         faststart=(b := p.read_bytes()).find(b'moov') < b.find(b'mdat'))
-    assert count == 28*fps and round(float(s.average_rate)) == fps, data
+    assert count == 9*fps and round(float(s.average_rate)) == fps, data
     assert s.height == height and s.codec_context.name == 'h264', data
-    assert data['audio_streams'] == 0 and data['duration'] == 28 and data['faststart'], data
-    assert data['seam_at_5pct_MAE'] < .1 and data['seam_p99']*.05 < 1, data
+    assert data['audio_streams'] == 0 and data['duration'] == 9 and data['faststart'], data
+    assert data['seam_at_8pct_MAE'] < .1 and data['seam_p99']*.08 < 1, data
+    assert data['seam_MAE'] <= data['adjacent_MAE_max'], data
     results.append(data)
     c.close()
 report = json.dumps(results, indent=2)
