@@ -155,3 +155,46 @@
 @media (max-width: 640px) {
   .portfolio-grid { grid-template-columns: 1fr; }
 }
+
+/* Real project previews supplied from the live products. */
+.project-letrecord {
+  background:
+    radial-gradient(circle at 20% 18%, rgba(105, 173, 235, .22), transparent 38%),
+    linear-gradient(145deg, #07192a 0%, #0c2943 62%, #174b72 140%);
+}
+.letrecord-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: .92;
+}
+.project-letrecord::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(5, 19, 33, .86) 0%, rgba(5, 19, 33, .18) 48%, rgba(5, 19, 33, .04) 100%);
+}
+.letrecord-brand {
+  color: #b9ddf7;
+  z-index: 2;
+  text-shadow: 0 2px 12px rgba(3, 14, 24, .65);
+}
+.letrecord-brand img {
+  width: 22px;
+  height: 24px;
+}
+.instructor-road {
+  overflow: hidden;
+  border: 1px solid rgba(91,230,165,.3);
+  background: #061014;
+  box-shadow: 0 12px 30px rgba(0,0,0,.32);
+}
+.instructor-road img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
