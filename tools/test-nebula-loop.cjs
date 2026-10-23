@@ -38,8 +38,8 @@ const server = http.createServer((req, res) => {
       await page.waitForFunction(() => document.querySelector('video').currentTime > .1);
       const result = await page.evaluate(async () => {
         const v = document.querySelector('video');
-        v.defaultPlaybackRate = 0.8;
-        v.playbackRate = 0.8;
+        v.defaultPlaybackRate = 0.64;
+        v.playbackRate = 0.64;
         const canvas = document.createElement('canvas');
         canvas.width = 128; canvas.height = 72;
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
@@ -50,7 +50,7 @@ const server = http.createServer((req, res) => {
         await new Promise(resolve => v.addEventListener('seeked', resolve, { once: true }));
         await v.play();
         return await new Promise((resolve, reject) => {
-          const timeout = setTimeout(() => reject(new Error('three loop wraps timed out')), 25000);
+          const timeout = setTimeout(() => reject(new Error('three loop wraps timed out')), 35000);
           function sample(now, metadata) {
             ctx.drawImage(v, 0, 0, 128, 72);
             const pixels = ctx.getImageData(0, 0, 128, 72).data;
@@ -86,7 +86,7 @@ const server = http.createServer((req, res) => {
       assert.deepEqual(result.errors, []);
       if (version === 'v3') {
         assert.equal(result.duration, 6.8);
-        assert.equal(result.playbackRate, 0.8);
+        assert.equal(result.playbackRate, 0.64);
         assert.ok(result.seams.every(s => s.gapMs <= Math.max(150, result.frameGapP95Ms * 3)), JSON.stringify(result));
         // Browser rasterization is measured at 128x72; keep mean visible change
         // below half one 8-bit channel step, plus a separate black-flash check.

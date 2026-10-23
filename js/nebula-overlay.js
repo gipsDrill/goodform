@@ -58,8 +58,8 @@
       video.defaultMuted = true;
       video.playsInline = true;
       video.loop = true;
-      video.defaultPlaybackRate = 0.8;
-      video.playbackRate = 0.8;
+      video.defaultPlaybackRate = 0.64;
+      video.playbackRate = 0.64;
       video.preload = 'none';
       video.addEventListener('playing', () => video && video.setAttribute('data-playing', ''));
       video.addEventListener('error', () => {
