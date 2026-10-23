@@ -10,7 +10,7 @@
   const connection = navigator.connection;
   const mobile = window.matchMedia('(max-width: 900px), (pointer: coarse)').matches ||
     (navigator.deviceMemory && navigator.deviceMemory <= 4);
-  const source = new URL(mobile ? 'nebula-v2-720p.mp4' : 'nebula-v2-1440p.mp4', base).href;
+  const source = new URL(mobile ? 'nebula-v3-720p.mp4' : 'nebula-v3-1440p.mp4', base).href;
   let video;
   let failed = false;
   let started = false;
@@ -58,6 +58,8 @@
       video.defaultMuted = true;
       video.playsInline = true;
       video.loop = true;
+      video.defaultPlaybackRate = 0.8;
+      video.playbackRate = 0.8;
       video.preload = 'none';
       video.addEventListener('playing', () => video && video.setAttribute('data-playing', ''));
       video.addEventListener('error', () => {

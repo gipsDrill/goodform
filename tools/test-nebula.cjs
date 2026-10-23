@@ -54,7 +54,7 @@ const server = http.createServer((req, res) => {
       const p = await page(); await p.goto(`${base}/${file}`); await playing(p);
       const state = await p.evaluate(() => {
         const v = document.getElementById('nebula-overlay'), s = getComputedStyle(v);
-        return { duration: v.duration, source: v.currentSrc, muted: v.muted, inline: v.playsInline,
+        return { duration: v.duration, playbackRate: v.playbackRate, source: v.currentSrc, muted: v.muted, inline: v.playsInline,
           loop: v.loop, width: v.videoWidth, height: v.videoHeight, blend: s.mixBlendMode,
           pointer: s.pointerEvents, z: s.zIndex, after: v.previousElementSibling.id,
           before: v.compareDocumentPosition(document.querySelector('main')) & Node.DOCUMENT_POSITION_FOLLOWING,
@@ -62,8 +62,9 @@ const server = http.createServer((req, res) => {
             const c = document.getElementById(id); return { width: c.width, opacity: getComputedStyle(c).opacity, filter: getComputedStyle(c).filter };
           }) };
       });
-      assert.equal(state.duration, 9); assert.equal(state.width, 2560);
-      assert.ok(state.source.endsWith('/nebula-v2-1440p.mp4'));
+      assert.equal(state.duration, 6.8); assert.equal(state.width, 2560);
+      assert.equal(state.playbackRate, 0.8);
+      assert.ok(state.source.endsWith('/nebula-v3-1440p.mp4'));
       assert.equal(state.blend, 'screen'); assert.equal(state.pointer, 'none');
       assert.equal(state.after, 'bg-canvas-net'); assert.equal(state.z, '0'); assert.ok(state.before);
       assert.ok(state.muted && state.inline && state.loop && state.canvases.every(c => c.width > 0));
@@ -79,7 +80,8 @@ const server = http.createServer((req, res) => {
     assert.ok(await mobile.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     await mobile.waitForTimeout(1700);
     assert.equal(await mobile.$eval('video', v => getComputedStyle(v).opacity), '0.5');
-    assert.ok(await mobile.$eval('video', v => v.currentSrc.endsWith('/nebula-v2-720p.mp4')));
+    assert.equal(await mobile.$eval('video', v => v.playbackRate), 0.8);
+    assert.ok(await mobile.$eval('video', v => v.currentSrc.endsWith('/nebula-v3-720p.mp4')));
     await mobile.screenshot({ path: path.join(out, 'mobile-nebula-50pct.png') });
     check('mobile 720p, inline playback and working navigation'); await mobile.close();
 
@@ -126,7 +128,7 @@ const server = http.createServer((req, res) => {
     check('desktop decode sample', quality);
     await p.evaluate(() => {
       window.__freeze = true;
-      const v = document.querySelector('video'); v.pause(); v.currentTime = 8;
+      const v = document.querySelector('video'); v.pause(); v.currentTime = 4;
     });
     await p.waitForTimeout(300);
     await p.addStyleTag({ content: '*,*::before,*::after {animation:none!important;transition:none!important;caret-color:transparent!important}' });
@@ -134,9 +136,9 @@ const server = http.createServer((req, res) => {
     await p.screenshot({ path: path.join(out, 'desktop-nebula-50pct.png') });
     await p.$eval('video', v => v.style.opacity = '0');
     await p.screenshot({ path: path.join(out, 'desktop-original.png') });
-    await p.$eval('video', v => { v.style.opacity = ''; v.currentTime = 8.8; v.play(); });
+    await p.$eval('video', v => { v.style.opacity = ''; v.currentTime = v.duration - .2; v.play(); });
     await p.waitForFunction(() => document.querySelector('video').currentTime < 2, null, { polling: 100 });
-    check('real video loop wraps 9 s to start');
+    check('real video loop wraps 6.8 s to start');
     await p.evaluate(() => window.dispatchEvent(new PageTransitionEvent('pagehide')));
     assert.ok(await p.$eval('video', v => v.paused));
     await p.evaluate(() => window.dispatchEvent(new PageTransitionEvent('pageshow')));
