@@ -1,4 +1,4 @@
-# Nakładka Nebula — nowy klip, 20%
+# Nakładka Nebula — nowy klip, 50%
 
 Aktualizacja: 23 października 2026. Baza zmiany: `8aab29c`.
 
@@ -6,8 +6,8 @@ Aktualizacja: 23 października 2026. Baza zmiany: `8aab29c`.
 
 Poprzednie filmy `nebula-1080p.mp4` i `nebula-720p.mp4` usunięto z bieżącego
 repozytorium. Zastępują je warianty NOWEGO załącznika `Nebula.mp4`.
-Widoczność nakładki wynosi dokładnie `opacity: 0.20` po łagodnym wejściu 1,5 s.
-Na życzenie użytkownika zwiększono ją z 8% do 20%; filmy, pętla, warstwowanie
+Widoczność nakładki wynosi dokładnie `opacity: 0.50` po łagodnym wejściu 1,5 s.
+Na życzenie użytkownika zwiększono ją z 20% do 50%; filmy, pętla, warstwowanie
 i dotychczasowe dynamiczne tło pozostały bez zmian.
 Tryb `screen` zachowuje neutralną czerń. Dodatkowe przyciemnienie wynosi 0%.
 
