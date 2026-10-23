@@ -1,0 +1,23 @@
+/* Screen makes black neutral. No dimming, filters or changes to the canvases. */
+#nebula-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+#nebula-overlay[data-playing] { opacity: .03; }
+
+@media (prefers-reduced-motion: reduce) {
+  #nebula-overlay { display: none; }
+}
+
+@supports not (mix-blend-mode: screen) {
+  #nebula-overlay { display: none; }
+}
