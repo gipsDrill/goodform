@@ -12,7 +12,7 @@
   transition: opacity 1.5s ease;
 }
 
-#nebula-overlay[data-playing] { opacity: 0.08; }
+#nebula-overlay[data-playing] { opacity: 0.20; }
 
 @media (prefers-reduced-motion: reduce) {
   #nebula-overlay { display: none; }

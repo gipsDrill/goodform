@@ -62,7 +62,7 @@
   const base = new URL('.', document.currentScript.src);
   const sheet = document.createElement('link');
   sheet.rel = 'stylesheet';
-  sheet.href = new URL('../css/nebula-overlay.css?v=nebula-v2-8', base).href;
+  sheet.href = new URL('../css/nebula-overlay.css?v=nebula-v2-20', base).href;
   const script = document.createElement('script');
   script.src = new URL('nebula-overlay.js?v=nebula-v2-8', base).href;
   // Never show an unstyled video if its stylesheet fails to load.
