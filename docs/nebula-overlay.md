@@ -1,7 +1,7 @@
 # Nakładka Nebula — przygotowanie i testy
 
-Stan: 23 października 2026. Zmiana przygotowana na gałęzi
-`codex/subtle-nebula-overlay`, bez wdrożenia i bez zmiany `main`.
+Raport etapu przygotowania: 23 października 2026. Zmiana przygotowana na gałęzi
+`codex/subtle-nebula-overlay` i przetestowana przed publikacją.
 Baza: `e934a5f`.
 
 ## Wygląd i pliki
@@ -132,5 +132,7 @@ Zrzuty: Node + Playwright + Edge; porównanie pikseli: Pillow + numpy.
 `QA_OUTPUT` ustawia katalog raportów i zrzutów. Opcjonalnie `QA_BROWSER=webkit`
 oraz `QA_WEBKIT_EXECUTABLE` wybierają instalację WebKit.
 
-Zmiana oczekuje w osobnym pull requeście. Nie scalono jej do `main`,
-nie wywołano wdrożenia i nie zmieniono konfiguracji hostingu.
+Ten raport opisuje testy przed publikacją. Bieżący status scalenia jest w
+[PR #4](https://github.com/gipsDrill/goodform/pull/4), a wynik publikacji w
+[GitHub Actions](https://github.com/gipsDrill/goodform/actions).
+Publikacja korzysta z istniejącego GitHub Pages dla `main`, bez zmian konfiguracji hostingu.
