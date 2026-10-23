@@ -6,7 +6,8 @@ Baza: `e934a5f`.
 
 ## Wygląd i pliki
 
-Widoczność nebuli: **3%** (`opacity: .03`), mieszanie **screen**.
+Widoczność nebuli: **5%** (`opacity: .05`), mieszanie **screen**.
+Po pierwszej publikacji zwiększono widoczność z 3% do 5% na życzenie użytkownika.
 Dodatkowe przyciemnienie: **0%**. Czerń filmu jest neutralna w tym trybie.
 Nie zmieniono istniejących ustawień jasności, kolorów ani animacji tła.
 `script.js`, `styles.css`, `css/bg-layers.css`, `js/network-bg.js`
@@ -15,7 +16,7 @@ i `js/drift-cluster.js` pozostały identyczne z bazą.
 | Plik | Rola |
 | --- | --- |
 | `js/site-layers.js` | Dopisany niezależny loader; uruchamia nakładkę dopiero po załadowaniu jej CSS. |
-| `css/nebula-overlay.css` | Stała warstwa za treścią, screen, 3%, bez przechwytywania kliknięć. |
+| `css/nebula-overlay.css` | Stała warstwa za treścią, screen, 5%, bez przechwytywania kliknięć. |
 | `js/nebula-overlay.js` | Jeden odtwarzacz, wybór wariantu, opóźniony start i obsługa preferencji/błędów. |
 | `assets/video/nebula-1080p.mp4` | Wariant desktopowy. |
 | `assets/video/nebula-720p.mp4` | Wariant mobilny i dla urządzeń z małą pamięcią. |
@@ -53,7 +54,7 @@ jest myląca: rzeczywisty kodek to H.264, a klatkaż 60 fps. Metadane źródła
 informują, że wcześniej przeliczono klatkaż do 60 fps przez interpolację.
 Nie jest to potwierdzenie natywnego nagrania 60 fps.
 
-Wersja 4K nie jest wysyłana do przeglądarki. Przy widoczności 3% wariant 1080p
+Wersja 4K nie jest wysyłana do przeglądarki. Przy widoczności 5% wariant 1080p
 zachowuje subtelne detale przy znacznie niższym koszcie dekodowania i transferu.
 Źródło pozostaje bez zmian poza repozytorium.
 
@@ -78,7 +79,7 @@ Przy `prefers-reduced-motion`, `saveData`, połączeniu 2G albo braku obsługi s
 film nie jest pobierany. Zmiana preferencji ruchu usuwa odtwarzacz i zwalnia jego
 źródło. Brak filmu, brak CSS lub blokada autoplay pozostawiają dotychczasowe tło.
 
-## Wyniki testów
+## Wyniki pierwotnych testów (widoczność 3%)
 
 **Edge 155.0.4283.62, Windows, tryb headless: 23 kontrole zakończone powodzeniem.**
 Widok desktopowy 1440×960, mobilny 390×844 z emulacją dotyku.
