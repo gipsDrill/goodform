@@ -79,7 +79,7 @@ main { position: relative; z-index: 1; }
 }
 .eyebrow span { width: 18px; height: 2px; background: var(--coral); display: inline-block; }
 .eyebrow-dark { color: var(--aqua); }
-.eyebrow-light { color: var(--butter); }
+.eyebrow-light { color: var(--aqua); }
 
 .hero {
   min-height: 88vh;
@@ -1591,3 +1591,8 @@ main { position: relative; z-index: 1; }
     0 0 0 1px rgba(130,230,223,.14),
     0 0 28px rgba(130,230,223,.08);
 }
+
+/* Keep every Goodform section label consistent beside the coral marker. */
+p.eyebrow,
+p.eyebrow-dark,
+p.eyebrow-light { color: var(--aqua); }
