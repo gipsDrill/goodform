@@ -27,10 +27,10 @@ wybrany na podstawie analizy sąsiednich klatek. Cykl zaczyna się od t=3,2 s ź
 Źródło 6,8–10 s przenika w 0–3,2 s; połączenie pętli wypada między sąsiednimi
 klatkami wokół t=3,2 s. Cykl ma 6,8 s, przy oryginalnej prędkości ruchu.
 
-Na życzenie użytkownika odtwarzanie całej nebuli zwolniono najpierw o 20%,
-a następnie o kolejne 20% względem poprzedniej prędkości:
-`defaultPlaybackRate = playbackRate = 0.64` (0.8 × 0.8).
-Cykl na stronie trwa więc 10,625 s, a przenikanie 5 s.
+Na życzenie użytkownika odtwarzanie całej nebuli zwolniono trzykrotnie,
+za każdym razem o 20% względem poprzedniej prędkości:
+`defaultPlaybackRate = playbackRate = 0.512` (0.8 × 0.8 × 0.8).
+Cykl na stronie trwa więc 13,28125 s, a przenikanie 6,25 s.
 Widoczność pozostaje na 50%. Spowolnienie dotyczy wyłącznie
 nebuli; nie zmienia istniejących animacji tła i nie wymaga kolejnej kompresji filmu.
 

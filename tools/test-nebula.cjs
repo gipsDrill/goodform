@@ -63,7 +63,7 @@ const server = http.createServer((req, res) => {
           }) };
       });
       assert.equal(state.duration, 6.8); assert.equal(state.width, 2560);
-      assert.equal(state.playbackRate, 0.64);
+      assert.equal(state.playbackRate, 0.512);
       assert.ok(state.source.endsWith('/nebula-v3-1440p.mp4'));
       assert.equal(state.blend, 'screen'); assert.equal(state.pointer, 'none');
       assert.equal(state.after, 'bg-canvas-net'); assert.equal(state.z, '0'); assert.ok(state.before);
@@ -80,7 +80,7 @@ const server = http.createServer((req, res) => {
     assert.ok(await mobile.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     await mobile.waitForTimeout(1700);
     assert.equal(await mobile.$eval('video', v => getComputedStyle(v).opacity), '0.5');
-    assert.equal(await mobile.$eval('video', v => v.playbackRate), 0.64);
+    assert.equal(await mobile.$eval('video', v => v.playbackRate), 0.512);
     assert.ok(await mobile.$eval('video', v => v.currentSrc.endsWith('/nebula-v3-720p.mp4')));
     await mobile.screenshot({ path: path.join(out, 'mobile-nebula-50pct.png') });
     check('mobile 720p, inline playback and working navigation'); await mobile.close();
