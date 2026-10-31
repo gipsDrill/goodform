@@ -79,10 +79,10 @@ const server = http.createServer((req, res) => {
     await mobile.click('.menu-button');
     assert.ok(await mobile.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     await mobile.waitForTimeout(1700);
-    assert.equal(await mobile.$eval('video', v => getComputedStyle(v).opacity), '0.5');
+    assert.equal(await mobile.$eval('video', v => getComputedStyle(v).opacity), '0.45');
     assert.equal(await mobile.$eval('video', v => v.playbackRate), 0.512);
     assert.ok(await mobile.$eval('video', v => v.currentSrc.endsWith('/nebula-v3-720p.mp4')));
-    await mobile.screenshot({ path: path.join(out, 'mobile-nebula-50pct.png') });
+    await mobile.screenshot({ path: path.join(out, 'mobile-nebula-45pct.png') });
     check('mobile 720p, inline playback and working navigation'); await mobile.close();
 
     for (const [name, init, options] of [
@@ -123,7 +123,7 @@ const server = http.createServer((req, res) => {
     });
     await p.goto(`${base}/index.html`); await playing(p);
     await p.waitForTimeout(1700);
-    assert.equal(await p.$eval('video', v => getComputedStyle(v).opacity), '0.5');
+    assert.equal(await p.$eval('video', v => getComputedStyle(v).opacity), '0.45');
     const quality = await p.$eval('video', v => { const q = v.getVideoPlaybackQuality(); return { totalFrames: q.totalVideoFrames, droppedFrames: q.droppedVideoFrames }; });
     check('desktop decode sample', quality);
     await p.evaluate(() => {
@@ -133,7 +133,7 @@ const server = http.createServer((req, res) => {
     await p.waitForTimeout(300);
     await p.addStyleTag({ content: '*,*::before,*::after {animation:none!important;transition:none!important;caret-color:transparent!important}' });
     await p.evaluate(() => document.getAnimations().forEach(a => a.pause()));
-    await p.screenshot({ path: path.join(out, 'desktop-nebula-50pct.png') });
+    await p.screenshot({ path: path.join(out, 'desktop-nebula-45pct.png') });
     await p.$eval('video', v => v.style.opacity = '0');
     await p.screenshot({ path: path.join(out, 'desktop-original.png') });
     await p.$eval('video', v => { v.style.opacity = ''; v.currentTime = v.duration - .2; v.play(); });

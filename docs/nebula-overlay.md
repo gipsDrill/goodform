@@ -1,10 +1,11 @@
-# Nakładka Nebula — płynniejsza pętla przy 50%
+# Nakładka Nebula — płynniejsza pętla przy 45%
 
 Aktualizacja: 23 października 2026. Baza poprawki pętli: `7fb3a5e`.
 
 ## Zachowane ustawienia
 
-Widoczność wynosi dokładnie `opacity: 0.50` po łagodnym wejściu 1,5 s.
+Widoczność wynosi dokładnie `opacity: 0.45` po łagodnym wejściu 1,5 s.
+31 października 2026 zmniejszono ją z 50% do 45%.
 Tryb mieszania `screen`, warstwowanie pod treścią i brak przechwytywania kliknięć
 pozostają bez zmian. Dodatkowe przyciemnienie tła: 0%.
 
@@ -31,7 +32,7 @@ Na życzenie użytkownika odtwarzanie całej nebuli zwolniono trzykrotnie,
 za każdym razem o 20% względem poprzedniej prędkości:
 `defaultPlaybackRate = playbackRate = 0.512` (0.8 × 0.8 × 0.8).
 Cykl na stronie trwa więc 13,28125 s, a przenikanie 6,25 s.
-Widoczność pozostaje na 50%. Spowolnienie dotyczy wyłącznie
+Widoczność wynosi teraz 45%. Spowolnienie dotyczy wyłącznie
 nebuli; nie zmienia istniejących animacji tła i nie wymaga kolejnej kompresji filmu.
 
 Przejście zapisano bezpośrednio w MP4. Produkcja nadal używa jednego elementu
@@ -57,7 +58,7 @@ obsługa ograniczenia ruchu/oszczędzania danych oraz fallbacki pozostają zacho
 ## Weryfikacja
 
 `tools/verify-nebula.py` dekoduje wszystkie klatki i ocenia granicę przy
-aktualnej widoczności 50%. Granica musi mieścić się w 95. percentylu zwykłych
+konserwatywnej widoczności 50% (powyżej aktualnych 45%). Granica musi mieścić się w 95. percentylu zwykłych
 zmian pomiędzy sąsiednimi klatkami, a nie tylko być mniejsza od najgorszego skoku.
 
 `tools/test-nebula-loop.cjs` obserwuje klatki faktycznie prezentowane przez
@@ -66,7 +67,7 @@ Sprawdza różnicę obrazu, przerwy między klatkami i brak błysku do czerni.
 Odczyt testowy przez canvas służy wyłącznie pomiarowi; strona go nie używa.
 
 `tools/test-nebula.cjs` sprawdza 10 stron, widok mobilny, menu, warstwowanie,
-widoczność 50%, odtwarzanie i zachowanie po błędach/zmianach preferencji.
+widoczność 45%, odtwarzanie i zachowanie po błędach/zmianach preferencji.
 `tools/compare-nebula-screenshots.py` porównuje zamrożony obraz z nakładką i bez.
 Nie jest to test fizycznego iPhone'a, Androida ani Safari.
 
