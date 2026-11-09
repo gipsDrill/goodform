@@ -1,0 +1,4 @@
+Contact: mailto:contact@goodform.org.uk
+Expires: 2027-11-01T00:00:00Z
+Canonical: https://goodform.org.uk/.well-known/security.txt
+Preferred-Languages: en, pl

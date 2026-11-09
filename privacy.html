@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2JG9DE1CXG"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-2JG9DE1CXG');
-</script>
 <meta charset="utf-8"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com; connect-src 'self' https://formspree.io https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formspree.io; upgrade-insecure-requests"/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
+
+
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="noindex,follow" name="robots"/>
 <link href="https://goodform.org.uk/privacy.html" rel="canonical"/>
@@ -20,6 +17,38 @@
 <link href="styles.css" rel="stylesheet"/>
 <link href="css/bg-layers.css" rel="stylesheet"/>
 <script src="vendor/three.min.js"></script>
+<link rel="stylesheet" href="/css/consent.css"/>
+<script src="/js/consent.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://goodform.org.uk/#organization",
+      "name": "Goodform Web Studio",
+      "url": "https://goodform.org.uk/",
+      "logo": "https://goodform.org.uk/assets/goodform-logo.webp",
+      "email": "contact@goodform.org.uk",
+      "description": "Websites, systems and applications for businesses in Greater Manchester and across the UK.",
+      "areaServed": {
+        "@type": "Country",
+        "name": "United Kingdom"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://goodform.org.uk/privacy.html#webpage",
+      "url": "https://goodform.org.uk/privacy.html",
+      "name": "Privacy Policy | Goodform Web Studio",
+      "inLanguage": "en-GB",
+      "publisher": {
+        "@id": "https://goodform.org.uk/#organization"
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <canvas id="bg-canvas"></canvas>
@@ -32,7 +61,7 @@
 <article style="max-width:780px;margin:auto">
 <p class="eyebrow"><span></span> Legal</p>
 <h1 style="font-size:clamp(3rem,7vw,5.5rem);line-height:.95;letter-spacing:-.06em">Privacy policy</h1>
-<p><strong>Last updated: 28 July 2026</strong></p>
+<p><strong>Last updated: 9 November 2026</strong></p>
 <h2>Who is responsible for your information</h2>
 <p>Goodform Web Studio is responsible for the personal information collected through this website. Questions about privacy can be sent to <a href="mailto:contact@goodform.org.uk">contact@goodform.org.uk</a>.</p>
 <h2>Information we collect</h2>
@@ -42,7 +71,7 @@
 <h2>Form and service providers</h2>
 <p>The contact form is processed by Formspree. Website files are hosted through GitHub Pages and the domain is managed through Cloudflare. These providers may process limited technical or form data to deliver their services and operate under their own privacy terms.</p>
 <h2>Cookies and analytics</h2>
-<p>This website does not currently use advertising cookies or visitor analytics. If non-essential analytics or tracking tools are added later, this policy and any cookie controls will be updated first.</p>
+<p>We use Google Analytics only if you choose Accept analytics. Before you accept, or if you reject, the Google Analytics script is not loaded and analytics cookies are not set. With your consent, Google receives technical and usage information, such as pages visited, device and browser details, and interactions with the website, to help us understand and improve it. Google Signals and advertising personalisation are disabled in our website configuration. We do not use advertising cookies.</p><p>The Cookie settings button on every page lets you accept or reject analytics and withdraw your consent at any time. Rejecting has no effect on the enquiry form or other website features. When you withdraw consent, we stop analytics and remove accessible Google Analytics cookies for this website. Withdrawal does not remove data already collected.</p><p>We store your consent choice in your browser's local storage for up to six months. This is used only to remember your privacy preference. If you accept analytics, Google Analytics uses first-party cookies such as _ga and _ga_2JG9DE1CXG, configured to expire after up to 180 days. You can also clear this information using your browser settings.</p><p>Google may process analytics data outside the UK under its applicable data protection terms. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's privacy policy</a> for information about its processing.</p>
 <h2>How long information is kept</h2>
 <p>General enquiries are normally kept for up to 24 months so that conversations can be followed up. Records connected with paid work may be kept longer where needed for contracts, accounting, tax or legal obligations.</p>
 <h2>Sharing and international processing</h2>
