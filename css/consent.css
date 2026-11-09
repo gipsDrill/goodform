@@ -1,10 +1,15 @@
 .cookie-panel[hidden] { display: none !important; }
-.cookie-panel { position: fixed; z-index: 10001; right: 20px; bottom: 64px; width: min(480px, calc(100vw - 40px)); max-height: calc(100dvh - 90px); overflow: auto; box-sizing: border-box; padding: 24px; border: 1px solid #6d687a; border-radius: 16px; background: #171521; color: #faf7f2; box-shadow: 0 12px 60px #0008; font: 15px/1.55 system-ui, sans-serif; }
+.cookie-panel { position: fixed; z-index: 10001; right: 20px; bottom: 20px; width: min(480px, calc(100vw - 40px)); max-height: calc(100dvh - 40px); overflow: auto; box-sizing: border-box; padding: 24px; border: 1px solid #6d687a; border-radius: 16px; background: #171521; color: #faf7f2; box-shadow: 0 12px 60px #0008; font: 15px/1.55 system-ui, sans-serif; }
 .cookie-panel h2 { margin: 0 0 12px; color: inherit; font: 700 22px/1.2 system-ui, sans-serif; letter-spacing: normal; }
 .cookie-panel p { margin: 0 0 12px; color: inherit; font-size: 15px; line-height: 1.55; }
 .cookie-panel a { color: #94e8e0; text-decoration: underline; }
 .cookie-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
 .cookie-actions button { flex: 1 1 170px; padding: 12px 16px; border: 1px solid #faf7f2; border-radius: 7px; background: #faf7f2; color: #171521; font: 600 14px/1.4 system-ui, sans-serif; cursor: pointer; }
-.cookie-settings { position: fixed; z-index: 10000; right: 20px; bottom: 14px; min-height: 38px; padding: 8px 14px; border: 1px solid #6d687a; border-radius: 7px; background: #171521; color: #faf7f2; font: 13px/1.4 system-ui, sans-serif; cursor: pointer; }
+.cookie-settings { position: static; align-self: flex-start; width: fit-content; min-height: 32px; padding: 4px 0; border: 0; border-radius: 0; background: transparent; color: inherit; font: inherit; text-align: left; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.cookie-settings:hover { opacity: .8; }
+.cookie-footer { padding: 24px; text-align: center; }
+.cookie-panel .cookie-current { color: #94e8e0; font-weight: 600; }
+.cookie-notice:empty { display: none; }
+.cookie-notice { position: fixed; z-index: 10002; right: 20px; bottom: 20px; width: max-content; max-width: calc(100vw - 40px); box-sizing: border-box; padding: 14px 18px; border: 1px solid #6d687a; border-radius: 10px; background: #171521; color: #faf7f2; box-shadow: 0 6px 30px #0008; font: 14px/1.5 system-ui, sans-serif; pointer-events: none; }
 .cookie-panel button:hover { background: #94e8e0; }
 .cookie-panel :focus-visible, .cookie-settings:focus-visible { outline: 3px solid #ffae86; outline-offset: 4px; }

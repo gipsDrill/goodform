@@ -64,9 +64,28 @@
     panel.setAttribute('aria-labelledby', 'cookie-title');
     panel.hidden = choice !== null;
     panel.innerHTML = '<h2 id="cookie-title">Your privacy choices</h2>' +
+      '<p class="cookie-current"></p>' +
       '<p>With your permission, we use Google Analytics to understand how visitors use this website. Analytics stays off until you accept. Your choice is saved on this device for six months.</p>' +
-      '<p><a href="/privacy.html">Read our privacy policy</a>. You can change your choice at any time using Cookie settings.</p>' +
+      '<p><a href="/privacy.html">Read our privacy policy</a>. You can change your choice at any time using Cookie settings in the footer.</p>' +
       '<div class="cookie-actions"><button type="button" data-choice="denied">Reject analytics</button><button type="button" data-choice="granted">Accept analytics</button></div>';
+    const current = panel.querySelector('.cookie-current');
+    const notice = document.createElement('div');
+    notice.className = 'cookie-notice';
+    notice.setAttribute('role', 'status');
+    notice.setAttribute('aria-live', 'polite');
+    notice.setAttribute('aria-atomic', 'true');
+    let noticeTimer;
+    let openedFromSettings = false;
+    function updateCurrent() {
+      current.textContent = choice === 'granted' ? 'Current setting: analytics allowed.' :
+        choice === 'denied' ? 'Current setting: analytics rejected.' : 'Current setting: analytics off. No choice saved yet.';
+    }
+    function showNotice(message) {
+      clearTimeout(noticeTimer);
+      notice.textContent = message;
+      noticeTimer = setTimeout(function () { notice.textContent = ''; }, 5000);
+    }
+    updateCurrent();
     const settings = document.createElement('button');
     settings.type = 'button';
     settings.className = 'cookie-settings';
@@ -75,6 +94,8 @@
     settings.setAttribute('aria-expanded', String(!panel.hidden));
     panel.id = 'cookie-panel';
     settings.addEventListener('click', function () {
+      openedFromSettings = true;
+      updateCurrent();
       panel.hidden = !panel.hidden;
       settings.setAttribute('aria-expanded', String(!panel.hidden));
       if (!panel.hidden) panel.querySelector('button').focus();
@@ -83,27 +104,50 @@
       if (event.key === 'Escape') {
         panel.hidden = true;
         settings.setAttribute('aria-expanded', 'false');
-        settings.focus();
+        if (openedFromSettings) settings.focus({ preventScroll: true });
       }
     });
     panel.querySelectorAll('[data-choice]').forEach(function (button) {
       button.addEventListener('click', function () {
         choice = button.dataset.choice;
-        try { localStorage.setItem(storageKey, JSON.stringify({ value: choice, expires: Date.now() + lifetime })); } catch (_) {}
+        let saved = false;
+        try {
+          localStorage.setItem(storageKey, JSON.stringify({ value: choice, expires: Date.now() + lifetime }));
+          saved = true;
+        } catch (_) {}
         panel.hidden = true;
         settings.setAttribute('aria-expanded', 'false');
-        settings.focus();
+        if (openedFromSettings) settings.focus({ preventScroll: true });
+        updateCurrent();
+        const message = (choice === 'granted' ? 'Analytics allowed. ' : 'Analytics rejected. ') +
+          (saved ? 'Your choice has been saved.' : 'Your browser could not save this choice. It applies to this visit only.');
+        showNotice(message);
         if (choice === 'granted') startAnalytics();
         else {
           window['ga-disable-' + measurementId] = true;
           window.gtag('consent', 'update', denied);
           clearAnalyticsCookies();
           // Unload an already running tag so revocation stops all later collection.
-          if (started) location.reload();
+          if (started) {
+            try { sessionStorage.setItem(storageKey + '.notice', message); } catch (_) {}
+            location.reload();
+          }
         }
       });
     });
-    document.body.append(settings, panel);
+    let footer = document.querySelector('footer .footer-links:last-child') || document.querySelector('footer .footer-links') || document.querySelector('footer');
+    if (!footer) {
+      footer = document.createElement('footer');
+      footer.className = 'cookie-footer';
+      document.body.append(footer);
+    }
+    footer.append(settings);
+    document.body.append(panel, notice);
+    try {
+      const message = sessionStorage.getItem(storageKey + '.notice');
+      sessionStorage.removeItem(storageKey + '.notice');
+      if (message) showNotice(message);
+    } catch (_) {}
     window.addEventListener('storage', function (event) {
       if (event.key !== storageKey && event.key !== null) return;
       const next = readChoice();
@@ -113,6 +157,7 @@
         location.reload();
       } else {
         choice = next;
+        updateCurrent();
         panel.hidden = choice !== null;
         settings.setAttribute('aria-expanded', String(!panel.hidden));
         if (choice === 'granted') startAnalytics();
