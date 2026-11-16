@@ -14,21 +14,21 @@
   text-align: center;
 }
 .footer-award img {
-  width: 152px;
+  width: 132px;
   height: auto;
   aspect-ratio: 1;
   object-fit: contain;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .footer-award-name {
   color: var(--text);
-  font-size: 1rem;
+  font-size: .875rem;
   font-weight: 700;
 }
 .footer-award-status {
   margin-top: 2px;
   color: #e9c878;
-  font-size: .9375rem;
+  font-size: .8125rem;
   font-weight: 600;
 }
 .footer-award:hover .footer-award-name,
@@ -54,5 +54,5 @@
   .site-footer .footer-links:first-child,
   .footer-award { grid-column: 1 / -1; }
   .footer-award { justify-self: center; }
-  .footer-award img { width: 136px; }
+  .footer-award img { width: 120px; }
 }
