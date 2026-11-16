@@ -1,21 +1,27 @@
-GoodForm — Cats GO update (16 November 2026)
+GoodForm — Cats GO and Web Design Awards badge update (16 November 2026)
 
 STATUS: Prepared locally; NOT published.
 Repository: https://github.com/gipsDrill/goodform
 Baseline commit: ddd4ce632d69fbfc8f210bf8e0621b7ad3e7d3ad
 
-Contains six ready-to-publish website files with their original relative paths.
+Contains eight ready-to-publish website files with their original relative paths.
 - Homepage: Cats GO is the ninth example. Compact 3-column, 3-row grid at every viewport width.
 - Portfolio: ninth Cats GO card with original artwork/logo, short description and external link.
-- All other sections and global styles/scripts remain unchanged.
+- Homepage header: official Web Design Awards Nominee 2026 badge (44 x 44 px) immediately to the right of the Goodform logo. Opens the provided nominee profile in a new tab. Header height stays at 72 px. Styles are scoped to the homepage header; only the 901–1100 px navigation spacing/type size is compacted to accommodate the badge.
+- Official badge image is stored locally so the existing image Content Security Policy works unchanged.
+- Global styles, scripts, footer, form, background and other pages remain unchanged.
 
-Validation completed: HTML/card counts, local links, asset dimensions, scoped CSS/cascade review and git diff --check. Independent review found no blocking issue.
+Validation completed: HTML/card counts, local links, asset formats/dimensions, scoped CSS/cascade review, header width calculation at 320 px and git diff --check. Independent code review found no blocking issue for the Cats GO changes.
 Browser rendering of the changed version and final live verification are still pending.
 
-Publication is blocked by GitHub integration returning 403 Resource not accessible by integration. The browser available to the assistant is not signed into GitHub.
+Publication is blocked by GitHub integration returning 403 Resource not accessible by integration. A login handoff has been provided for the browser available to the assistant.
 
-To publish, first confirm the main branch has not changed since the baseline. Copy only the six website files into the existing repository at the same paths, review and commit. Do not delete any other repository files. This archive is a targeted update, not a complete website.
+To publish, first confirm main has not changed since the baseline. Copy only the eight website files into the existing repository at the same paths, review and commit. Do not delete any other repository files. This archive is a targeted update, not a complete website.
 
 Artwork sources:
 https://cats-go.app/assets/cache/035915582b7e62ff-hero-garden-960.webp
 https://cats-go.app/assets/cache/e60aac2cdcbcf959-cats-go-gold-lockup.png
+https://www.webdesignawards.io/badges/2026/nominee_2026.webp
+
+Award destination:
+https://www.webdesignawards.io/nominees/web-design-for-business-goodform?ref=badge

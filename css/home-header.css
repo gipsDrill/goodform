@@ -1,0 +1,49 @@
+/* The homepage award sits beside the logo without changing the header height. */
+.home-page .site-header {
+  column-gap: 12px;
+}
+.home-page .site-header .header-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+.home-page .site-header .header-brand-group .brand {
+  flex: 0 0 auto;
+}
+.home-page .site-header .award-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+.home-page .site-header .award-badge img {
+  display: block;
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+.home-page .site-header .award-badge:focus-visible {
+  outline: 2px solid var(--aqua);
+  outline-offset: 3px;
+}
+.home-page .site-header .menu-button {
+  flex: 0 0 44px;
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .home-page .site-header .main-nav {
+    gap: 12px;
+    font-size: .8125rem;
+  }
+  .home-page .site-header .main-nav .nav-cta {
+    padding-inline: 14px;
+  }
+}
+@media (max-width: 360px) {
+  .home-page .site-header .header-brand-group {
+    gap: 8px;
+  }
+}

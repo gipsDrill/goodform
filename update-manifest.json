@@ -3,11 +3,13 @@
   "base_commit": "ddd4ce632d69fbfc8f210bf8e0621b7ad3e7d3ad",
   "published": false,
   "files": {
-    "index.html": "a93513398c41466f35ecb3f64a566eaafd6189e0fcd3f57aec569b42a94f9883",
+    "index.html": "3e358afd220972e2afd29a230192b075a308f08d39ca7dae7c47bae24b7e96d9",
     "portfolio.html": "0257e1e2e9d88932595322025b1f9dba6452632956595e4fedb12d5ba41903a4",
     "css/home-examples.css": "af70ba5481ba4b28e1a5c124a6ec2f8584587b7221838511825981cc7ebc0cf7",
     "css/portfolio-layout.css": "708164cab0c05f2332b5fc2900e485e2d1ce63c847391af02cfe4cb22c09c13c",
+    "css/home-header.css": "23305e7a0f6c7cc79a95fe6371ce410534cf15aa6c83dac3c29f87ef2feff530",
     "assets/cats-go-garden.webp": "035915582b7e62ffe5bf3c02f50cb3984d684f00efcf0dd884e33d04253f8945",
-    "assets/cats-go-logo.webp": "5bda4dbe008fe1c9c569b6e485637299f741c898e1ff60eddda9e585b1887c49"
+    "assets/cats-go-logo.webp": "5bda4dbe008fe1c9c569b6e485637299f741c898e1ff60eddda9e585b1887c49",
+    "assets/web-design-awards-nominee-2026.webp": "6c4e9f1cadac5c49a44139d7c62bbdc0661e7dd16604c63507f78d985f15b562"
   }
 }
