@@ -135,7 +135,7 @@
         }
       });
     });
-    let footer = document.querySelector('footer .footer-links:last-child') || document.querySelector('footer .footer-links') || document.querySelector('footer');
+    let footer = document.querySelector('footer .footer-links:last-of-type') || document.querySelector('footer .footer-links') || document.querySelector('footer');
     if (!footer) {
       footer = document.createElement('footer');
       footer.className = 'cookie-footer';
