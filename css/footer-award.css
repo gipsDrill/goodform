@@ -14,7 +14,7 @@
   text-align: center;
 }
 .footer-award img {
-  width: 160px;
+  width: 152px;
   height: auto;
   aspect-ratio: 1;
   object-fit: contain;
@@ -54,5 +54,5 @@
   .site-footer .footer-links:first-child,
   .footer-award { grid-column: 1 / -1; }
   .footer-award { justify-self: center; }
-  .footer-award img { width: 144px; }
+  .footer-award img { width: 136px; }
 }
