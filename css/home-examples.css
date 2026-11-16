@@ -1,41 +1,88 @@
+/* Keep the nine live examples in a compact 3 × 3 grid on every screen. */
+.work.section-pad {
+  padding-block: 56px;
+}
 .work .section-heading {
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto 22px;
   text-align: center;
   max-width: 720px;
 }
 .work .section-heading .eyebrow {
   justify-content: center;
 }
-.example-grid {
+.work .example-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 10px;
   width: min(100%, 920px);
-  max-width: 920px;
-  margin: 28px auto 0;
+  margin: 0 auto;
 }
-.example-card {
-  padding: 18px 20px 16px;
+.work .example-card {
+  min-width: 0;
+  padding: 14px 16px;
   gap: 6px;
+  border-radius: 16px;
+  overflow-wrap: anywhere;
 }
-.example-card strong { font-size: 1.05rem; }
-.example-card span { font-size: .88rem; line-height: 1.4; }
-.example-card b { font-size: .82rem; margin-top: 6px; }
-.example-card:last-child:nth-child(odd) {
-  grid-column: 1 / -1;
-  width: min(100%, calc(50% - 7px));
-  justify-self: center;
+.work .example-card strong {
+  font-size: 1rem;
+  line-height: 1.3;
 }
-@media (max-width: 900px) {
-  .example-grid {
-    grid-template-columns: 1fr;
-    width: min(100%, 760px);
-    margin-top: 20px;
+.work .example-card span {
+  font-size: .8125rem;
+  line-height: 1.4;
+}
+.work .example-card b {
+  font-size: .75rem;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+.work .example-card:focus-visible {
+  outline: 2px solid var(--aqua);
+  outline-offset: 3px;
+}
+.work .work-more {
+  padding-top: 22px;
+}
+@media (max-width: 600px) {
+  .work.section-pad {
+    padding: 36px 12px;
   }
-  .example-card:last-child:nth-child(odd) {
-    grid-column: auto;
-    width: auto;
-    justify-self: stretch;
+  .work .section-heading {
+    margin-bottom: 18px;
+  }
+  .work .section-heading h2 {
+    font-size: clamp(1.4rem, 5.5vw, 1.8rem);
+  }
+  .work .example-grid {
+    gap: 8px;
+  }
+  .work .example-card {
+    padding: 11px 8px;
+    gap: 5px;
+    border-radius: 12px;
+  }
+  .work .example-card strong {
+    font-size: .8125rem;
+  }
+  .work .example-card span,
+  .work .example-card b {
+    font-size: .75rem;
+    line-height: 1.35;
+  }
+  .work .work-more {
+    padding-top: 18px;
+  }
+}
+@media (max-width: 360px) {
+  .work.section-pad {
+    padding-inline: 10px;
+  }
+  .work .example-grid {
+    gap: 6px;
+  }
+  .work .example-card {
+    padding-inline: 7px;
   }
 }

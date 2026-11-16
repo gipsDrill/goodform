@@ -1,0 +1,21 @@
+GoodForm — Cats GO update (16 November 2026)
+
+STATUS: Prepared locally; NOT published.
+Repository: https://github.com/gipsDrill/goodform
+Baseline commit: ddd4ce632d69fbfc8f210bf8e0621b7ad3e7d3ad
+
+Contains six ready-to-publish website files with their original relative paths.
+- Homepage: Cats GO is the ninth example. Compact 3-column, 3-row grid at every viewport width.
+- Portfolio: ninth Cats GO card with original artwork/logo, short description and external link.
+- All other sections and global styles/scripts remain unchanged.
+
+Validation completed: HTML/card counts, local links, asset dimensions, scoped CSS/cascade review and git diff --check. Independent review found no blocking issue.
+Browser rendering of the changed version and final live verification are still pending.
+
+Publication is blocked by GitHub integration returning 403 Resource not accessible by integration. The browser available to the assistant is not signed into GitHub.
+
+To publish, first confirm the main branch has not changed since the baseline. Copy only the six website files into the existing repository at the same paths, review and commit. Do not delete any other repository files. This archive is a targeted update, not a complete website.
+
+Artwork sources:
+https://cats-go.app/assets/cache/035915582b7e62ff-hero-garden-960.webp
+https://cats-go.app/assets/cache/e60aac2cdcbcf959-cats-go-gold-lockup.png

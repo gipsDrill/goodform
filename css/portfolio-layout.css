@@ -198,3 +198,22 @@
   object-fit: cover;
   object-position: center;
 }
+
+/* Original Cats GO artwork and logo, served locally. */
+.project-cats-go { background: #faf3e4; }
+.project-cats-go .cats-go-garden {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.project-cats-go .cats-go-logo {
+  position: absolute;
+  left: 4%;
+  top: 50%;
+  width: 42%;
+  height: auto;
+  transform: translateY(-50%);
+}
