@@ -1,0 +1,58 @@
+/* The nomination follows the footer links in reading and keyboard order. */
+.site-footer {
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, .8fr) minmax(0, .8fr) auto;
+}
+.footer-award {
+  grid-column: -2 / -1;
+  place-self: center end;
+  display: grid;
+  justify-items: center;
+  width: max-content;
+  max-width: 100%;
+  border-radius: 8px;
+  line-height: 1.35;
+  text-align: center;
+}
+.footer-award img {
+  width: 160px;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+.footer-award-name {
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 700;
+}
+.footer-award-status {
+  margin-top: 2px;
+  color: #e9c878;
+  font-size: .9375rem;
+  font-weight: 600;
+}
+.footer-award:hover .footer-award-name,
+.footer-award:focus-visible .footer-award-name {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+.footer-award:focus-visible {
+  outline: 2px solid var(--aqua);
+  outline-offset: 5px;
+}
+@media (min-width: 641px) and (max-width: 900px) {
+  .site-footer { grid-template-columns: repeat(2, minmax(0, 1fr)) auto; }
+  .site-footer .footer-brand { grid-column: span 2; }
+  .site-footer:has(.footer-brand) .footer-award { grid-row: 1 / span 2; }
+}
+@media (max-width: 640px) {
+  .site-footer {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 16px;
+  }
+  .site-footer .footer-brand,
+  .site-footer .footer-links:first-child,
+  .footer-award { grid-column: 1 / -1; }
+  .footer-award { justify-self: center; }
+  .footer-award img { width: 144px; }
+}
