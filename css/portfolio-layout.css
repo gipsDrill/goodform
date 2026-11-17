@@ -12,7 +12,7 @@
 .portfolio-section .project-visual { min-height: 168px; }
 .systems-note {
   max-width: 720px;
-  margin: 0 auto 34px;
+  margin: 0 0 34px;
   color: var(--text-muted);
   text-align: left;
 }
