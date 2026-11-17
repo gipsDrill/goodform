@@ -125,6 +125,49 @@
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const lerp = (from, to, amount) => from + (to - from) * amount;
 
+
+  // Only the tile or button directly under the pointer should move.
+  if (document.querySelector('[data-tilt]')) {
+    const motion = window.matchMedia('(any-hover: hover) and (any-pointer: fine) and (prefers-reduced-motion: no-preference)');
+    let activeTile = null;
+    let frame = 0;
+
+    function resetTilt() {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      if (!activeTile) return;
+      activeTile.classList.remove('is-tilted');
+      activeTile.style.removeProperty('--tilt-x');
+      activeTile.style.removeProperty('--tilt-y');
+      activeTile = null;
+    }
+
+    document.addEventListener('pointermove', (event) => {
+      if (!motion.matches || event.pointerType === 'touch') return;
+      const tile = event.target.closest('[data-tilt]');
+      if (tile !== activeTile) resetTilt();
+      if (!tile) return;
+      activeTile = tile;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const rect = tile.getBoundingClientRect();
+        const x = clamp(2 * (event.clientX - rect.left) / rect.width - 1, -1, 1);
+        const y = clamp(2 * (event.clientY - rect.top) / rect.height - 1, -1, 1);
+        tile.style.setProperty('--tilt-x', `${(-y * 3).toFixed(2)}deg`);
+        tile.style.setProperty('--tilt-y', `${(x * 3).toFixed(2)}deg`);
+        tile.classList.add('is-tilted');
+        frame = 0;
+      });
+    }, { passive: true });
+
+    document.addEventListener('pointerout', (event) => {
+      if (activeTile && !activeTile.contains(event.relatedTarget)) resetTilt();
+    });
+    document.addEventListener('pointercancel', resetTilt);
+    window.addEventListener('blur', resetTilt);
+    motion.addEventListener('change', resetTilt);
+  }
+
   const clusterStates = reactiveClusters.map((cluster, index) => ({
     cluster,
     variant: cluster.dataset.clusterVariant || 'story',
